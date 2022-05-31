@@ -22,7 +22,9 @@
         const quranize = new Quranize(5);
         Vue.createApp({
             data() {
-                return { transliteration: "" };
+                return {
+                    transliteration: "",
+                };
             },
             computed: {
                 encodeResults() {
@@ -44,8 +46,9 @@
         </div>
     </section>
 
-    <section class="section" id="quranize-app" v-cloak>
-        <div class="container block">
+    <section class="section" id="quranize-app">
+        <div v-show="false" class="container content">preparing the app ⏳</div>
+        <div class="container block" v-cloak>
             <div class="control has-icons-left">
                 <input :value="transliteration" @input="transliteration = $event.target.value" ref="transliteration"
                     class="input" type="text" placeholder="subhanallah">
@@ -54,7 +57,7 @@
                 </span>
             </div>
         </div>
-        <div class="container">
+        <div class="container" v-cloak>
             <nav class="panel" v-for="encodeResult in encodeResults">
                 <p class="panel-heading">{{ encodeResult.quran }}</p>
             </nav>
