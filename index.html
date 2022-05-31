@@ -17,6 +17,19 @@
         [v-cloak] {
             display: none;
         }
+
+        @font-face {
+            font-family: me_quran;
+            font-display: swap;
+            src: url(https://raw.githubusercontent.com/alpancs/quranize-service/master/public/me_quran.ttf);
+        }
+
+        .quran-text {
+            font-family: me_quran;
+            font-size: 1.1em;
+            line-height: 1.8em;
+            direction: rtl;
+        }
     </style>
 
     <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
@@ -43,8 +56,7 @@
                     let splitted = location[1].split(" ");
                     splitted[word_start] = "<mark>" + splitted[word_start];
                     splitted[word_start + word_length - 1] += "</mark>";
-                    let marked = splitted.join(" ");
-                    return `${marked} (sura ${location[0].sura_number} aya ${location[0].aya_number})`;
+                    return splitted.join(" ");
                 },
             },
             mounted() {
@@ -77,9 +89,13 @@
         </div>
         <div class="container" v-cloak>
             <nav class="panel" v-for="encodeResult in encodeResults">
-                <p class="panel-heading" dir="rtl">{{ encodeResult.quran }} ({{ encodeResult.locations.length }})</p>
-                <label class="panel-block" v-for="location in encodeResult.locations" dir="rtl"
-                    v-html="highlighted(encodeResult.quran, location)">
+                <p class="panel-heading quran-text">
+                    {{ encodeResult.quran }}
+                    <span class="tag is-light is-rounded">{{ encodeResult.locations.length }}</span>
+                </p>
+                <label class="panel-block quran-text" v-for="location in encodeResult.locations">
+                    <span v-html="highlighted(encodeResult.quran, location)"></span>
+                    <span class="tag">{{location[0].sura_number}}:{{location[0].aya_number}}</span>
                 </label>
             </nav>
         </div>
