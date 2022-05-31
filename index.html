@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mini Quranize</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.prod.js"></script>
+    <script type="module">
+        import init, { Quranize } from "./pkg/quranize.js";
+        await init();
+        const quranize = new Quranize(5);
+        Vue.createApp({
+            data() {
+                return { transliteration: "" };
+            },
+            computed: {
+                encodeResults() {
+                    return quranize.encode(this.transliteration);
+                }
+            },
+            mounted() {
+                this.$refs.transliteration.focus();
+            },
+        }).mount('#quranize-app');
+    </script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Mini Quranize</h1>
+            <h2 class="subtitle">search in the alquran using alphabet keyword</h2>
+        </div>
+    </section>
+
+    <section class="section" id="quranize-app">
+        <div class="container">
+            <div class="control has-icons-left">
+                <input :value="transliteration" @input="transliteration = $event.target.value" ref="transliteration"
+                    class="input" type="text" placeholder="subhanallah">
+                <span class="icon is-left">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+            </div>
+        </div>
+        <div class="container">
+            <nav class="panel" v-for="encodeResult in encodeResults">
+                <p class="panel-heading">{{ encodeResult.quran }}</p>
+            </nav>
+        </div>
+    </section>
+</body>
+
+</html>
