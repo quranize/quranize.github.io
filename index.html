@@ -8,8 +8,13 @@
     <title>Mini Quranize</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 
+    <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.prod.js"></script>
     <script type="module">
         import init, { Quranize } from "./pkg/quranize.js";
@@ -39,8 +44,8 @@
         </div>
     </section>
 
-    <section class="section" id="quranize-app">
-        <div class="container">
+    <section class="section" id="quranize-app" v-cloak>
+        <div class="container block">
             <div class="control has-icons-left">
                 <input :value="transliteration" @input="transliteration = $event.target.value" ref="transliteration"
                     class="input" type="text" placeholder="subhanallah">
