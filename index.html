@@ -34,7 +34,18 @@
             computed: {
                 encodeResults() {
                     return quranize.encode(this.transliteration);
-                }
+                },
+            },
+            methods: {
+                highlighted(quran_clean, location) {
+                    let word_start = location[0].word_number - 1;
+                    let word_length = quran_clean.split(" ").length;
+                    let splitted = location[1].split(" ");
+                    splitted[word_start] = "<mark>" + splitted[word_start];
+                    splitted[word_start + word_length - 1] += "</mark>";
+                    let marked = splitted.join(" ");
+                    return `${marked} (sura ${location[0].sura_number} aya ${location[0].aya_number})`;
+                },
             },
             mounted() {
                 this.$refs.transliteration.focus();
@@ -67,15 +78,8 @@
         <div class="container" v-cloak>
             <nav class="panel" v-for="encodeResult in encodeResults">
                 <p class="panel-heading" dir="rtl">{{ encodeResult.quran }} ({{ encodeResult.locations.length }})</p>
-                <label class="panel-block" v-for="location in encodeResult.locations">
-                    <nav class="level">
-                        <div class="level-left">
-                            <p class="level-item">{{ location[0] }}</p>
-                        </div>
-                        <div class="level-right">
-                            <p class="level-item" dir="rtl">{{ location[1] }}</p>
-                        </div>
-                    </nav>
+                <label class="panel-block" v-for="location in encodeResult.locations" dir="rtl"
+                    v-html="highlighted(encodeResult.quran, location)">
                 </label>
             </nav>
         </div>
