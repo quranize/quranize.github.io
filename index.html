@@ -50,9 +50,9 @@
             },
             methods: {
                 highlighted(quran_clean, location) {
-                    let word_start = location[0].word_number - 1;
+                    let word_start = location.word_number - 1;
                     let word_length = quran_clean.split(" ").length;
-                    let splitted = location[1].split(" ");
+                    let splitted = location.enhanced_quran.split(" ");
                     splitted[word_start] = "<mark>" + splitted[word_start];
                     splitted[word_start + word_length - 1] += "</mark>";
                     return splitted.join(" ");
@@ -94,7 +94,7 @@
                 </p>
                 <label class="panel-block quran-text" v-for="location in encodeResult.locations">
                     <span v-html="highlighted(encodeResult.quran, location)"></span>
-                    <span class="tag">{{location[0].sura_number}}:{{location[0].aya_number}}</span>
+                    <span class="tag">{{location.sura_number}}:{{location.aya_number}}</span>
                 </label>
             </nav>
         </div>
