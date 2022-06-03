@@ -74,7 +74,7 @@
     </section>
 
     <section class="section" id="quranize-app">
-        <div v-show="false" class="container content">
+        <div v-if="false" class="container content">
             <p>preparing the app ⏳</p>
         </div>
         <div class="container block" v-cloak>
@@ -86,15 +86,15 @@
                 </span>
             </div>
         </div>
-        <div class="container" v-cloak>
-            <nav class="panel" v-for="encodeResult in encodeResults">
-                <p class="panel-heading quran-text">
-                    {{ encodeResult.quran }}
-                    <span class="tag is-light is-rounded">{{ encodeResult.locations.length }}</span>
+        <div class="container" v-cloak v-for="encodeResult in encodeResults">
+            <nav class="panel" v-for="location in encodeResult.locations">
+                <p class="panel-heading">
+                    sura {{location.sura_number}} aya {{location.aya_number}}
                 </p>
-                <label class="panel-block quran-text" v-for="location in encodeResult.locations">
-                    <span>{{ location.before_text }} <mark>{{ location.text }}</mark> {{ location.after_text }}</span>
-                    <span class="tag">{{location.sura_number}}:{{location.aya_number}}</span>
+                <label class="panel-block quran-text">
+                    {{ location.before_text }}
+                    <mark>{{ location.text }}</mark>
+                    {{ location.after_text }}
                 </label>
             </nav>
         </div>
