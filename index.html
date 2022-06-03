@@ -33,6 +33,7 @@
 
     <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script type="module">
         import init, { Quranize } from "./pkg/quranize.js";
         await init();
@@ -40,26 +41,22 @@
         Vue.createApp({
             data() {
                 return {
-                    transliteration: "",
+                    keyword: "",
                 };
             },
             computed: {
                 encodeResults() {
-                    return quranize.encode(this.transliteration);
+                    return quranize.encode(this.keyword);
                 },
             },
             methods: {
-                highlighted(quran_clean, location) {
-                    let word_start = location.word_number - 1;
-                    let word_length = quran_clean.split(" ").length;
-                    let splitted = location.enhanced_quran.split(" ");
-                    splitted[word_start] = "<mark>" + splitted[word_start];
-                    splitted[word_start + word_length - 1] += "</mark>";
-                    return splitted.join(" ");
-                },
+                slowlyUpdateKeyword: _.debounce(
+                    function (event) { this.keyword = event.target.value; },
+                    25,
+                ),
             },
             mounted() {
-                this.$refs.transliteration.focus();
+                this.$refs.keyword.focus();
             },
         }).mount('#quranize-app');
     </script>
@@ -79,8 +76,8 @@
         </div>
         <div class="container block" v-cloak>
             <div class="control has-icons-left">
-                <input :value="transliteration" @input="transliteration = $event.target.value" ref="transliteration"
-                    class="input" type="text" placeholder="subhanallah">
+                <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
+                    placeholder="subhanallah">
                 <span class="icon is-left">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
