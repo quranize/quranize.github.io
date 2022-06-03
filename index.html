@@ -26,7 +26,7 @@
 
         .quran-text {
             font-family: me_quran;
-            line-height: 1.5em;
+            line-height: 1.7em;
             direction: rtl;
         }
     </style>
@@ -56,10 +56,12 @@
                 ),
             },
             mounted() {
-                init()
-                    .then(() => this.quranize = new Quranize(5))
-                    .then(() => this.keywordPlaceholder = "subhanallah")
-                    .then(() => this.$refs.keyword.focus());
+                setTimeout(() => {
+                    init()
+                        .then(() => this.quranize = new Quranize(5))
+                        .then(() => this.keywordPlaceholder = "subhanallah")
+                        .then(() => this.$refs.keyword.focus());
+                }, 100);
             },
         }).mount('#quranize-app');
     </script>
@@ -74,26 +76,30 @@
     </section>
 
     <section class="section" id="quranize-app">
-        <div class="container block" v-cloak>
+        <div class="container block">
             <div class="control has-icons-left">
                 <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
-                    :placeholder="keywordPlaceholder" :disabled="!quranize">
+                    :placeholder="keywordPlaceholder">
                 <span class="icon is-left">
                     <i class="fa-solid" :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
                 </span>
             </div>
         </div>
-        <div class="container" v-cloak v-for="encodeResult in encodeResults">
-            <nav class="panel" v-for="location in encodeResult.locations">
-                <p class="panel-heading">
-                    sura {{location.sura_number}} aya {{location.aya_number}}
-                </p>
-                <label class="panel-block quran-text">
-                    {{ location.before_text }}
-                    <mark>{{ location.text }}</mark>
-                    {{ location.after_text }}
-                </label>
-            </nav>
+        <div class="container" v-cloak>
+            <div v-for="encodeResult in encodeResults">
+                <nav class="panel" v-for="location in encodeResult.locations">
+                    <p class="panel-heading">
+                        sura {{location.sura_number}} aya {{location.aya_number}}
+                    </p>
+                    <label class="panel-block quran-text">
+                        <span>
+                            {{ location.before_text }}
+                            <mark>{{ location.text }}</mark>
+                            {{ location.after_text }}
+                        </span>
+                    </label>
+                </nav>
+            </div>
         </div>
     </section>
 </body>
