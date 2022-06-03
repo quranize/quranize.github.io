@@ -93,7 +93,7 @@
                     <span class="tag is-light is-rounded">{{ encodeResult.locations.length }}</span>
                 </p>
                 <label class="panel-block quran-text" v-for="location in encodeResult.locations">
-                    <span v-html="highlighted(encodeResult.quran, location)"></span>
+                    <span>{{ location.before_text }} <mark>{{ location.text }}</mark> {{ location.after_text }}</span>
                     <span class="tag">{{location.sura_number}}:{{location.aya_number}}</span>
                 </label>
             </nav>
