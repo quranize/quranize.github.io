@@ -36,17 +36,16 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script type="module">
         import init, { Quranize } from "./pkg/quranize.js";
-        await init();
-        const quranize = new Quranize(5);
         Vue.createApp({
             data() {
                 return {
                     keyword: "",
+                    quranize: undefined,
                 };
             },
             computed: {
                 encodeResults() {
-                    return quranize.encode(this.keyword);
+                    return this.quranize ? this.quranize.encode(this.keyword) : [];
                 },
             },
             methods: {
@@ -56,7 +55,9 @@
                 ),
             },
             mounted() {
-                this.$refs.keyword.focus();
+                init()
+                    .then(() => this.quranize = new Quranize(5))
+                    .then(() => this.$refs.keyword.focus());
             },
         }).mount('#quranize-app');
     </script>
@@ -71,10 +72,10 @@
     </section>
 
     <section class="section" id="quranize-app">
-        <div v-if="false" class="container content">
-            <p>preparing the app ⏳</p>
+        <div v-if="!quranize" class="container content">
+            <p>preparing the app <i class="fa-solid fa-gear fa-spin"></i></p>
         </div>
-        <div class="container block" v-cloak>
+        <div class="container block" v-cloak v-show="quranize">
             <div class="control has-icons-left">
                 <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
                     placeholder="subhanallah">
