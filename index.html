@@ -52,7 +52,7 @@
             methods: {
                 slowlyUpdateKeyword: _.debounce(
                     function (event) { this.keyword = event.target.value; },
-                    25,
+                    50,
                 ),
             },
             mounted() {
