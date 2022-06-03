@@ -40,6 +40,7 @@
             data() {
                 return {
                     keyword: "",
+                    keywordPlaceholder: "preparing the app ...",
                     quranize: undefined,
                 };
             },
@@ -57,6 +58,7 @@
             mounted() {
                 init()
                     .then(() => this.quranize = new Quranize(5))
+                    .then(() => this.keywordPlaceholder = "subhanallah")
                     .then(() => this.$refs.keyword.focus());
             },
         }).mount('#quranize-app');
@@ -72,15 +74,12 @@
     </section>
 
     <section class="section" id="quranize-app">
-        <div v-if="!quranize" class="container content">
-            <p>preparing the app <i class="fa-solid fa-gear fa-spin"></i></p>
-        </div>
-        <div class="container block" v-cloak v-show="quranize">
+        <div class="container block" v-cloak>
             <div class="control has-icons-left">
                 <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
-                    placeholder="subhanallah">
+                    :placeholder="keywordPlaceholder" :disabled="!quranize">
                 <span class="icon is-left">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid" :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
                 </span>
             </div>
         </div>
