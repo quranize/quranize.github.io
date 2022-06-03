@@ -77,11 +77,15 @@
 
     <section class="section" id="quranize-app">
         <div class="container block">
-            <div class="control has-icons-left">
+            <div class="control has-icons-left has-icons-right">
                 <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
                     :placeholder="keywordPlaceholder">
                 <span class="icon is-left">
                     <i class="fa-solid" :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
+                </span>
+                <span class="icon is-right" v-show="keyword.trim()">
+                    <i class="fa-solid"
+                        :class="{'fa-check': encodeResults.length, 'fa-xmark': !encodeResults.length}"></i>
                 </span>
             </div>
         </div>
