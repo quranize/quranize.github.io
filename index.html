@@ -31,8 +31,7 @@
     <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
     <script type="module">
-        import init, { Quranize } from "./pkg/quranize.js";
-        Vue.createApp({
+        const quranizeApp = Vue.createApp({
             data() {
                 return {
                     keyword: "",
@@ -49,16 +48,16 @@
                 },
             },
             mounted() {
-                setTimeout(() => {
-                    let t0 = new Date();
-                    init()
-                        .then(() => this.quranize = new Quranize(3))
-                        .then(() => console.debug(`build time: ${(new Date() - t0) / 1e3} seconds.\nmemory usage: ${performance.memory.usedJSHeapSize / 1e6} MB.`))
-                        .then(() => this.keywordPlaceholder = "subhanallah")
-                        .then(() => this.$refs.keyword.focus());
-                }, 25);
+                let t0 = new Date();
+                init()
+                    .then(() => this.quranize = new Quranize(3))
+                    .then(() => console.debug(`build time: ${(new Date() - t0) / 1e3} seconds.\nmemory usage: ${performance.memory.usedJSHeapSize / 1e6} MB.`))
+                    .then(() => this.keywordPlaceholder = "subhanallah")
+                    .then(() => this.$refs.keyword.focus());
             },
-        }).mount('#quranize-app');
+        });
+        import init, { Quranize } from "./pkg/quranize.js";
+        quranizeApp.mount('#quranize-app');
     </script>
 </head>
 
@@ -77,12 +76,10 @@
                     <input class="input is-rounded" type="text" :value="keyword" @input="updateKeyword"
                         :placeholder="keywordPlaceholder" ref="keyword">
                     <span class="icon is-left">
-                        <i class="fa-solid"
-                            :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
+                        <i class="fa-solid" :class="quranize ? 'fa-magnifying-glass' : 'fa-gear fa-spin'"></i>
                     </span>
-                    <span class="icon is-right" v-show="keyword.trim()">
-                        <i class="fa-solid"
-                            :class="{'fa-check': encodeResults.length, 'fa-xmark': !encodeResults.length}"></i>
+                    <span class="icon is-right" v-show="keyword">
+                        <i class="fa-solid" :class="encodeResults.length ? 'fa-check' : 'fa-xmark'"></i>
                     </span>
                 </div>
             </div>
