@@ -47,6 +47,11 @@
                     if (this.quranize)
                         this.encodeResults = this.quranize.encode(this.keyword);
                 },
+                toArabicNumber(n) {
+                    if (n < 0) return `-${this.toArabicNumber(-n)}`;
+                    if (n < 10) return String.fromCharCode(0x0660 + n);
+                    return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
+                },
             },
             mounted() {
                 let t0 = new Date();
@@ -66,7 +71,7 @@
     <section class="section">
         <div class="container">
             <h1 class="title">Mini Quranize</h1>
-            <h2 class="subtitle">search in the alquran using alphabet keywords</h2>
+            <h2 class="subtitle">search in the <span class="quran-text">القرآن</span> using alphabet keywords</h2>
         </div>
     </section>
 
@@ -100,10 +105,14 @@
                 </div>
                 <div v-if="encodeResult.expanded">
                     <nav class="panel" v-for="location in encodeResult.locations">
-                        <p class="panel-heading">
-                            sura {{location.sura_number}}
-                            (<span class="quran-text">{{ suraNames[location.sura_number - 1] }}</span>)
-                            aya {{location.aya_number}} -
+                        <p class="panel-heading has-text-centered">
+                            <span class="quran-text">
+                                {{ suraNames[location.sura_number - 1] }}
+                            </span>
+                            ({{ toArabicNumber(location.sura_number) }}:{{ toArabicNumber(location.aya_number) }})
+                        </p>
+                        <p class="panel-tabs">
+                            <a class="is-active">Aya</a>
                             <a :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`"
                                 target="_blank">
                                 tanzil.net
@@ -112,16 +121,11 @@
                                 </span>
                             </a>
                         </p>
-                        <p class="panel-tabs">
-                            <a class="is-active">Quran</a>
-                            <a>Translation (Bahasa)</a>
-                        </p>
-                        <label class="panel-block">
-                            <div class="quran-text">
-                                {{ location.before_text }}
-                                <mark>{{ location.text }}</mark>
-                                {{ location.after_text }}
-                            </div>
+                        <label class="panel-block quran-text">
+                            {{ location.before_text }}
+                            <mark>{{ location.text }}</mark>
+                            {{ location.after_text }}
+                            ({{ toArabicNumber(location.aya_number) }})
                         </label>
                     </nav>
                 </div>
