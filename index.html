@@ -71,8 +71,8 @@
         <div class="container">
             <div class="block">
                 <div class="control has-icons-left has-icons-right">
-                    <input :value="keyword" @input="this.keyword = $event.target.value" ref="keyword" class="input"
-                        type="text" :placeholder="keywordPlaceholder">
+                    <input class="input is-rounded" type="text" ref="keyword" :value="keyword"
+                        @input="this.keyword = $event.target.value" :placeholder="keywordPlaceholder">
                     <span class="icon is-left">
                         <i class="fa-solid"
                             :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
@@ -83,12 +83,19 @@
                     </span>
                 </div>
             </div>
-            <div v-for="encodeResult in encodeResults">
-                <div class="quran-text">
-                    {{ encodeResult.quran }}
-                    <span class="tag is-rounded">
-                        {{ encodeResult.locations.length }}
-                    </span>
+            <div v-for="encodeResult in encodeResults" class="box">
+                <div class="content has-text-centered">
+                    <p class="quran-text subtitle">
+                        {{ encodeResult.quran }}
+                        <span class="tag is-rounded">
+                            {{ encodeResult.locations.length }}
+                        </span>
+                    </p>
+                    <button class="button is-small is-rounded">
+                        <span class="icon">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </span>
+                    </button>
                 </div>
                 <div v-if="encodeResult.expanded">
                     <nav class="panel" v-for="location in encodeResult.locations">
