@@ -33,7 +33,6 @@
 
     <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script type="module">
         import init, { Quranize } from "./pkg/quranize.js";
         Vue.createApp({
@@ -48,12 +47,6 @@
                 encodeResults() {
                     return this.quranize ? this.quranize.encode(this.keyword) : [];
                 },
-            },
-            methods: {
-                slowlyUpdateKeyword: _.debounce(
-                    function (event) { this.keyword = event.target.value; },
-                    200,
-                ),
             },
             mounted() {
                 setTimeout(() => {
@@ -80,8 +73,8 @@
     <section class="section" id="quranize-app">
         <div class="container block">
             <div class="control has-icons-left has-icons-right">
-                <input :value="keyword" @input="slowlyUpdateKeyword" ref="keyword" class="input" type="text"
-                    :placeholder="keywordPlaceholder">
+                <input :value="keyword" @input="this.keyword = $event.target.value" ref="keyword" class="input"
+                    type="text" :placeholder="keywordPlaceholder">
                 <span class="icon is-left">
                     <i class="fa-solid" :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
                 </span>
