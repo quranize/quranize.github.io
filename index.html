@@ -96,7 +96,7 @@
                     </p>
                     <button class="button is-small is-rounded" @click="encodeResult.expanded ^= true">
                         <span class="icon is-small">
-                            <i class="fa-solid fa-angle-down"></i>
+                            <i class="fa-solid" :class="encodeResult.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
                         </span>
                     </button>
                 </div>
