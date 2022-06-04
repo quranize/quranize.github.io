@@ -36,13 +36,16 @@
             data() {
                 return {
                     keyword: "",
+                    encodeResults: [],
                     keywordPlaceholder: "preparing the app ...",
                     quranize: undefined,
                 };
             },
-            computed: {
-                encodeResults() {
-                    return this.quranize ? this.quranize.encode(this.keyword) : [];
+            methods: {
+                updateKeyword(event) {
+                    this.keyword = event.target.value;
+                    if (this.quranize)
+                        this.encodeResults = this.quranize.encode(this.keyword);
                 },
             },
             mounted() {
@@ -71,8 +74,8 @@
         <div class="container">
             <div class="block">
                 <div class="control has-icons-left has-icons-right">
-                    <input class="input is-rounded" type="text" ref="keyword" :value="keyword"
-                        @input="this.keyword = $event.target.value" :placeholder="keywordPlaceholder">
+                    <input class="input is-rounded" type="text" :value="keyword" @input="updateKeyword"
+                        :placeholder="keywordPlaceholder" ref="keyword">
                     <span class="icon is-left">
                         <i class="fa-solid"
                             :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
@@ -87,12 +90,12 @@
                 <div class="content has-text-centered">
                     <p class="quran-text subtitle">
                         {{ encodeResult.quran }}
-                        <span class="tag is-rounded">
+                        <span class="tag is-small is-rounded">
                             {{ encodeResult.locations.length }}
                         </span>
                     </p>
-                    <button class="button is-small is-rounded">
-                        <span class="icon">
+                    <button class="button is-small is-rounded" @click="encodeResult.expanded ^= true">
+                        <span class="icon is-small">
                             <i class="fa-solid fa-angle-down"></i>
                         </span>
                     </button>
