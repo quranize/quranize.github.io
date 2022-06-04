@@ -4,11 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="icon" type="image/png" sizes="32x32"
         href="https://raw.githubusercontent.com/alpancs/quranize-service/master/public/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://raw.githubusercontent.com/alpancs/quranize-service/master/public/favicon-16x16.png">
 
     <title>Mini Quranize</title>
 
@@ -26,7 +23,7 @@
 
         .quran-text {
             font-family: me_quran;
-            line-height: 1.7em;
+            line-height: 2em;
             direction: rtl;
         }
     </style>
@@ -70,41 +67,47 @@
         </div>
     </section>
 
-    <section class="section" id="quranize-app">
-        <div class="container block">
-            <div class="control has-icons-left has-icons-right">
-                <input :value="keyword" @input="this.keyword = $event.target.value" ref="keyword" class="input"
-                    type="text" :placeholder="keywordPlaceholder">
-                <span class="icon is-left">
-                    <i class="fa-solid" :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
-                </span>
-                <span class="icon is-right" v-show="keyword.trim()">
-                    <i class="fa-solid"
-                        :class="{'fa-check': encodeResults.length, 'fa-xmark': !encodeResults.length}"></i>
-                </span>
+    <section class="section" id="quranize-app" v-cloak>
+        <div class="container">
+            <div class="block">
+                <div class="control has-icons-left has-icons-right">
+                    <input :value="keyword" @input="this.keyword = $event.target.value" ref="keyword" class="input"
+                        type="text" :placeholder="keywordPlaceholder">
+                    <span class="icon is-left">
+                        <i class="fa-solid"
+                            :class="{'fa-magnifying-glass': quranize, 'fa-gear fa-spin': !quranize}"></i>
+                    </span>
+                    <span class="icon is-right" v-show="keyword.trim()">
+                        <i class="fa-solid"
+                            :class="{'fa-check': encodeResults.length, 'fa-xmark': !encodeResults.length}"></i>
+                    </span>
+                </div>
             </div>
-        </div>
-        <div class="container" v-cloak>
             <div v-for="encodeResult in encodeResults">
-                <span class="quran-text">
-                    {{ encodeResult.quran }} ({{ encodeResult.locations.length }})
-                </span>
-                <nav class="panel" v-for="location in encodeResult.locations" v-if="encodeResult.expanded">
-                    <p class="panel-heading">
-                        sura {{location.sura_number}} aya {{location.aya_number}}
-                    </p>
-                    <p class="panel-tabs">
-                        <a class="is-active">Quran</a>
-                        <a>Translation (Bahasa)</a>
-                    </p>
-                    <label class="panel-block quran-text">
-                        <span>
-                            {{ location.before_text }}
-                            <mark>{{ location.text }}</mark>
-                            {{ location.after_text }}
-                        </span>
-                    </label>
-                </nav>
+                <div class="quran-text">
+                    {{ encodeResult.quran }}
+                    <span class="tag is-rounded">
+                        {{ encodeResult.locations.length }}
+                    </span>
+                </div>
+                <div v-if="encodeResult.expanded">
+                    <nav class="panel" v-for="location in encodeResult.locations">
+                        <p class="panel-heading">
+                            sura {{location.sura_number}} aya {{location.aya_number}}
+                        </p>
+                        <p class="panel-tabs">
+                            <a class="is-active">Quran</a>
+                            <a>Translation (Bahasa)</a>
+                        </p>
+                        <label class="panel-block">
+                            <div class="quran-text">
+                                {{ location.before_text }}
+                                <mark>{{ location.text }}</mark>
+                                {{ location.after_text }}
+                            </div>
+                        </label>
+                    </nav>
+                </div>
             </div>
         </div>
     </section>
