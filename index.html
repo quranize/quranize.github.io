@@ -63,7 +63,7 @@
                         .then(() => console.debug(`build time: ${(new Date() - t0) / 1e3} seconds.\nmemory usage: ${performance.memory.usedJSHeapSize / 1e6} MB.`))
                         .then(() => this.keywordPlaceholder = "subhanallah")
                         .then(() => this.$refs.keyword.focus());
-                }, 100);
+                }, 25);
             },
         }).mount('#quranize-app');
     </script>
