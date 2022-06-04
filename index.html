@@ -93,7 +93,10 @@
         </div>
         <div class="container" v-cloak>
             <div v-for="encodeResult in encodeResults">
-                <nav class="panel" v-for="location in encodeResult.locations">
+                <span class="quran-text">
+                    {{ encodeResult.quran }} ({{ encodeResult.locations.length }})
+                </span>
+                <nav class="panel" v-for="location in encodeResult.locations" v-if="encodeResult.expanded">
                     <p class="panel-heading">
                         sura {{location.sura_number}} aya {{location.aya_number}}
                     </p>
