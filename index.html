@@ -108,8 +108,7 @@
                         <p class="panel-heading has-text-centered">
                             <span class="quran-text">
                                 {{ suraNames[location.sura_number - 1] }}
-                            </span>
-                            ({{ toArabicNumber(location.sura_number) }}:{{ toArabicNumber(location.aya_number) }})
+                            </span>:{{ toArabicNumber(location.aya_number) }}
                         </p>
                         <p class="panel-tabs">
                             <a class="is-active">Aya</a>
@@ -122,10 +121,12 @@
                             </a>
                         </p>
                         <label class="panel-block quran-text">
-                            {{ location.before_text }}
-                            <mark>{{ location.text }}</mark>
-                            {{ location.after_text }}
-                            ({{ toArabicNumber(location.aya_number) }})
+                            <span>
+                                {{ location.before_text }}
+                                <mark>{{ location.text }}</mark>
+                                {{ location.after_text }}
+                                ({{ toArabicNumber(location.aya_number) }})
+                            </span>
                         </label>
                     </nav>
                 </div>
