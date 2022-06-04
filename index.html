@@ -32,7 +32,7 @@
     </style>
 
     <script src="https://kit.fontawesome.com/3c11d55c8a.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script type="module">
         import init, { Quranize } from "./pkg/quranize.js";
@@ -59,7 +59,7 @@
                 setTimeout(() => {
                     let t0 = new Date();
                     init()
-                        .then(() => this.quranize = new Quranize(5))
+                        .then(() => this.quranize = new Quranize(3))
                         .then(() => console.debug(`build time: ${(new Date() - t0) / 1e3} seconds.\nmemory usage: ${performance.memory.usedJSHeapSize / 1e6} MB.`))
                         .then(() => this.keywordPlaceholder = "subhanallah")
                         .then(() => this.$refs.keyword.focus());
