@@ -66,10 +66,16 @@
 </head>
 
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title">Mini Quranize</h1>
-            <h2 class="subtitle">search in the <span class="quran-text">القرآن</span> using alphabet keywords</h2>
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container">
+                <p class="title">
+                    Mini Quranize
+                </p>
+                <p class="subtitle">
+                    search in the <span class="quran-text">القرآن</span> using alphabet keywords
+                </p>
+            </div>
         </div>
     </section>
 
@@ -100,7 +106,7 @@
                     </button>
                 </div>
                 <div v-if="encodeResult.expanded">
-                    <nav class="panel" v-for="location in encodeResult.locations">
+                    <nav class="panel is-success" v-for="location in encodeResult.locations">
                         <p class="panel-heading has-text-centered">
                             <span class="quran-text">
                                 {{ suraNames[location.sura_number - 1] }}
