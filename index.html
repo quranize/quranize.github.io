@@ -136,11 +136,8 @@
                                 ({{ toArabicNumber(location.aya_number) }})
                             </span>
                         </label>
-                        <label class="panel-block" v-if="location.expanded && location.terjemah">
+                        <label class="panel-block" v-if="location.expanded">
                             <progress class="progress is-small" v-if="!location.terjemah"></progress>
-                            <span class="panel-icon">
-                                <i class="fa-solid fa-language" aria-hidden="true"></i>
-                            </span>
                             {{ location.terjemah }}
                         </label>
                     </nav>
