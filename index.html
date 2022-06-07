@@ -50,7 +50,7 @@
                     this.keyword = event.target.value;
                     if (this.quranize)
                         this.encodeResults = this.quranize.encode(this.keyword);
-                    this.encodeResults.forEach(r => { if (r.locations.length < 10) r.expanded = true });
+                    this.encodeResults.forEach(r => { if (r.locations.length < 10) r.locations.forEach(l => l.expanded = true) });
                 },
                 clickLocation(location) {
                     location.expanded ^= true;
