@@ -95,7 +95,7 @@
                     </span>
                 </div>
             </div>
-            <div v-for="encodeResult in encodeResults" class="box">
+            <div class="box" v-for="encodeResult in encodeResults">
                 <div class="block has-text-centered">
                     <p class="title quran-text">{{ encodeResult.quran }}</p>
                     <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
