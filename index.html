@@ -109,10 +109,8 @@
                 </div>
                 <div v-if="encodeResult.expanded">
                     <nav class="panel" v-for="location in encodeResult.locations">
-                        <p class="panel-heading has-text-centered">
-                            <span class="quran-text">
-                                {{ suraNames[location.sura_number - 1] }}
-                            </span>:{{ toArabicNumber(location.aya_number) }}
+                        <p class="panel-heading quran-text has-text-centered">
+                            {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
                         </p>
                         <p class="panel-tabs">
                             <a class="is-active">Aya</a>
