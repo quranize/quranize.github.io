@@ -51,6 +51,13 @@
                     if (this.quranize)
                         this.encodeResults = this.quranize.encode(this.keyword);
                 },
+                clickLocation(location) {
+                    location.expanded ^= true;
+                    if (!location.terjemah)
+                        fetch(`//api.alquran.cloud/v1/ayah/${location.sura_number}:${location.aya_number}/id.indonesian`)
+                            .then(response => response.json())
+                            .then((response) => location.terjemah = response.data.text);
+                },
                 toArabicNumber(n) {
                     if (n < 0) return `-${this.toArabicNumber(-n)}`;
                     if (n < 10) return String.fromCharCode(0x0660 + n);
@@ -114,7 +121,7 @@
                         <p class="panel-heading quran-text has-text-centered">
                             {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
                             <button class="button is-small is-rounded" :class="{'is-success': location.expanded}"
-                                @click="location.expanded ^= true">
+                                @click="clickLocation(location)">
                                 <span class="icon">
                                     <i class="fa-solid"
                                         :class="location.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
@@ -128,6 +135,12 @@
                                 {{ location.after_text }}
                                 ({{ toArabicNumber(location.aya_number) }})
                             </span>
+                        </label>
+                        <label class="panel-block" v-if="location.expanded && location.terjemah">
+                            <span class="panel-icon">
+                                <i class="fa-solid fa-language" aria-hidden="true"></i>
+                            </span>
+                            {{ location.terjemah }}
                         </label>
                     </nav>
                 </div>
