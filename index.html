@@ -34,8 +34,7 @@
 
     <script src="scripts/vue.global.prod.js"></script>
     <script type="module">
-        import init, { Quranize } from "./scripts/quranize.js";
-        Vue.createApp({
+        const quranizeApp = Vue.createApp({
             data() {
                 return {
                     keyword: "",
@@ -58,14 +57,14 @@
                 },
             },
             mounted() {
-                setTimeout(() => {
-                    init()
-                        .then(() => this.quranize = new Quranize(5))
-                        .then(() => this.keywordPlaceholder = "subhanallah")
-                        .then(() => this.$refs.keyword.focus());
-                }, 25);
+                init()
+                    .then(() => this.quranize = new Quranize(5))
+                    .then(() => this.keywordPlaceholder = "subhanallah")
+                    .then(() => this.$refs.keyword.focus());
             },
-        }).mount('#quranize-app');
+        });
+        import init, { Quranize } from "./scripts/quranize.js";
+        quranizeApp.mount('#quranize-app');
     </script>
 </head>
 
