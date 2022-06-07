@@ -137,6 +137,7 @@
                             </span>
                         </label>
                         <label class="panel-block" v-if="location.expanded && location.terjemah">
+                            <progress class="progress is-small" v-if="!location.terjemah"></progress>
                             <span class="panel-icon">
                                 <i class="fa-solid fa-language" aria-hidden="true"></i>
                             </span>
