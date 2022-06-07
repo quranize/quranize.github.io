@@ -96,19 +96,15 @@
                 </div>
             </div>
             <div v-for="encodeResult in encodeResults" class="box">
-                <div class="has-text-centered">
-                    <p class="quran-text subtitle">
-                        {{ encodeResult.quran }}
-                        <span class="tag is-small is-rounded">
-                            {{ encodeResult.locations.length }}
-                        </span>
-                    </p>
+                <div class="block has-text-centered">
+                    <p class="title quran-text">{{ encodeResult.quran }}</p>
                     <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
                         @click="encodeResult.expanded ^= true">
                         <span class="icon">
                             <i class="fa-solid"
                                 :class="encodeResult.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
                         </span>
+                        <span>{{ encodeResult.locations.length }}</span>
                     </button>
                 </div>
                 <div v-if="encodeResult.expanded">
