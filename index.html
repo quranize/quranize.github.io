@@ -102,8 +102,9 @@
                         </span>
                     </p>
                     <button class="button is-small is-rounded" @click="encodeResult.expanded ^= true">
-                        <span class="icon is-small">
-                            <i class="fa-solid" :class="encodeResult.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                        <span class="icon">
+                            <i class="fa-solid"
+                                :class="encodeResult.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
                         </span>
                     </button>
                 </div>
@@ -111,18 +112,14 @@
                     <nav class="panel" v-for="location in encodeResult.locations">
                         <p class="panel-heading quran-text has-text-centered">
                             {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
-                        </p>
-                        <p class="panel-tabs">
-                            <a class="is-active">Aya</a>
-                            <a :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`"
-                                target="_blank">
-                                tanzil.net
-                                <span class="icon is-small">
-                                    <i class="fa-solid fa-up-right-from-square fa-sm"></i>
+                            <button class="button is-small is-rounded" @click="location.expanded ^= true">
+                                <span class="icon">
+                                    <i class="fa-solid"
+                                        :class="location.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
                                 </span>
-                            </a>
+                            </button>
                         </p>
-                        <label class="panel-block quran-text">
+                        <label class="panel-block quran-text" v-if="location.expanded">
                             <span>
                                 {{ location.before_text }}
                                 <mark>{{ location.text }}</mark>
