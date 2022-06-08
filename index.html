@@ -95,7 +95,7 @@
             },
             mounted() {
                 this.fetchTranslations();
-                this.initQuranize();
+                setTimeout(this.initQuranize, 50);
             },
         });
         import init, { Quranize } from "./scripts/quranize.js";
