@@ -51,12 +51,21 @@
                     if (this.quranize)
                         this.encodeResults = this.quranize.encode(this.keyword);
                 },
+                clickEncodeResult(encodeResult) {
+                    encodeResult.expanded ^= true;
+                    if (encodeResult.locations.length <= 10)
+                        encodeResult.locations.forEach(this.clickLocation);
+                },
                 clickLocation(location) {
                     location.expanded ^= true;
                     if (!location.terjemah)
                         fetch(`//api.alquran.cloud/v1/ayah/${location.sura_number}:${location.aya_number}/id.indonesian`)
                             .then(r => r.json())
-                            .then(r => location.terjemah = r.data.text);
+                            .then(r => location.terjemah = r.data.text)
+                            .catch(() => {
+                                location.expanded ^= true;
+                                this.clickLocation(location);
+                            });
                 },
                 toArabicNumber(n) {
                     if (n < 0) return `-${this.toArabicNumber(-n)}`;
@@ -108,7 +117,7 @@
                 <div class="block has-text-centered">
                     <p class="title quran-text">{{ encodeResult.quran }}</p>
                     <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
-                        @click="encodeResult.expanded ^= true">
+                        @click="clickEncodeResult(encodeResult)">
                         <span class="icon">
                             <i class="fa-solid"
                                 :class="encodeResult.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
