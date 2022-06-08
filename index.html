@@ -42,9 +42,32 @@
                     encodeResults: [],
                     quranize: undefined,
                     suraNames: ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "ابراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبإ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الانسان", "المرسلات", "النبإ", "النازعات", "عبس", "التكوير", "الإنفطار", "المطففين", "الإنشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"],
+                    translations: {},
                 };
             },
             methods: {
+                initQuranize() {
+                    init()
+                        .then(() => this.quranize = new Quranize(5))
+                        .then(() => this.$refs.keyword.focus());
+                },
+                fetchTranslations() {
+                    fetch("translations/id.indonesian")
+                        .then(response => response.text())
+                        .then(text => text
+                            .split("\n")
+                            .map(l => l.split("|"))
+                            .filter(e => e.length == 3)
+                            .forEach(e => this.translations[`${e[0]}:${e[1]}`] = e[2])
+                        )
+                        .then(() =>
+                            this.encodeResults.forEach(r =>
+                                r.locations.forEach(l =>
+                                    l.translation = this.translations[`${l.sura_number}:${l.aya_number}`]
+                                )
+                            )
+                        );
+                },
                 updateKeyword(event) {
                     this.keyword = event.target.value;
                     if (this.quranize)
@@ -52,19 +75,12 @@
                 },
                 clickEncodeResult(encodeResult) {
                     encodeResult.expanded ^= true;
-                    if (encodeResult.locations.length <= 10)
+                    if (encodeResult.locations.length < 40)
                         encodeResult.locations.forEach(this.clickLocation);
                 },
                 clickLocation(location) {
                     location.expanded ^= true;
-                    if (!location.terjemah)
-                        fetch(`//api.alquran.cloud/v1/ayah/${location.sura_number}:${location.aya_number}/id.indonesian`)
-                            .then(r => r.json())
-                            .then(r => location.terjemah = r.data.text)
-                            .catch(() => {
-                                location.expanded ^= true;
-                                this.clickLocation(location);
-                            });
+                    location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
                 },
                 toArabicNumber(n) {
                     if (n < 0) return `-${this.toArabicNumber(-n)}`;
@@ -78,11 +94,8 @@
                 },
             },
             mounted() {
-                setTimeout(() => {
-                    init()
-                        .then(() => this.quranize = new Quranize(5))
-                        .then(() => this.$refs.keyword.focus());
-                }, 50);
+                this.fetchTranslations();
+                this.initQuranize();
             },
         });
         import init, { Quranize } from "./scripts/quranize.js";
@@ -149,8 +162,7 @@
                             </span>
                         </label>
                         <label class="panel-block" v-if="location.expanded">
-                            <progress class="progress is-small" v-if="!location.terjemah"></progress>
-                            {{ location.terjemah }}
+                            {{ location.translation }}
                         </label>
                     </nav>
                 </div>
