@@ -36,7 +36,6 @@
     <script src="scripts/vue.global.prod.js"></script>
     <script type="module">
         import init, { Quranize } from "./scripts/quranize.js";
-        await init();
         Vue.createApp({
             data() {
                 return {
@@ -49,8 +48,10 @@
             },
             methods: {
                 initQuranize() {
-                    this.quranize = new Quranize(5);
-                    this.$refs.keyword.focus();
+                    init().then(() => {
+                        this.quranize = new Quranize(5);
+                        this.$refs.keyword.focus();
+                    });
                 },
                 initTranslations() {
                     fetch("translations/id.indonesian")
@@ -95,7 +96,7 @@
                 },
             },
             mounted() {
-                setTimeout(this.initQuranize, 100);
+                document.fonts.ready.then(this.initQuranize);
                 this.initTranslations();
             },
         }).mount('#quranize-app');
