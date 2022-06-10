@@ -160,6 +160,7 @@
                             </span>
                         </label>
                         <label class="panel-block" v-if="location.expanded">
+                            <progress class="progress" v-if="!location.translation"></progress>
                             {{ location.translation }}
                         </label>
                     </nav>
