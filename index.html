@@ -120,9 +120,9 @@
         <div class="container">
             <div class="block">
                 <div class="control has-icons-left">
-                    <input class="input is-rounded"
-                        :class="{'is-success': encodeResults.length, 'is-danger': keyword && !encodeResults.length}"
-                        type="text" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
+                    <input type="text" class="input is-rounded"
+                        :class="{'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
+                        @input="updateKeyword" :placeholder="keywordPlaceholder" :disabled="!quranize" ref="keyword">
                     <span class="icon is-left">
                         <i class="fa-solid" :class="quranize ? 'fa-magnifying-glass' : 'fa-gear fa-spin'"></i>
                     </span>
