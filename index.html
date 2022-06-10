@@ -48,27 +48,25 @@
             },
             methods: {
                 initQuranize() {
-                    init().then(() => {
+                    return init().then(() => {
                         this.quranize = new Quranize(5);
                         this.$refs.keyword.focus();
                     });
                 },
                 initTranslations() {
-                    fetch("translations/id.indonesian")
+                    return fetch("translations/id.indonesian")
                         .then(response => response.text())
-                        .then(text => text
-                            .split("\n")
-                            .map(l => l.split("|"))
-                            .filter(e => e.length == 3)
-                            .forEach(e => this.translations[`${e[0]}:${e[1]}`] = e[2])
-                        )
-                        .then(() =>
-                            this.encodeResults.forEach(r =>
-                                r.locations.forEach(l =>
-                                    l.translation = this.translations[`${l.sura_number}:${l.aya_number}`]
-                                )
-                            )
-                        );
+                        .then(text => {
+                            text.split("\n")
+                                .map(l => l.split("|"))
+                                .filter(e => e.length == 3)
+                                .forEach(e => this.translations[`${e[0]}:${e[1]}`] = e[2]);
+                            this.encodeResults.forEach(r => r.locations.forEach(this.setTranslation));
+                        });
+                },
+                setTranslation(location) {
+                    if (!location.translation)
+                        location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
                 },
                 updateKeyword(event) {
                     this.keyword = event.target.value;
@@ -82,7 +80,7 @@
                 },
                 clickLocation(location) {
                     location.expanded ^= true;
-                    location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
+                    this.setTranslation(location);
                 },
                 toArabicNumber(n) {
                     if (n < 0) return `-${this.toArabicNumber(-n)}`;
@@ -96,8 +94,9 @@
                 },
             },
             mounted() {
-                document.fonts.ready.then(this.initQuranize);
-                this.initTranslations();
+                document.fonts.ready
+                    .then(this.initQuranize)
+                    .then(this.initTranslations);
             },
         }).mount('#quranize-app');
     </script>
