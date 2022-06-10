@@ -36,10 +36,12 @@
     <script src="scripts/vue.global.prod.js"></script>
     <script type="module">
         import init, { Quranize } from "./scripts/quranize.js";
+        const initPromise = init();
         Vue.createApp({
             data() {
                 return {
                     keyword: "",
+                    keywordPlaceholder: "engine loading ...",
                     encodeResults: [],
                     quranize: undefined,
                     suraNames: ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "ابراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبإ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الانسان", "المرسلات", "النبإ", "النازعات", "عبس", "التكوير", "الإنفطار", "المطففين", "الإنشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"],
@@ -48,10 +50,12 @@
             },
             methods: {
                 initQuranize() {
-                    return init().then(() => {
+                    this.keywordPlaceholder = "starting the engine ..";
+                    setTimeout(() => {
                         this.quranize = new Quranize(5);
-                        this.$refs.keyword.focus();
-                    });
+                        this.keywordPlaceholder = "subhanallah";
+                        this.encodeResults = this.quranize.encode(this.keyword);
+                    }, 10);
                 },
                 initTranslations() {
                     return fetch("translations/id.indonesian")
@@ -88,15 +92,8 @@
                     return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
                 },
             },
-            computed: {
-                keywordPlaceholder() {
-                    return this.quranize ? "subhanallah" : "preparing the app ...";
-                },
-            },
             mounted() {
-                document.fonts.ready
-                    .then(this.initQuranize)
-                    .then(this.initTranslations);
+                initPromise.then(this.initQuranize).then(this.initTranslations);
             },
         }).mount('#quranize-app');
     </script>
@@ -110,7 +107,7 @@
                     Mini Quranize
                 </p>
                 <p class="subtitle">
-                    search in the <span class="quran-text">القرآن</span> using alphabet keywords
+                    search <span class="quran-text">القرآن</span> text using alphabet keywords
                 </p>
             </div>
         </div>
@@ -122,7 +119,7 @@
                 <div class="control has-icons-left">
                     <input type="text" class="input is-rounded"
                         :class="{'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
-                        @input="updateKeyword" :placeholder="keywordPlaceholder" :disabled="!quranize" ref="keyword">
+                        @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
                     <span class="icon is-left">
                         <i class="fa-solid" :class="quranize ? 'fa-magnifying-glass' : 'fa-gear fa-spin'"></i>
                     </span>
