@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
 
-    <title>Mini Quranize</title>
+    <title>Quranin</title>
 
     <link rel="stylesheet" href="styles/bulma.min.css">
     <link rel="stylesheet" href="assets/fontawesome/css/fontawesome.min.css">
@@ -41,7 +41,7 @@
             data() {
                 return {
                     keyword: "",
-                    keywordPlaceholder: "engine loading ...",
+                    keywordPlaceholder: "memuat mesin ...",
                     encodeResults: [],
                     quranize: undefined,
                     suraNames: ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "ابراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبإ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الانسان", "المرسلات", "النبإ", "النازعات", "عبس", "التكوير", "الإنفطار", "المطففين", "الإنشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"],
@@ -50,7 +50,7 @@
             },
             methods: {
                 initQuranize() {
-                    this.keywordPlaceholder = "starting the engine ..";
+                    this.keywordPlaceholder = "menyalakan mesin ..";
                     setTimeout(() => {
                         this.quranize = new Quranize(5);
                         this.keywordPlaceholder = "subhanallah";
@@ -104,10 +104,10 @@
         <div class="hero-body">
             <div class="container">
                 <p class="title">
-                    Mini Quranize
+                    Quranin
                 </p>
                 <p class="subtitle">
-                    search <span class="quran-text">القرآن</span> text using alphabet keywords
+                    mencari teks <span class="quran-text">القرآن</span> menggunakan kata kunci alfabet
                 </p>
             </div>
         </div>
