@@ -129,8 +129,7 @@
                     <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
                         @click="clickEncodeResult(encodeResult)">
                         <span class="icon">
-                            <i class="fa-solid"
-                                :class="encodeResult.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                            <i class="fa-solid" :class="encodeResult.expanded ? 'fa-angles-up' : 'fa-angles-down'"></i>
                         </span>
                         <span>{{ encodeResult.locations.length }}</span>
                     </button>
@@ -143,7 +142,7 @@
                                 @click="clickLocation(location)">
                                 <span class="icon">
                                     <i class="fa-solid"
-                                        :class="location.expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                                        :class="location.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
                                 </span>
                             </button>
                         </p>
