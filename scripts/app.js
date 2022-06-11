@@ -21,7 +21,7 @@ Vue.createApp({
             }, 25);
         },
         initTranslations() {
-            return fetch("translations/id.indonesian")
+            return fetch("scripts/quran/id.indonesian")
                 .then(response => response.text())
                 .then(text => {
                     text.split("\n")
