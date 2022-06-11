@@ -116,7 +116,7 @@
             <div class="block">
                 <div class="control has-icons-left">
                     <input type="text" class="input is-rounded"
-                        :class="{'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
+                        :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
                         @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
                     <span class="icon is-left">
                         <i class="fa-solid" :class="quranize ? 'fa-magnifying-glass' : 'fa-gear fa-spin'"></i>
