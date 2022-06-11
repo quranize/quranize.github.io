@@ -56,6 +56,12 @@
                     <nav class="panel" v-for="location in encodeResult.locations">
                         <p class="panel-heading quran-text has-text-centered">
                             {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
+                            <a class="button is-small is-rounded is-link" target="_blank"
+                                :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`">
+                                <span class="icon">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </span>
+                            </a>
                             <button class="button is-small is-rounded" :class="{'is-success': location.expanded}"
                                 @click="clickLocation(location)">
                                 <span class="icon">
