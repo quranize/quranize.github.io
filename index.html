@@ -64,17 +64,17 @@
                                 </span>
                             </button>
                         </p>
-                        <label class="panel-block quran-text" v-if="location.expanded">
+                        <p class="panel-block quran-text" v-if="location.expanded">
                             <span>
                                 {{ location.before_text }}
                                 <mark>{{ location.text }}</mark>
                                 {{ location.after_text }}
                             </span>
-                        </label>
-                        <label class="panel-block" v-if="location.expanded">
+                        </p>
+                        <p class="panel-block" v-if="location.expanded">
                             <progress class="progress" v-if="!location.translation"></progress>
                             {{ location.translation }}
-                        </label>
+                        </p>
                     </nav>
                 </div>
             </div>
