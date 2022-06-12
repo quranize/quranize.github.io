@@ -16,8 +16,8 @@ Vue.createApp({
             this.keywordPlaceholder = "menyalakan mesin ..";
             setTimeout(() => {
                 this.quranize = new Quranize(5);
-                this.keywordPlaceholder = "subhanallah";
-                this.encodeResults = this.quranize.encode(this.keyword);
+                this.keywordPlaceholder = "masyaallah";
+                this.setKeyword(window.location.hash.replace(/^#/, ""));
             }, 25);
         },
         initTranslations() {
@@ -35,10 +35,12 @@ Vue.createApp({
             if (!location.translation)
                 location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
         },
+        setKeyword(keyword) {
+            this.keyword = keyword;
+            if (this.quranize) this.encodeResults = this.quranize.encode(keyword);
+        },
         updateKeyword(event) {
-            this.keyword = event.target.value;
-            if (this.quranize)
-                this.encodeResults = this.quranize.encode(this.keyword);
+            this.setKeyword(event.target.value);
         },
         clickEncodeResult(encodeResult) {
             encodeResult.expanded ^= true;
@@ -57,5 +59,6 @@ Vue.createApp({
     },
     mounted() {
         initPromise.then(this.initQuranize).then(this.initTranslations);
+        window.onhashchange = () => this.setKeyword(window.location.hash.replace(/^#/, ""));
     },
 }).mount('#quranize-app');
