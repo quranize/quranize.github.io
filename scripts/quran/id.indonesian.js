@@ -1,3 +1,4 @@
+export default `
 1|1|Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang.
 1|2|Segala puji bagi Allah, Tuhan semesta alam.
 1|3|Maha Pemurah lagi Maha Penyayang.
@@ -6247,3 +6248,4 @@
 #  Source: Tanzil.net
 #
 # --------------------------------------------------------------------
+`;

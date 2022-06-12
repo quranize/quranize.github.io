@@ -21,8 +21,7 @@ Vue.createApp({
             }, 25);
         },
         async initTranslations() {
-            const response = await fetch("scripts/quran/id.indonesian");
-            (await response.text())
+            (await import("./quran/id.indonesian.js")).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(e => e.length == 3)
