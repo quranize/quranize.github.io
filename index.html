@@ -33,13 +33,21 @@
     <section class="section" id="quranize-app" v-cloak>
         <div class="container">
             <div class="block">
-                <div class="control has-icons-left" :class="{'is-loading': !quranize}">
-                    <input type="text" class="input is-rounded"
-                        :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
-                        :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
-                    <span class="icon is-left">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </span>
+                <div class="field">
+                    <label class="label">Kata Kunci</label>
+                    <div class="control has-icons-left" :class="{'is-loading': !quranize}">
+                        <input type="text" class="input is-rounded"
+                            :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
+                            :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
+                        <span class="icon is-left">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                    </div>
+                    <p class="help">Contoh:
+                        <span class="is-italic">masyaallah</span>,
+                        <span class="is-italic">subhaanallah</span>,
+                        <span class="is-italic">wa'tasimu</span>
+                    </p>
                 </div>
             </div>
             <div class="box" v-for="encodeResult in encodeResults">
