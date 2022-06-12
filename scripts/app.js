@@ -20,16 +20,14 @@ Vue.createApp({
                 this.setKeyword(window.location.hash.replace(/^#/, ""));
             }, 25);
         },
-        initTranslations() {
-            return fetch("scripts/quran/id.indonesian")
-                .then(response => response.text())
-                .then(text => {
-                    text.split("\n")
-                        .map(l => l.split("|"))
-                        .filter(e => e.length == 3)
-                        .forEach(e => this.translations[`${e[0]}:${e[1]}`] = e[2]);
-                    this.encodeResults.forEach(r => r.locations.forEach(this.setTranslation));
-                });
+        async initTranslations() {
+            const response = await fetch("scripts/quran/id.indonesian");
+            (await response.text())
+                .split("\n")
+                .map(l => l.split("|"))
+                .filter(e => e.length == 3)
+                .forEach(e_1 => this.translations[`${e_1[0]}:${e_1[1]}`] = e_1[2]);
+            this.encodeResults.forEach(r => r.locations.forEach(this.setTranslation));
         },
         setTranslation(location) {
             if (!location.translation)
