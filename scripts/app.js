@@ -56,7 +56,8 @@ Vue.createApp({
         },
     },
     mounted() {
-        initPromise.then(this.initQuranize).then(this.initTranslations);
+        initPromise.then(this.initQuranize);
+        initPromise.then(this.initTranslations);
         window.onhashchange = () => this.setKeyword(window.location.hash.replace(/^#/, ""));
     },
 }).mount('#quranize-app');
