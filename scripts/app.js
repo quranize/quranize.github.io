@@ -16,7 +16,7 @@ Vue.createApp({
             this.keywordPlaceholder = "menyalakan mesin ..";
             setTimeout(() => {
                 this.quranize = new Quranize(5);
-                this.keywordPlaceholder = "masyaallah";
+                this.keywordPlaceholder = "";
                 this.setKeyword(window.location.hash.replace(/^#/, ""));
             }, 25);
         },
