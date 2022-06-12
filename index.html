@@ -33,12 +33,12 @@
     <section class="section" id="quranize-app" v-cloak>
         <div class="container">
             <div class="block">
-                <div class="control has-icons-left">
+                <div class="control has-icons-left" :class="{'is-loading': !quranize}">
                     <input type="text" class="input is-rounded"
                         :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
                         :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
                     <span class="icon is-left">
-                        <i class="fa-solid" :class="quranize ? 'fa-magnifying-glass' : 'fa-gear fa-spin'"></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
                 </div>
             </div>
