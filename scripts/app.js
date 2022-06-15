@@ -18,7 +18,7 @@ Vue.createApp({
             setTimeout(() => {
                 this.quranize = new Quranize(5);
                 this.keywordPlaceholder = "";
-                this.setKeyword(window.location.hash.replace(/^#/, ""));
+                if (!this.keyword) this.setKeyword(this.getLocationHash());
             }, 25);
         },
         async initTranslations() {
@@ -54,10 +54,13 @@ Vue.createApp({
             if (n < 10) return String.fromCharCode(0x0660 + n);
             return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
         },
+        getLocationHash() {
+            return window.location.hash.replace(/^#/, "");
+        },
     },
     mounted() {
         initPromise.then(this.initQuranize);
         initPromise.then(this.initTranslations);
-        window.onhashchange = () => this.setKeyword(window.location.hash.replace(/^#/, ""));
+        window.onhashchange = () => this.setKeyword(this.getLocationHash());
     },
 }).mount('#quranize-app');
