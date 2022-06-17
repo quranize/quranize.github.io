@@ -38,7 +38,7 @@
                     <div class="control has-icons-left" :class="{'is-loading': !quranize}">
                         <input title="Kata Kunci" type="text" class="input is-rounded"
                             :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
-                            :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" autofocus>
+                            :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
                         <span class="icon is-left">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>

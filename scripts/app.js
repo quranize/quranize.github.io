@@ -23,6 +23,7 @@ Vue.createApp({
                     this.setKeyword(hash);
                     history.pushState("", document.title, location.href.replace(/#.*$/, ""));
                 }
+                this.$refs.keyword.focus();
             }, 40);
         },
         async initTranslations() {
