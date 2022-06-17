@@ -18,7 +18,11 @@ Vue.createApp({
             setTimeout(() => {
                 this.quranize = new Quranize(5);
                 this.keywordPlaceholder = "masyaallah";
-                if (!this.keyword) this.setKeyword(this.getLocationHash());
+                let hash = this.getLocationHash();
+                if (!this.keyword && hash) {
+                    this.setKeyword(hash);
+                    history.pushState("", document.title, location.href.replace(/#.*$/, ""));
+                }
             }, 25);
         },
         async initTranslations() {
@@ -55,7 +59,7 @@ Vue.createApp({
             return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
         },
         getLocationHash() {
-            return window.location.hash.replace(/^#/, "");
+            return location.hash.replace(/^#/, "");
         },
     },
     mounted() {
