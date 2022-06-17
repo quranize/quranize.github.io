@@ -23,7 +23,7 @@ Vue.createApp({
                     this.setKeyword(hash);
                     history.pushState("", document.title, location.href.replace(/#.*$/, ""));
                 }
-            }, 25);
+            }, 40);
         },
         async initTranslations() {
             (await import("./quran/id.indonesian.js")).default
@@ -62,9 +62,10 @@ Vue.createApp({
             return location.hash.replace(/^#/, "");
         },
     },
-    mounted() {
-        initPromise.then(this.initQuranize);
-        initPromise.then(this.initTranslations);
+    async mounted() {
+        await initPromise;
+        this.initQuranize();
+        this.initTranslations();
         window.onhashchange = () => this.setKeyword(this.getLocationHash());
     },
 }).mount('#quranize-app');
