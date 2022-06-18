@@ -52,7 +52,6 @@
             </div>
             <div class="box" v-for="encodeResult in encodeResults">
                 <div class="block has-text-centered">
-                    <p class="subtitle quran-text">{{ encodeResult.quran }}</p>
                     <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
                         @click="clickEncodeResult(encodeResult)">
                         <span class="icon">
@@ -60,6 +59,7 @@
                         </span>
                         <span>{{ encodeResult.locations.length }}</span>
                     </button>
+                    <span class="subtitle quran-text ml-1">{{ encodeResult.quran }}</span>
                 </div>
                 <div v-if="encodeResult.expanded">
                     <nav class="panel" v-for="location in encodeResult.locations">
