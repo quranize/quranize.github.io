@@ -62,6 +62,21 @@
                     <span class="subtitle quran-text ml-1">{{ encodeResult.quran }}</span>
                 </div>
                 <div v-if="encodeResult.expanded">
+                    <article class="message is-small is-info">
+                        <div class="message-body">
+                            <div class="tags">
+                                <span class="tag is-white" v-for="(e, i) in encodeResult.explanations">
+                                    <span class="icon-text">
+                                        <span>{{ e }}</span>
+                                        <span class="icon">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </span>
+                                        <span class="quran-text">{{ encodeResult.quran[i] }}</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
                     <nav class="panel" v-for="location in encodeResult.locations">
                         <p class="panel-heading quran-text has-text-centered">
                             {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
