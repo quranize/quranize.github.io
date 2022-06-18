@@ -47,7 +47,7 @@ Vue.createApp({
         },
         clickEncodeResult(encodeResult) {
             encodeResult.expanded ^= true;
-            if (encodeResult.locations.length < 25)
+            if (encodeResult.locations.length <= 30)
                 encodeResult.locations.forEach(this.clickLocation);
         },
         clickLocation(location) {
