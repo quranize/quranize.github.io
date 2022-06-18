@@ -51,16 +51,21 @@
                 </div>
             </div>
             <div class="box" v-for="encodeResult in encodeResults">
-                <div class="block has-text-centered">
-                    <button class="button is-small is-rounded" :class="{'is-success': encodeResult.expanded}"
-                        @click="clickEncodeResult(encodeResult)">
-                        <span class="icon">
-                            <i class="fa-solid" :class="encodeResult.expanded ? 'fa-angles-up' : 'fa-angles-down'"></i>
+                <nav class="level is-mobile">
+                    <div class="level-item">
+                        <button class="button is-small is-rounded" :class="{'is-info': encodeResult.expanded}"
+                            @click="clickEncodeResult(encodeResult)">
+                            <span class="icon">
+                                <i class="fa-solid"
+                                    :class="encodeResult.expanded ? 'fa-angles-up' : 'fa-angles-down'"></i>
+                            </span>
+                            <span>{{ encodeResult.locations.length }}</span>
+                        </button>
+                        <span class="quran-text subtitle has-text-weight-semibold ml-2">
+                            {{ encodeResult.quran }}
                         </span>
-                        <span>{{ encodeResult.locations.length }}</span>
-                    </button>
-                    <span class="subtitle quran-text ml-1">{{ encodeResult.quran }}</span>
-                </div>
+                    </div>
+                </nav>
                 <div v-if="encodeResult.expanded">
                     <article class="message is-small is-info">
                         <div class="message-body">
@@ -78,22 +83,38 @@
                         </div>
                     </article>
                     <nav class="panel" v-for="location in encodeResult.locations">
-                        <p class="panel-heading quran-text has-text-centered">
-                            {{ suraNames[location.sura_number - 1] }}:{{ toArabicNumber(location.aya_number) }}
-                            <button class="button is-small is-rounded" :class="{'is-success': location.expanded}"
-                                @click="clickLocation(location)">
-                                <span class="icon">
-                                    <i class="fa-solid"
-                                        :class="location.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
-                                </span>
-                            </button>
-                            <a class="button is-small is-rounded is-link" target="_blank"
-                                :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`">
-                                <span class="icon">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                </span>
-                            </a>
-                        </p>
+                        <div class="panel-heading">
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <button class="button is-small is-rounded"
+                                            :class="{'is-info': location.expanded}" @click="clickLocation(location)">
+                                            <span class="icon">
+                                                <i class="fa-solid"
+                                                    :class="location.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="level-item">
+                                        <a class="button is-small is-rounded is-link is-light" target="_blank"
+                                            :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`">
+                                            <span class="icon">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <span class="quran-text has-text-weight-normal">
+                                            {{ suraNames[location.sura_number - 1] }}
+                                            :
+                                            {{ toArabicNumber(location.aya_number) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
                         <p class="panel-block quran-text" v-if="location.expanded">
                             <span>
                                 {{ location.before_text }}
