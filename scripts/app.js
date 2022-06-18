@@ -41,14 +41,13 @@ Vue.createApp({
         setKeyword(keyword) {
             this.keyword = keyword;
             if (this.quranize) this.encodeResults = this.quranize.encode(keyword);
-            this.encodeResults.forEach(r => { if (r.locations.length <= 10) this.clickEncodeResult(r) });
         },
         updateKeyword(event) {
             this.setKeyword(event.target.value);
         },
         clickEncodeResult(encodeResult) {
             encodeResult.expanded ^= true;
-            if (encodeResult.locations.length < 40)
+            if (encodeResult.locations.length < 25)
                 encodeResult.locations.forEach(this.clickLocation);
         },
         clickLocation(location) {
