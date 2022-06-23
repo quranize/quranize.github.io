@@ -18,7 +18,7 @@ Vue.createApp({
             setTimeout(() => {
                 this.quranize = new Quranize(5);
                 this.keywordPlaceholder = "masyaallah";
-                let hash = this.getLocationHash();
+                let hash = location.hash.replace(/^#/, "");
                 if (!this.keyword && hash) {
                     this.setKeyword(hash);
                     history.pushState({}, "", location.href.replace(/#.*$/, ""));
@@ -58,9 +58,6 @@ Vue.createApp({
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
             if (n < 10) return String.fromCharCode(0x0660 + n);
             return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
-        },
-        getLocationHash() {
-            return location.hash.replace(/^#/, "");
         },
     },
     async mounted() {
