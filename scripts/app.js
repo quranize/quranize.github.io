@@ -21,7 +21,7 @@ Vue.createApp({
                 let hash = this.getLocationHash();
                 if (!this.keyword && hash) {
                     this.setKeyword(hash);
-                    history.pushState("", document.title, location.href.replace(/#.*$/, ""));
+                    history.pushState({}, "", location.href.replace(/#.*$/, ""));
                 }
                 this.$refs.keyword.focus();
             }, 40);
@@ -67,6 +67,5 @@ Vue.createApp({
         await initPromise;
         this.initQuranize();
         this.initTranslations();
-        window.onhashchange = () => this.setKeyword(this.getLocationHash());
     },
 }).mount('#quranize-app');
