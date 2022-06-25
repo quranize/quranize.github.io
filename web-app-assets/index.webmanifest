@@ -1,23 +1,21 @@
 {
     "name": "Quranize",
-    "short_name": "Quranize",
-    "start_url": "/",
-    "display": "standalone",
     "description": "mencari teks القرآن menggunakan alfabet",
+    "display": "standalone",
+    "start_url": "/",
     "lang": "id",
-    "dir": "auto",
     "theme_color": "#3E8ED0",
-    "background_color": "#3E8ED0",
+    "background_color": "#FFFFFF",
     "orientation": "any",
     "icons": [
         {
-            "src": "icons/play_store_512.png",
+            "src": "play_store_512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/mipmap-xxxhdpi/quranize.png",
+            "src": "mipmap-xxxhdpi/quranize.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
@@ -25,11 +23,10 @@
     ],
     "screenshots": [
         {
-            "src": "icons/screenshot.jpg",
+            "src": "screenshots/screenshot1.png",
             "sizes": "1081x1891",
-            "type": "image/jpg",
-            "description": "A screenshot of the home page"
+            "type": "image/png",
+            "description": "tampilan awal"
         }
-    ],
-    "prefer_related_applications": false
+    ]
 }
