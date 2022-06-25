@@ -1,5 +1,6 @@
 {
     "name": "Quranize",
+    "short_name": "Quranize",
     "description": "mencari teks القرآن menggunakan alfabet",
     "display": "standalone",
     "start_url": "/",
