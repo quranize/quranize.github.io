@@ -24,10 +24,28 @@
     ],
     "screenshots": [
         {
-            "src": "screenshots/screenshot1.png",
-            "sizes": "1081x1891",
-            "type": "image/png",
+            "src": "screenshots/screenshot1.jpg",
+            "sizes": "1080x2400",
+            "type": "image/jpg",
             "description": "tampilan awal"
+        },
+        {
+            "src": "screenshots/screenshot2.jpg",
+            "sizes": "1080x2400",
+            "type": "image/jpg",
+            "description": "tampilan masyaallah"
+        },
+        {
+            "src": "screenshots/screenshot3.jpg",
+            "sizes": "1080x2400",
+            "type": "image/jpg",
+            "description": "tampilan wa'tasimu"
+        },
+        {
+            "src": "screenshots/screenshot4.jpg",
+            "sizes": "1080x2400",
+            "type": "image/jpg",
+            "description": "tampilan walaqod yassarna"
         }
     ]
 }
