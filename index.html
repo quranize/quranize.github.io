@@ -32,7 +32,9 @@
             <div class="container">
                 <p class="title"><a href="/">Quranize</a></p>
                 <p class="subtitle">
-                    mencari teks <span class="quran-text">القرآن</span> menggunakan alfabet
+                    mencari teks
+                    <span class="quran-text" style="font-size: 1em; line-height: 1em;">القرآن</span>
+                    menggunakan alfabet
                 </p>
             </div>
         </div>
@@ -135,7 +137,7 @@
                         </p>
                         <p class="panel-block" v-if="location.expanded">
                             <progress class="progress" v-if="!location.translation"></progress>
-                            {{ location.translation }}
+                            <span v-if="location.translation">{{ location.translation }}</span>
                         </p>
                     </nav>
                 </div>
