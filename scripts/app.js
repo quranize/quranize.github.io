@@ -1,6 +1,8 @@
 import init, { Quranize } from "./quranize.js";
-const initPromise = init();
 import suraNames from "./quran/sura-names.js";
+
+const initPromise = init();
+
 Vue.createApp({
     data() {
         return {
@@ -66,3 +68,7 @@ Vue.createApp({
         this.initTranslations();
     },
 }).mount('#quranize-app');
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+}
