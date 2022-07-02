@@ -126,7 +126,7 @@ export class Quranize {
     * @param {number} word_count_limit
     */
     constructor(word_count_limit) {
-        const ret = wasm.quranize_js_new(word_count_limit);
+        const ret = wasm.quranize_new(word_count_limit);
         return Quranize.__wrap(ret);
     }
     /**
