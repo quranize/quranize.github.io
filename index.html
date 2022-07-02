@@ -42,7 +42,7 @@
     <section class="section" id="quranize-app" v-cloak>
         <div class="container">
             <div class="block">
-                <form class="field" onsubmit="event.preventDefault();">
+                <div class="field">
                     <label class="label">Kata Kunci</label>
                     <div class="control has-icons-left" :class="{'is-loading': !quranize}">
                         <input title="Kata Kunci" type="text" class="input is-rounded"
@@ -58,7 +58,7 @@
                         <span class="is-italic">tabaarokalladzi</span>,
                         <span class="is-italic">alhamdulilla hilladzii</span>
                     </p>
-                </form>
+                </div>
             </div>
             <div class="box" v-for="encodeResult in encodeResults">
                 <nav class="level is-mobile">
