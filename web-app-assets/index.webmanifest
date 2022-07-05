@@ -7,7 +7,7 @@
     "lang": "id",
     "theme_color": "#3E8ED0",
     "background_color": "#FFFFFF",
-    "orientation": "natural",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "1024.png",
