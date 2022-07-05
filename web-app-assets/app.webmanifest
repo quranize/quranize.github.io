@@ -4,10 +4,14 @@
     "description": "mencari القرآن menggunakan alfabet",
     "display": "standalone",
     "start_url": "/",
-    "lang": "id",
     "theme_color": "#3E8ED0",
     "background_color": "#FFFFFF",
+    "lang": "id",
     "orientation": "portrait",
+    "categories": [
+        "education",
+        "utilities"
+    ],
     "icons": [
         {
             "src": "1024.png",
@@ -24,32 +28,27 @@
         {
             "src": "mipmap-xxxhdpi/quranize.png",
             "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         },
         {
             "src": "mipmap-xxhdpi/quranize.png",
             "sizes": "144x144",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         },
         {
             "src": "mipmap-xhdpi/quranize.png",
             "sizes": "96x96",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         },
         {
             "src": "mipmap-hdpi/quranize.png",
             "sizes": "72x72",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         },
         {
             "src": "mipmap-mdpi/quranize.png",
             "sizes": "48x48",
-            "type": "image/png",
-            "purpose": "any"
+            "type": "image/png"
         }
     ],
     "screenshots": [
