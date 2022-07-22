@@ -20,6 +20,7 @@
         [v-cloak] {
             display: none;
         }
+
     </style>
 
     <script defer src="scripts/vue.global.prod.js"></script>
@@ -45,13 +46,23 @@
             <div class="block">
                 <div class="field">
                     <label class="label">Kata Kunci</label>
-                    <div class="control has-icons-left" :class="{'is-loading': !quranize}">
-                        <input title="Kata Kunci" type="text" class="input is-rounded"
-                            :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': !encodeResults.length && keyword}"
-                            :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
-                        <span class="icon is-left">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </span>
+                    <div class="field is-grouped">
+                        <div class="control has-icons-left is-expanded" :class="{'is-loading': !quranize}">
+                            <input title="Kata Kunci" type="text" class="input is-rounded"
+                                :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': hasEmptyResult}"
+                                :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
+                            <span class="icon is-left">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                        </div>
+                        <div class="control" v-if="supportSharing">
+                            <button class="button is-info is-outlined is-rounded" @click="share"
+                                :disabled="hasEmptyResult">
+                                <span class="icon">
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                </span>
+                            </button>
+                        </div>
                     </div>
                     <p class="help">Contoh:
                         <span class="is-italic">masyaallah</span>,

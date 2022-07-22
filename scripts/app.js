@@ -12,7 +12,13 @@ Vue.createApp({
             quranize: undefined,
             suraNames: suraNames,
             translations: {},
+            supportSharing: "share" in navigator,
         };
+    },
+    computed: {
+        hasEmptyResult() {
+            return this.keyword.trim() != "" && this.encodeResults.length == 0;
+        },
     },
     methods: {
         initQuranize() {
@@ -22,11 +28,11 @@ Vue.createApp({
                 this.keywordPlaceholder = "masyaallah";
                 let hash = location.hash.replace(/^#/, "");
                 if (!this.keyword && hash) {
-                    this.setKeyword(hash);
+                    this.setKeyword(decodeURIComponent(hash));
                     history.pushState({}, "", location.href.replace(/#.*$/, ""));
                 }
                 this.$refs.keyword.focus();
-            }, 40);
+            }, 64);
         },
         async initTranslations() {
             (await import("./quran/id.indonesian.js")).default
@@ -61,13 +67,16 @@ Vue.createApp({
             if (n < 10) return String.fromCharCode(0x0660 + n);
             return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
         },
+        share() {
+            navigator.share({ url: `${location.href}#${encodeURIComponent(this.keyword.trim())}` });
+        },
     },
     async mounted() {
         await initPromise;
         this.initQuranize();
         this.initTranslations();
     },
-}).mount('#quranize-app');
+}).mount("#quranize-app");
 
-if ('serviceWorker' in navigator)
+if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("/service-worker.js");
