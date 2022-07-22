@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout Frontend 🛎️
         uses: actions/checkout@v3
-        with:
-          path: quranize.github.io
 
       - name: Checkout Engine 🛎️
         uses: actions/checkout@v3
@@ -23,11 +21,11 @@ jobs:
 
       - name: Build 🔨
         run: |
-          cd quranize-rs
-          wasm-pack build --release --target=web --no-typescript
-          cp -v pkg/quranize.js pkg/quranize_bg.wasm ../quranize.github.io/scripts
+          wasm-pack build --release --target=web --no-typescript quranize-rs
+          cp -v quranize-rs/pkg/{quranize.js,quranize_bg.wasm} scripts
+          rm -rf quranize-rs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: quranize.github.io
+          folder: .
