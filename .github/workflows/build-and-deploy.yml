@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Engine 🛎️
         uses: actions/checkout@v3
         with:
-          repository: github.com/alpancs/quranize-rs
+          repository: alpancs/quranize-rs
           path: ../quranize-rs
 
       - name: Install Tools 🔧
