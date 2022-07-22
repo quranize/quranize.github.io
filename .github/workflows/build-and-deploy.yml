@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout Frontend 🛎️
         uses: actions/checkout@v3
+        with:
+          path: quranize.github.io
 
       - name: Checkout Engine 🛎️
         uses: actions/checkout@v3
@@ -16,18 +18,18 @@ jobs:
           repository: alpancs/quranize-rs
           path: quranize-rs
 
-      - name: Install Tools 🔧
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: Install Toolchain 🔧
+        uses: actions-rs/toolchain@v1
+        with:
+          components: wasm-pack
 
       - name: Build 🔨
         run: |
           cd quranize-rs
           wasm-pack build --release --target=web --no-typescript
-          cp -v pkg/quranize.js pkg/quranize_bg.wasm ../script
-          cd ..
-          rm -rf quranize-rs
+          cp -v pkg/quranize.js pkg/quranize_bg.wasm ../quranize.github.io/scripts
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: "."
+          folder: quranize.github.io
