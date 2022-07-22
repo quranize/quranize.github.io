@@ -19,10 +19,7 @@ jobs:
           path: quranize-rs
 
       - name: Install Toolchain 🔧
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          components: wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
       - name: Build 🔨
         run: |
