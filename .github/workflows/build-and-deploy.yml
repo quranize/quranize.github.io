@@ -14,17 +14,18 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: alpancs/quranize-rs
-          path: ../quranize-rs
+          path: quranize-rs
 
       - name: Install Tools 🔧
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
       - name: Build 🔨
         run: |
-          cd ../quranize-rs
+          cd quranize-rs
           wasm-pack build --release --target=web --no-typescript
-          cp -v pkg/quranize.js pkg/quranize_bg.wasm  $GITHUB_WORKSPACE/script
-          cd -
+          cp -v pkg/quranize.js pkg/quranize_bg.wasm ../script
+          cd ..
+          rm -rf quranize-rs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
