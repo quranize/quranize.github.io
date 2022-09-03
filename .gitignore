@@ -1,3 +1,4 @@
 /target
 
-/web-app/scripts/quranize_wasm*
+/web-app/scripts/quranize.js
+/web-app/scripts/quranize_bg.wasm

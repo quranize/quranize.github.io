@@ -20,11 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
-      - run: wasm-pack build --target=web --no-typescript
+      - run: wasm-pack build --target=web --no-typescript --out-name=quranize
       - uses: actions/upload-artifact@v3
         with:
-          name: quranize_wasm
-          path: pkg/quranize_wasm*
+          name: quranize-wasm-build
+          path: |
+            pkg/quranize.js
+            pkg/quranize_bg.wasm
   deploy:
     needs: build
     environment:
@@ -36,7 +38,7 @@ jobs:
       - uses: actions/configure-pages@v2
       - uses: actions/download-artifact@v3
         with:
-          name: quranize_wasm
+          name: quranize-wasm-build
           path: web-app/scripts
       - uses: actions/upload-pages-artifact@v1
         with:

@@ -1,4 +1,4 @@
-import init, { Quranize } from "./quranize_wasm.js";
+import init, { Quranize } from "./quranize.js";
 import suraNames from "./quran/sura-names.js";
 
 const initPromise = init();
