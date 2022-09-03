@@ -1,0 +1,45 @@
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
+      - run: wasm-pack build --target=web --no-typescript
+      - uses: actions/upload-artifact@v3
+        with:
+          name: quranize_wasm
+          path: pkg/quranize_wasm*
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/configure-pages@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: quranize_wasm
+          path: web-app/scripts
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: web-app
+      - uses: actions/deploy-pages@v1
+        id: deployment
