@@ -21,8 +21,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: wasm-pack build --target=web --no-typescript
+      - uses: actions/upload-artifact@v3
+        with:
+          name: quranize_wasm
+          path: pkg/quranize_wasm*
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -32,10 +42,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: quranize_wasm
+          path: web-app/scripts
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
           path: web-app
       - name: Deploy to GitHub Pages
         id: deployment
