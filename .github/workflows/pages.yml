@@ -36,6 +36,7 @@ jobs:
           repository: jgthms/bulma
           ref: "0.9.4"
           path: bulma
+      - run: ls -alh bulma
       - run: curl -L https://github.com/sass/dart-sass/releases/download/1.54.8/dart-sass-1.54.8-linux-x64.tar.gz | tar xzv
       - run: dart-sass/sass --load-path=. --no-source-map --style=compressed web-app/styles/pre-compiled/app.scss web-app/styles/app.min.css
       - uses: actions/upload-artifact@v3
