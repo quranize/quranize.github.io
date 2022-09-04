@@ -38,10 +38,15 @@ jobs:
           path: web-app/styles/bulma
       - run: curl -L https://github.com/sass/dart-sass/releases/download/1.54.8/dart-sass-1.54.8-linux-x64.tar.gz | tar xzv
       - run: dart-sass/sass --no-source-map --style=compressed web-app/styles/app.scss web-app/styles/app.min.css
+      - run: wget https://use.fontawesome.com/releases/v6.2.0/fontawesome-free-6.2.0-web.zip
+      - run: unzip fontawesome-free-6.2.0-web.zip "fontawesome-free-6.2.0-web/webfonts/**" "fontawesome-free-6.2.0-web/css/**"
+      - run: mv fontawesome-free-6.2.0-web web-app/styles/fontawesome
       - uses: actions/upload-artifact@v3
         with:
           name: build-styles
-          path: web-app/styles/app.min.css
+          path: |
+            web-app/styles/app.min.css
+            web-app/styles/fontawesome
   deploy:
     needs:
       - build-scripts
