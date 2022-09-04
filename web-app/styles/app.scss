@@ -1,5 +1,3 @@
-@use 'index.css';
-
 @import 'bulma/sass/base/_all.sass';
 @import 'bulma/sass/utilities/_all.sass';
 @import 'bulma/sass/form/_all.sass';
@@ -20,3 +18,22 @@
 
 @import 'bulma/sass/layout/hero.sass';
 @import 'bulma/sass/layout/section.sass';
+
+@font-face {
+    font-family: hafs;
+    font-display: swap;
+    src: url("fonts/hafs/hafs.woff2") format("woff2"),
+        url("fonts/hafs/hafs.woff") format("woff"),
+        url("fonts/hafs/hafs.otf") format("opentype");
+}
+
+.quran-text {
+    font-family: hafs;
+    font-size: 1.15em;
+    line-height: 2em;
+    direction: rtl;
+}
+
+[v-cloak] {
+    display: none;
+}
