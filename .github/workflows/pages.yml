@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-wasm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,12 +23,29 @@ jobs:
       - run: wasm-pack build --target=web --no-typescript --out-name=quranize
       - uses: actions/upload-artifact@v3
         with:
-          name: quranize-wasm-build
+          name: build-wasm
           path: |
             pkg/quranize.js
             pkg/quranize_bg.wasm
+  build-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: jgthms/bulma
+          ref: "0.9.4"
+          path: web-app/styles/pre-compiled/bulma
+      - run: curl -L https://github.com/sass/dart-sass/releases/download/1.54.8/dart-sass-1.54.8-linux-x64.tar.gz | tar xzv
+      - run: dart-sass/sass --no-source-map --style=compressed web-app/styles/pre-compiled/app.scss web-app/styles/app.min.css
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-css
+          path: web-app/styles/app.min.css
   deploy:
-    needs: build
+    needs:
+      - build-wasm
+      - build-css
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -38,8 +55,12 @@ jobs:
       - uses: actions/configure-pages@v2
       - uses: actions/download-artifact@v3
         with:
-          name: quranize-wasm-build
+          name: build-wasm
           path: web-app/scripts
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-css
+          path: web-app/styles
       - uses: actions/upload-pages-artifact@v1
         with:
           path: web-app

@@ -12,3 +12,7 @@
     line-height: 2em;
     direction: rtl;
 }
+
+[v-cloak] {
+    display: none;
+}
