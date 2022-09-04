@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-wasm:
+  build-scripts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,11 +23,11 @@ jobs:
       - run: wasm-pack build --target=web --no-typescript --out-name=quranize
       - uses: actions/upload-artifact@v3
         with:
-          name: build-wasm
+          name: build-scripts
           path: |
             pkg/quranize.js
             pkg/quranize_bg.wasm
-  build-css:
+  build-styles:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,12 +40,12 @@ jobs:
       - run: dart-sass/sass --no-source-map --style=compressed web-app/styles/app.scss web-app/styles/app.min.css
       - uses: actions/upload-artifact@v3
         with:
-          name: build-css
+          name: build-styles
           path: web-app/styles/app.min.css
   deploy:
     needs:
-      - build-wasm
-      - build-css
+      - build-scripts
+      - build-styles
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -55,11 +55,11 @@ jobs:
       - uses: actions/configure-pages@v2
       - uses: actions/download-artifact@v3
         with:
-          name: build-wasm
+          name: build-scripts
           path: web-app/scripts
       - uses: actions/download-artifact@v3
         with:
-          name: build-css
+          name: build-styles
           path: web-app/styles
       - uses: actions/upload-pages-artifact@v1
         with:
