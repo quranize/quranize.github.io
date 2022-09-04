@@ -24,7 +24,7 @@ Vue.createApp({
         initQuranize() {
             this.keywordPlaceholder = "menyalakan mesin ..";
             setTimeout(() => {
-                this.quranize = new Quranize(7);
+                this.quranize = new Quranize(6);
                 this.keywordPlaceholder = "masyaallah";
                 let hash = location.hash.replace(/^#/, "");
                 if (!this.keyword && hash) {
