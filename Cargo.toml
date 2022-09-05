@@ -7,6 +7,6 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-quranize = { version = "0.2", features = ["quran-simple-plain"] }
+quranize = { version = "0.3", features = ["quran-simple-plain"] }
 wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 serde = { version = "1.0", features = ["derive"] }
