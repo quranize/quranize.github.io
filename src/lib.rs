@@ -34,17 +34,19 @@ impl JsQuranize {
             .encode(text)
             .into_iter()
             .map(|(quran, locations, explanations)| JsEncodeResult {
-                locations: self.to_js_locations(&quran, locations),
+                locations: self.to_js_locations(&quran, locations.iter()),
                 quran,
                 explanations,
             })
             .collect()
     }
 
-    fn to_js_locations(&self, quran: &str, locations: &[(u8, u16, u8)]) -> Vec<JsLocation> {
+    fn to_js_locations<'a, I>(&self, quran: &str, locations: I) -> Vec<JsLocation>
+    where
+        I: Iterator<Item = &'a (u8, u16, u8)>,
+    {
         let word_count = quran.split_whitespace().count() as u8;
         locations
-            .iter()
             .map(|&(sura_number, aya_number, word_number)| {
                 let text = self.aya_index.get(sura_number, aya_number).unwrap();
                 let (l, r) = get_highlight_boundary(text, word_number, word_count);
