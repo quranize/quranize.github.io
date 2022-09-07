@@ -7,7 +7,7 @@ Vue.createApp({
     data() {
         return {
             keyword: "",
-            keywordPlaceholder: "memuat mesin ...",
+            keywordPlaceholder: "...",
             encodeResults: [],
             quranize: undefined,
             suraNames: suraNames,
@@ -22,17 +22,14 @@ Vue.createApp({
     },
     methods: {
         initQuranize() {
-            this.keywordPlaceholder = "menyalakan mesin ..";
-            setTimeout(() => {
-                this.quranize = new Quranize(7);
-                this.keywordPlaceholder = "masyaallah";
-                let hash = location.hash.replace(/^#/, "");
-                if (!this.keyword && hash) {
-                    this.setKeyword(decodeURIComponent(hash));
-                    history.pushState({}, "", location.href.replace(/#.*$/, ""));
-                }
-                this.$refs.keyword.focus();
-            }, 64);
+            this.quranize = new Quranize(7);
+            this.keywordPlaceholder = "masyaallah";
+            let hash = location.hash.replace(/^#/, "");
+            if (!this.keyword && hash) {
+                this.setKeyword(decodeURIComponent(hash));
+                history.pushState({}, "", location.href.replace(/#.*$/, ""));
+            }
+            this.$refs.keyword.focus();
         },
         async initTranslations() {
             (await import("./quran/id.indonesian.js")).default
