@@ -70,8 +70,8 @@ Vue.createApp({
     },
     async mounted() {
         await initPromise;
-        this.initQuranize();
         this.initTranslations();
+        this.initQuranize();
     },
 }).mount("#quranize-app");
 
