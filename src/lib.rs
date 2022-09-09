@@ -33,7 +33,7 @@ impl JsQuranize {
         Self {
             quranize: match word_count_limit {
                 0 => Quranize::default(),
-                n => Quranize::new(n),
+                _ => Quranize::new(word_count_limit),
             },
             aya_getter: AyaGetter::new(SIMPLE_PLAIN),
         }
