@@ -107,7 +107,7 @@ mod tests {
 
     #[test]
     fn test_encode() {
-        let q = JsQuranize::new(0);
+        let q = JsQuranize::new(5);
         let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
         assert_eq!(l.before_text, "");
         assert_eq!(l.text, "بِسْمِ اللَّهِ");
