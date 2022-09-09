@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="mencari القرآن menggunakan alfabet">
+    <meta name="description" content="alquran ➡️ القرآن">
     <meta name="google-site-verification" content="pNyOyA7MZAm8AoXI8ZyXf_eI5Pa_zTJSGXODDemVWH4">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/ios/32.png">
     <link rel="manifest" href="assets/app.webmanifest">
@@ -26,9 +26,11 @@
             <div class="container">
                 <p class="title"><a href="/">Quranize</a></p>
                 <p class="subtitle">
-                    mencari
+                    <span>alquran</span>
+                    <span class="icon">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
                     <span class="quran-text" style="font-size: 1em; line-height: 1em;">القرآن</span>
-                    menggunakan alfabet
                 </p>
             </div>
         </div>
@@ -38,7 +40,6 @@
         <div class="container">
             <div class="block">
                 <div class="field">
-                    <label class="label">Kata Kunci</label>
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'is-loading': !quranize}">
                             <input title="Kata Kunci" type="text" class="input is-rounded"
