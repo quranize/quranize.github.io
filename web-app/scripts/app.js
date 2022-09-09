@@ -36,8 +36,8 @@ Vue.createApp({
             (await import("./quran/id.indonesian.js")).default
                 .split("\n")
                 .map(l => l.split("|"))
-                .filter(e => e.length == 3)
-                .forEach(e_1 => this.translations[`${e_1[0]}:${e_1[1]}`] = e_1[2]);
+                .filter(x => x.length == 3)
+                .forEach(x => this.translations[`${x[0]}:${x[1]}`] = x[2]);
             this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.setTranslation));
         },
         setTranslation(location) {
