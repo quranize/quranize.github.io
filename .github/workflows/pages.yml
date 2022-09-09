@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
-      - run: wasm-pack build --target=web --no-typescript --out-name=quranize
+      - run: wasm-pack build --release --target=web --no-typescript --out-name=quranize
       - uses: actions/upload-artifact@v3
         with:
           name: build-scripts
