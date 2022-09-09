@@ -8,7 +8,7 @@ use quranize::{
 #[wasm_bindgen(js_name = Quranize)]
 pub struct JsQuranize {
     quranize: Quranize,
-    aya_index: AyaGetter<'static>,
+    aya_getter: AyaGetter<'static>,
 }
 
 #[derive(serde::Serialize)]
@@ -18,12 +18,12 @@ struct JsEncodeResult<'a> {
 }
 
 #[derive(serde::Serialize)]
-struct JsLocation {
+struct JsLocation<'a> {
     sura_number: u8,
     aya_number: u16,
-    before_text: &'static str,
-    text: &'static str,
-    after_text: &'static str,
+    before_text: &'a str,
+    text: &'a str,
+    after_text: &'a str,
 }
 
 #[wasm_bindgen(js_class = Quranize)]
@@ -35,7 +35,7 @@ impl JsQuranize {
                 0 => Quranize::default(),
                 n => Quranize::new(n),
             },
-            aya_index: AyaGetter::new(SIMPLE_PLAIN),
+            aya_getter: AyaGetter::new(SIMPLE_PLAIN),
         }
     }
 
@@ -65,7 +65,7 @@ impl JsQuranize {
         self.quranize
             .get_locations(quran)
             .map(|&(sura_number, aya_number, word_number)| {
-                let text = self.aya_index.get(sura_number, aya_number).unwrap();
+                let text = self.aya_getter.get(sura_number, aya_number).unwrap();
                 let (l, r) = get_highlight_boundary(text, word_number, word_count);
                 JsLocation {
                     sura_number,
