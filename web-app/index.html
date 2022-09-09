@@ -67,33 +67,39 @@
             <div class="box" v-for="encodeResult in encodeResults">
                 <nav class="level is-mobile">
                     <div class="level-item">
-                        <button class="button is-small is-rounded" :class="{'is-info': encodeResult.expanded}"
+                        <button class="button is-small is-rounded mr-1" :class="{'is-info': encodeResult.explained}"
+                            @click="clickExplanation(encodeResult)">
+                            <span class="icon">
+                                <i class="fa-solid fa-info"></i>
+                            </span>
+                        </button>
+                        <button class="button is-small is-rounded mr-1" :class="{'is-info': encodeResult.listed}"
                             @click="clickEncodeResult(encodeResult)">
                             <span class="icon">
                                 <i class="fa-solid fa-table-list"></i>
                             </span>
                         </button>
-                        <span class="quran-text subtitle has-text-weight-semibold ml-2">
+                        <span class="quran-text subtitle has-text-weight-semibold ml-1">
                             {{ encodeResult.quran }}
                         </span>
                     </div>
                 </nav>
-                <div v-if="encodeResult.expanded">
-                    <article class="message is-small is-info">
-                        <div class="message-body">
-                            <div class="tags">
-                                <span class="tag is-white" v-for="(e, i) in encodeResult.explanations">
-                                    <span class="icon-text">
-                                        <span>{{ e }}</span>
-                                        <span class="icon">
-                                            <i class="fa-solid fa-arrow-right"></i>
-                                        </span>
-                                        <span class="quran-text">{{ encodeResult.quran[i] }}</span>
+                <article class="message is-small is-info" v-if="encodeResult.explained">
+                    <div class="message-body">
+                        <div class="tags">
+                            <span class="tag is-white" v-for="(e, i) in encodeResult.explanations">
+                                <span class="icon-text">
+                                    <span>{{ e }}</span>
+                                    <span class="icon">
+                                        <i class="fa-solid fa-arrow-right"></i>
                                     </span>
+                                    <span class="quran-text">{{ encodeResult.quran[i] }}</span>
                                 </span>
-                            </div>
+                            </span>
                         </div>
-                    </article>
+                    </div>
+                </article>
+                <div v-if="encodeResult.listed">
                     <nav class="panel" v-for="location in encodeResult.locations">
                         <div class="panel-heading">
                             <nav class="level is-mobile">

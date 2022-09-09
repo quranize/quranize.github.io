@@ -52,9 +52,12 @@ Vue.createApp({
             this.setKeyword(event.target.value);
         },
         clickEncodeResult(result) {
-            result.expanded ^= true;
+            result.listed ^= true;
             if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
             if (result.locations.length < 40) result.locations.forEach(this.clickLocation);
+        },
+        clickExplanation(result) {
+            result.explained ^= true;
         },
         clickLocation(location) {
             location.expanded ^= true;
