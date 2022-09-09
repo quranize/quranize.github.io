@@ -54,7 +54,7 @@ Vue.createApp({
         clickEncodeResult(result) {
             result.expanded ^= true;
             if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
-            if (result.locations.length <= 30) result.locations.forEach(this.clickLocation);
+            if (result.locations.length < 40) result.locations.forEach(this.clickLocation);
         },
         clickLocation(location) {
             location.expanded ^= true;
