@@ -67,21 +67,23 @@
             <div class="box" v-for="encodeResult in encodeResults">
                 <nav class="level is-mobile">
                     <div class="level-item">
-                        <button class="button is-small is-rounded mr-1" :class="{'is-info': encodeResult.explained}"
-                            @click="clickExplanation(encodeResult)">
-                            <span class="icon">
-                                <i class="fa-solid fa-info"></i>
+                        <div class="buttons">
+                            <button class="button is-small is-rounded" :class="{'is-info': encodeResult.explained}"
+                                @click="clickExplanation(encodeResult)">
+                                <span class="icon">
+                                    <i class="fa-solid fa-info"></i>
+                                </span>
+                            </button>
+                            <button class="button is-small is-rounded" :class="{'is-info': encodeResult.listed}"
+                                @click="clickEncodeResult(encodeResult)">
+                                <span class="icon">
+                                    <i class="fa-solid fa-table-list"></i>
+                                </span>
+                            </button>
+                            <span class="quran-text subtitle has-text-weight-semibold">
+                                {{ encodeResult.quran }}
                             </span>
-                        </button>
-                        <button class="button is-small is-rounded mr-1" :class="{'is-info': encodeResult.listed}"
-                            @click="clickEncodeResult(encodeResult)">
-                            <span class="icon">
-                                <i class="fa-solid fa-table-list"></i>
-                            </span>
-                        </button>
-                        <span class="quran-text subtitle has-text-weight-semibold ml-1">
-                            {{ encodeResult.quran }}
-                        </span>
+                        </div>
                     </div>
                 </nav>
                 <article class="message is-small is-info" v-if="encodeResult.explained">
