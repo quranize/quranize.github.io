@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: [main, bug-fix-wasm-build-artifact]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
