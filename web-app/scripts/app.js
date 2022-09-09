@@ -50,10 +50,10 @@ Vue.createApp({
         updateKeyword(event) {
             this.setKeyword(event.target.value);
         },
-        clickEncodeResult(encodeResult) {
-            encodeResult.expanded ^= true;
-            if (encodeResult.locations.length <= 30)
-                encodeResult.locations.forEach(this.clickLocation);
+        clickEncodeResult(result) {
+            result.expanded ^= true;
+            if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
+            if (result.locations.length <= 30) result.locations.forEach(this.clickLocation);
         },
         clickLocation(location) {
             location.expanded ^= true;
