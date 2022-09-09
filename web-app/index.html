@@ -42,7 +42,7 @@
                 <div class="field">
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'is-loading': !quranize}">
-                            <input title="Kata Kunci" type="text" class="input is-rounded"
+                            <input title="alphabetic text" type="text" class="input is-rounded"
                                 :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': hasEmptyResult}"
                                 :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
                             <span class="icon is-left">
@@ -58,10 +58,13 @@
                             </button>
                         </div>
                     </div>
-                    <p class="help">Contoh:
-                        <span class="is-italic">masyaallah</span>,
-                        <span class="is-italic">tabaarokalladzi</span>,
-                        <span class="is-italic">wa'tasimu</span>
+                    <p class="help">
+                    <div class="tags">
+                        <span class="tag is-italic">masyaallah</span>
+                        <span class="tag is-italic">alhamdulillah</span>
+                        <span class="tag is-italic">innaddiina 'indallah</span>
+                        <span class="tag is-italic">walaqod yassarna</span>
+                    </div>
                     </p>
                 </div>
             </div>
