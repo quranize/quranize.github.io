@@ -20,13 +20,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
-      - run: wasm-pack build --target=web --no-typescript --out-name=quranize
+      - run: wasm-pack build --release --target=web --no-typescript --out-name=quranize
+      - run: wget https://unpkg.com/vue@3.2.39/dist/vue.global.prod.js -O vue.js
       - uses: actions/upload-artifact@v3
         with:
           name: build-scripts
           path: |
             pkg/quranize.js
             pkg/quranize_bg.wasm
+            vue.js
   build-styles:
     runs-on: ubuntu-latest
     steps:

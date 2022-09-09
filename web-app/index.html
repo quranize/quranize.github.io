@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/fontawesome/css/fontawesome.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="styles/fontawesome/css/solid.min.css" media="print" onload="this.media='all'">
 
-    <script defer src="scripts/vue.global.prod.js"></script>
+    <script defer src="scripts/vue.js"></script>
     <script type="module" src="scripts/app.js"></script>
 </head>
 
@@ -70,10 +70,8 @@
                         <button class="button is-small is-rounded" :class="{'is-info': encodeResult.expanded}"
                             @click="clickEncodeResult(encodeResult)">
                             <span class="icon">
-                                <i class="fa-solid"
-                                    :class="encodeResult.expanded ? 'fa-angles-up' : 'fa-angles-down'"></i>
+                                <i class="fa-solid fa-table-list"></i>
                             </span>
-                            <span>{{ encodeResult.locations.length }}</span>
                         </button>
                         <span class="quran-text subtitle has-text-weight-semibold ml-2">
                             {{ encodeResult.quran }}

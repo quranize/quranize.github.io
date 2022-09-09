@@ -24,20 +24,21 @@ Vue.createApp({
         initQuranize() {
             this.quranize = new Quranize(7);
             this.keywordPlaceholder = "masyaallah";
-            let hash = location.hash.replace(/^#/, "");
-            if (!this.keyword && hash) {
-                this.setKeyword(decodeURIComponent(hash));
+            let URLHash = location.hash.replace(/^#/, "");
+            if (this.keyword) this.encodeResults = this.quranize.encode(this.keyword)
+            else if (URLHash) {
+                this.setKeyword(decodeURIComponent(URLHash));
                 history.pushState({}, "", location.href.replace(/#.*$/, ""));
             }
-            this.$refs.keyword.focus();
+            else this.$refs.keyword.focus();
         },
         async initTranslations() {
             (await import("./quran/id.indonesian.js")).default
                 .split("\n")
                 .map(l => l.split("|"))
-                .filter(e => e.length == 3)
-                .forEach(e_1 => this.translations[`${e_1[0]}:${e_1[1]}`] = e_1[2]);
-            this.encodeResults.forEach(r => r.locations.forEach(this.setTranslation));
+                .filter(x => x.length == 3)
+                .forEach(x => this.translations[`${x[0]}:${x[1]}`] = x[2]);
+            this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.setTranslation));
         },
         setTranslation(location) {
             if (!location.translation)
@@ -50,10 +51,10 @@ Vue.createApp({
         updateKeyword(event) {
             this.setKeyword(event.target.value);
         },
-        clickEncodeResult(encodeResult) {
-            encodeResult.expanded ^= true;
-            if (encodeResult.locations.length <= 30)
-                encodeResult.locations.forEach(this.clickLocation);
+        clickEncodeResult(result) {
+            result.expanded ^= true;
+            if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
+            if (result.locations.length < 40) result.locations.forEach(this.clickLocation);
         },
         clickLocation(location) {
             location.expanded ^= true;
