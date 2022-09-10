@@ -109,7 +109,7 @@
                         <div class="panel-heading">
                             <nav class="level is-mobile">
                                 <div class="level-left">
-                                    <div class="level-item">
+                                    <div class="level-item" v-if="false">
                                         <button class="button is-small is-rounded"
                                             :class="{'is-info': location.expanded}" @click="clickLocation(location)">
                                             <span class="icon">
@@ -119,15 +119,13 @@
                                         </button>
                                     </div>
                                     <div class="level-item">
-                                        <div class="field has-addons">
-                                            <p class="control"
+                                        <div class="buttons has-addons">
+                                            <button class="button is-small is-rounded"
+                                                :class="{'is-info': selectedTranslation == translation}"
+                                                @click="clickTranslationSwitch(translation)"
                                                 v-for="translation in Object.keys(availableTranslations)">
-                                                <button class="button is-small is-rounded"
-                                                    :class="{'is-info': selectedTranslation == translation}"
-                                                    @click="clickTranslationSwitch(translation)">
-                                                    {{ translation }}
-                                                </button>
-                                            </p>
+                                                {{ translation }}
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="level-item">
