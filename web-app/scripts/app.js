@@ -52,20 +52,23 @@ Vue.createApp({
             else this.$refs.keyword.focus();
         },
         async initTranslations(translation) {
-            this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.unsetTranslation));
+            this.unsetLocationTranslations();
             (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(x => x.length == 3)
                 .forEach(x => this.translations[`${x[0]}:${x[1]}`] = x[2]);
+            this.setLocationTranslations();
+        },
+        unsetLocationTranslations() {
+            this.encodeResults.forEach(r => r.locations && r.locations.forEach(l => delete l.translation));
+        },
+        setLocationTranslations() {
             this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.setTranslation));
         },
         setTranslation(location) {
             if (!location.translation)
                 location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
-        },
-        unsetTranslation(location) {
-            delete location.translation;
         },
         setKeyword(keyword) {
             this.keyword = keyword;
