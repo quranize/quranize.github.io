@@ -93,8 +93,10 @@ Vue.createApp({
             this.setTranslation(location);
         },
         clickTranslationSwitch(translation) {
-            this.selectedTranslation = translation;
-            this.initTranslations(translation);
+            if (this.selectedTranslation != translation) {
+                this.selectedTranslation = translation;
+                this.initTranslations(translation);
+            }
         },
         toArabicNumber(n) {
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
