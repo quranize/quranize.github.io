@@ -12,6 +12,7 @@ Vue.createApp({
             quranize: undefined,
             suraNames: suraNames,
             translations: {},
+            selectedTranslation: "EN",
             supportSharing: "share" in navigator,
         };
     },
@@ -30,6 +31,9 @@ Vue.createApp({
                 taken.push(...candidates.splice(new Date() % candidates.length, 1));
             return taken;
         },
+        availableTranslations() {
+            return { "EN": "en.sahih", "ID": "id.indonesian" };
+        },
     },
     methods: {
         initQuranize() {
@@ -43,8 +47,9 @@ Vue.createApp({
             }
             else this.$refs.keyword.focus();
         },
-        async initTranslations() {
-            (await import("./quran/id.indonesian.js")).default
+        async initTranslations(translation) {
+            this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.unsetTranslation));
+            (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(x => x.length == 3)
@@ -54,6 +59,9 @@ Vue.createApp({
         setTranslation(location) {
             if (!location.translation)
                 location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
+        },
+        unsetTranslation(location) {
+            delete location.translation;
         },
         setKeyword(keyword) {
             this.keyword = keyword;
@@ -90,11 +98,15 @@ Vue.createApp({
             this.keywordPlaceholder = this.keywordPlaceholder.length < 7 ? this.keywordPlaceholder + "." : ".";
             setTimeout(this.animateKeywordPlaceholder, 500);
         },
+        selectTranslation(translation) {
+            this.selectedTranslation = translation;
+            this.initTranslations(translation);
+        },
     },
     async mounted() {
         this.animateKeywordPlaceholder();
         await initPromise;
-        this.initTranslations();
+        this.initTranslations(this.selectedTranslation);
         this.initQuranize();
     },
 }).mount("#quranize-app");

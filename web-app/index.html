@@ -119,6 +119,15 @@
                                         </button>
                                     </div>
                                     <div class="level-item">
+                                        <div class="field has-addons">
+                                            <p class="control" v-for="(_, tr) in availableTranslations">
+                                                <button class="button is-small is-rounded"
+                                                    :class="{'is-info': selectedTranslation == tr}"
+                                                    @click="selectTranslation(tr)">{{ tr }}</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="level-item">
                                         <a class="button is-small is-link is-outlined is-rounded" target="_blank"
                                             :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`">
                                             <span class="icon-text">
