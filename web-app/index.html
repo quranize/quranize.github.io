@@ -120,10 +120,11 @@
                                     </div>
                                     <div class="level-item">
                                         <div class="field has-addons">
-                                            <p class="control" v-for="(_, tr) in availableTranslations">
+                                            <p class="control"
+                                                v-for="translation in Object.keys(availableTranslations)">
                                                 <button class="button is-small is-rounded"
-                                                    :class="{'is-info': selectedTranslation == tr}"
-                                                    @click="selectTranslation(tr)">{{ tr }}</button>
+                                                    :class="{'is-info': selectedTranslation == translation}"
+                                                    @click="selectTranslation(translation)">{{ translation }}</button>
                                             </p>
                                         </div>
                                     </div>
