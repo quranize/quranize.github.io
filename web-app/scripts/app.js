@@ -62,6 +62,9 @@ Vue.createApp({
         updateKeyword(event) {
             this.setKeyword(event.target.value);
         },
+        clickExample(example) {
+            this.setKeyword(example);
+        },
         clickEncodeResult(result) {
             result.listed ^= true;
             if (!result.locations) result.locations = this.quranize.get_locations(result.quran);

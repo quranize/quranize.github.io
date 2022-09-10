@@ -60,7 +60,9 @@
                     </div>
                     <p class="help">
                         <span class="tags">
-                            <span class="tag is-italic" v-for="example in examples">{{ example }}</span>
+                            <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
+                                {{ example }}
+                            </span>
                         </span>
                     </p>
                 </div>
