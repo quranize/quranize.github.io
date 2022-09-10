@@ -19,6 +19,17 @@ Vue.createApp({
         hasEmptyResult() {
             return this.keyword.trim() != "" && this.encodeResults.length == 0;
         },
+        examples() {
+            let candidates = [
+                "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
+                "innaddiina 'indallah", "walaqod yassarna", "innaa anzalnaahu", "tabaarokalladzi", "wabarron biwalidati",
+            ];
+            let taken = [];
+            const COUNT = 4 + new Date() % 3;
+            for (let i = 0; i < COUNT; i++)
+                taken.push(...candidates.splice(new Date() % candidates.length, 1));
+            return taken;
+        },
     },
     methods: {
         initQuranize() {
