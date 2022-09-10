@@ -109,15 +109,6 @@
                         <div class="panel-heading">
                             <nav class="level is-mobile">
                                 <div class="level-left">
-                                    <div class="level-item" v-if="false">
-                                        <button class="button is-small is-rounded"
-                                            :class="{'is-info': location.expanded}" @click="clickLocation(location)">
-                                            <span class="icon">
-                                                <i class="fa-solid"
-                                                    :class="location.expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
-                                            </span>
-                                        </button>
-                                    </div>
                                     <div class="level-item">
                                         <div class="buttons has-addons">
                                             <button class="button is-small is-rounded"
@@ -151,14 +142,14 @@
                                 </div>
                             </nav>
                         </div>
-                        <p class="panel-block quran-text" v-if="location.expanded">
+                        <p class="panel-block quran-text">
                             <span>
                                 {{ location.before_text }}
                                 <mark>{{ location.text }}</mark>
                                 {{ location.after_text }}
                             </span>
                         </p>
-                        <p class="panel-block" v-if="location.expanded">
+                        <p class="panel-block">
                             <progress class="progress" v-if="!location.translation"></progress>
                             <span v-if="location.translation">{{ location.translation }}</span>
                         </p>
