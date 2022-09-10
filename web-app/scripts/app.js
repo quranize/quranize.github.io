@@ -10,9 +10,8 @@ Vue.createApp({
             keywordPlaceholder: "..",
             encodeResults: [],
             quranize: undefined,
-            suraNames: suraNames,
             translations: {},
-            supportSharing: "share" in navigator,
+            selectedTranslation: "EN",
         };
     },
     computed: {
@@ -30,6 +29,15 @@ Vue.createApp({
                 taken.push(...candidates.splice(new Date() % candidates.length, 1));
             return taken;
         },
+        availableTranslations() {
+            return { "EN": "en.sahih", "ID": "id.indonesian" };
+        },
+        suraNames() {
+            return suraNames;
+        },
+        supportSharing() {
+            return "share" in navigator;
+        },
     },
     methods: {
         initQuranize() {
@@ -43,12 +51,19 @@ Vue.createApp({
             }
             else this.$refs.keyword.focus();
         },
-        async initTranslations() {
-            (await import("./quran/id.indonesian.js")).default
+        async initTranslations(translation) {
+            this.unsetLocationTranslations();
+            (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(x => x.length == 3)
                 .forEach(x => this.translations[`${x[0]}:${x[1]}`] = x[2]);
+            this.setLocationTranslations();
+        },
+        unsetLocationTranslations() {
+            this.encodeResults.forEach(r => r.locations && r.locations.forEach(l => delete l.translation));
+        },
+        setLocationTranslations() {
             this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.setTranslation));
         },
         setTranslation(location) {
@@ -77,6 +92,12 @@ Vue.createApp({
             location.expanded ^= true;
             this.setTranslation(location);
         },
+        clickTranslationSwitch(translation) {
+            if (this.selectedTranslation != translation) {
+                this.selectedTranslation = translation;
+                this.initTranslations(translation);
+            }
+        },
         toArabicNumber(n) {
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
             if (n < 10) return String.fromCharCode(0x0660 + n);
@@ -94,7 +115,7 @@ Vue.createApp({
     async mounted() {
         this.animateKeywordPlaceholder();
         await initPromise;
-        this.initTranslations();
+        this.initTranslations(this.selectedTranslation);
         this.initQuranize();
     },
 }).mount("#quranize-app");
