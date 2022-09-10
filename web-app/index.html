@@ -124,7 +124,9 @@
                                                 v-for="translation in Object.keys(availableTranslations)">
                                                 <button class="button is-small is-rounded"
                                                     :class="{'is-info': selectedTranslation == translation}"
-                                                    @click="selectTranslation(translation)">{{ translation }}</button>
+                                                    @click="clickTranslationSwitch(translation)">
+                                                    {{ translation }}
+                                                </button>
                                             </p>
                                         </div>
                                     </div>

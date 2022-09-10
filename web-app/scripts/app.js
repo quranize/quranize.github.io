@@ -92,6 +92,10 @@ Vue.createApp({
             location.expanded ^= true;
             this.setTranslation(location);
         },
+        clickTranslationSwitch(translation) {
+            this.selectedTranslation = translation;
+            this.initTranslations(translation);
+        },
         toArabicNumber(n) {
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
             if (n < 10) return String.fromCharCode(0x0660 + n);
@@ -104,10 +108,6 @@ Vue.createApp({
             if (this.quranize) return;
             this.keywordPlaceholder = this.keywordPlaceholder.length < 7 ? this.keywordPlaceholder + "." : ".";
             setTimeout(this.animateKeywordPlaceholder, 500);
-        },
-        selectTranslation(translation) {
-            this.selectedTranslation = translation;
-            this.initTranslations(translation);
         },
     },
     async mounted() {
