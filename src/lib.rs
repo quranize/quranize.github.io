@@ -1,9 +1,7 @@
 use wasm_bindgen::prelude::*;
 
-use quranize::{
-    quran::{AyaGetter, SIMPLE_PLAIN},
-    Quranize,
-};
+use quranize::quran::{AyaGetter, SIMPLE_PLAIN};
+use quranize::Quranize;
 
 #[wasm_bindgen(js_name = Quranize)]
 pub struct JsQuranize {
@@ -44,7 +42,7 @@ impl JsQuranize {
         JsValue::from_serde(&self.encode(text)).unwrap()
     }
 
-    fn encode<'a>(&'a self, text: &'a str) -> Vec<JsEncodeResult<'a>> {
+    fn encode(&self, text: &str) -> Vec<JsEncodeResult> {
         self.quranize
             .encode(text)
             .into_iter()
