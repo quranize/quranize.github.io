@@ -10,10 +10,8 @@ Vue.createApp({
             keywordPlaceholder: "..",
             encodeResults: [],
             quranize: undefined,
-            suraNames: suraNames,
             translations: {},
             selectedTranslation: "EN",
-            supportSharing: "share" in navigator,
         };
     },
     computed: {
@@ -33,6 +31,12 @@ Vue.createApp({
         },
         availableTranslations() {
             return { "EN": "en.sahih", "ID": "id.indonesian" };
+        },
+        suraNames() {
+            return suraNames;
+        },
+        supportSharing() {
+            return "share" in navigator;
         },
     },
     methods: {
