@@ -62,7 +62,8 @@ impl JsQuranize {
 
     fn get_locations(&self, quran: &str) -> Vec<JsLocation> {
         let word_count = quran.split_whitespace().count() as u8;
-        self.quranize
+        let mut locations: Vec<_> = self
+            .quranize
             .get_locations(quran)
             .map(|&(sura_number, aya_number, word_number)| {
                 let text = self.aya_getter.get(sura_number, aya_number).unwrap();
@@ -75,10 +76,9 @@ impl JsQuranize {
                     after_text: &text[r.min(text.len() - 1) + 1..],
                 }
             })
-            .collect::<Vec<_>>()
-            .into_iter()
-            .rev()
-            .collect()
+            .collect();
+        locations.reverse();
+        locations
     }
 }
 
@@ -109,6 +109,8 @@ mod tests {
     fn test_encode() {
         let q = JsQuranize::new(5);
         let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
+        assert_eq!(l.sura_number, 1);
+        assert_eq!(l.aya_number, 1);
         assert_eq!(l.before_text, "");
         assert_eq!(l.text, "بِسْمِ اللَّهِ");
         assert_eq!(l.after_text, "الرَّحْمَـٰنِ الرَّحِيمِ");
@@ -119,6 +121,8 @@ mod tests {
         assert_eq!(l.after_text, "");
 
         let l = &q.get_locations(&q.encode("arrohman nirrohim")[0].quran)[0];
+        assert_eq!(l.sura_number, 1);
+        assert_eq!(l.aya_number, 1);
         assert_eq!(l.before_text, "بِسْمِ اللَّهِ");
         assert_eq!(l.text, "الرَّحْمَـٰنِ الرَّحِيمِ");
         assert_eq!(l.after_text, "");
