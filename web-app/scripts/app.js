@@ -7,7 +7,7 @@ Vue.createApp({
     data() {
         return {
             keyword: "",
-            keywordPlaceholder: ". .",
+            keywordPlaceholder: "..",
             encodeResults: [],
             quranize: undefined,
             suraNames: suraNames,
@@ -87,7 +87,7 @@ Vue.createApp({
         },
         animateKeywordPlaceholder() {
             if (this.quranize) return;
-            this.keywordPlaceholder = this.keywordPlaceholder.length >= 13 ? "." : this.keywordPlaceholder + " .";
+            this.keywordPlaceholder = this.keywordPlaceholder.length < 7 ? this.keywordPlaceholder + "." : ".";
             setTimeout(this.animateKeywordPlaceholder, 500);
         },
     },
