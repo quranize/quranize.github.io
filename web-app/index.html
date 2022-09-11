@@ -43,8 +43,8 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded">
                             <input type="text" placeholder="masyaallah" title="alphabetic text" class="input is-rounded"
-                                :class="{'is-success': encodeResults.length, 'is-danger': hasEmptyResult}"
-                                :value="keyword" @input="updateKeyword" :disabled="!quranize" ref="keyword">
+                                :class="{'is-warning': !quranize, 'is-success': hasResults, 'is-danger': hasEmptyResult}"
+                                :value="keyword" @input="updateKeyword" ref="keyword">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>

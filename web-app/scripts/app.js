@@ -14,9 +14,9 @@ Vue.createApp({
         };
     },
     computed: {
-        hasEmptyResult() {
-            return this.keyword.trim() != "" && this.encodeResults.length == 0;
-        },
+        suraNames() { return suraNames; },
+        hasResults() { return this.encodeResults.length > 0; },
+        hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length == 0; },
         examples() {
             let candidates = [
                 "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
@@ -28,15 +28,8 @@ Vue.createApp({
                 taken.push(...candidates.splice(new Date() % candidates.length, 1));
             return taken;
         },
-        availableTranslations() {
-            return { "EN": "en.sahih", "ID": "id.indonesian" };
-        },
-        suraNames() {
-            return suraNames;
-        },
-        supportSharing() {
-            return "share" in navigator;
-        },
+        availableTranslations() { return { "EN": "en.sahih", "ID": "id.indonesian" }; },
+        supportSharing() { return "share" in navigator; },
     },
     methods: {
         initQuranize() {
