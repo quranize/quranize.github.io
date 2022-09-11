@@ -49,7 +49,7 @@
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
                         </div>
-                        <div class="control" v-if="supportSharing && quranize">
+                        <div class="control" v-show="supportSharing && quranize">
                             <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
@@ -59,8 +59,8 @@
                         </div>
                     </div>
                     <p class="help">
-                        <progress class="progress is-info is-small" v-if="!quranize"></progress>
-                        <span class="tags" v-if="quranize">
+                        <progress class="progress is-info is-small" v-show="!quranize"></progress>
+                        <span class="tags" v-show="quranize">
                             <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
                                 {{ example }}
                             </span>
