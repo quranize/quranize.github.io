@@ -41,15 +41,15 @@
             <div class="block">
                 <div class="field">
                     <div class="field is-grouped">
-                        <div class="control has-icons-left is-expanded" :class="{'is-loading': !quranize}">
-                            <input title="alphabetic text" type="text" class="input is-rounded"
-                                :class="{'is-warning': !quranize, 'is-success': encodeResults.length, 'is-danger': hasEmptyResult}"
-                                :value="keyword" @input="updateKeyword" :placeholder="keywordPlaceholder" ref="keyword">
+                        <div class="control has-icons-left is-expanded">
+                            <input type="text" placeholder="masyaallah" title="alphabetic text" class="input is-rounded"
+                                :class="{'is-success': encodeResults.length, 'is-danger': hasEmptyResult}"
+                                :value="keyword" @input="updateKeyword" :disabled="!quranize" ref="keyword">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
                         </div>
-                        <div class="control" v-if="supportSharing">
+                        <div class="control" v-if="supportSharing && quranize">
                             <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
@@ -59,7 +59,8 @@
                         </div>
                     </div>
                     <p class="help">
-                        <span class="tags">
+                        <progress class="progress is-info is-small" v-if="!quranize"></progress>
+                        <span class="tags" v-if="quranize">
                             <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
                                 {{ example }}
                             </span>

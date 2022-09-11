@@ -7,7 +7,6 @@ Vue.createApp({
     data() {
         return {
             keyword: "",
-            keywordPlaceholder: "..",
             encodeResults: [],
             quranize: undefined,
             translations: {},
@@ -42,7 +41,6 @@ Vue.createApp({
     methods: {
         initQuranize() {
             this.quranize = new Quranize(7);
-            this.keywordPlaceholder = "masyaallah";
             let URLHash = location.hash.replace(/^#/, "");
             if (this.keyword) this.encodeResults = this.quranize.encode(this.keyword)
             else if (URLHash) {
@@ -102,14 +100,8 @@ Vue.createApp({
         share() {
             navigator.share({ url: `${location.href}#${encodeURIComponent(this.keyword.trim())}` });
         },
-        animateKeywordPlaceholder() {
-            if (this.quranize) return;
-            this.keywordPlaceholder = this.keywordPlaceholder.length < 7 ? this.keywordPlaceholder + "." : ".";
-            setTimeout(this.animateKeywordPlaceholder, 500);
-        },
     },
     async mounted() {
-        this.animateKeywordPlaceholder();
         await initPromise;
         this.initTranslations(this.selectedTranslation);
         this.initQuranize();
