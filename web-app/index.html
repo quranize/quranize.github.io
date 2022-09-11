@@ -150,10 +150,9 @@
                                 {{ location.after_text }}
                             </span>
                         </p>
-                        <p class="panel-block">
-                            <progress class="progress is-info is-small"
-                                v-if="selectedTranslation && !location.translation"></progress>
-                            <span v-if="location.translation">{{ location.translation }}</span>
+                        <p class="panel-block" v-show="selectedTranslation">
+                            <progress class="progress is-info is-small" v-show="!location.translation"></progress>
+                            <span v-show="location.translation">{{ location.translation }}</span>
                         </p>
                     </nav>
                 </div>
