@@ -10,7 +10,7 @@ Vue.createApp({
             encodeResults: [],
             quranize: undefined,
             translations: {},
-            selectedTranslation: "EN",
+            selectedTranslation: "",
         };
     },
     computed: {
@@ -80,7 +80,10 @@ Vue.createApp({
             result.explained ^= true;
         },
         clickTranslationSwitch(translation) {
-            if (this.selectedTranslation != translation) {
+            if (this.selectedTranslation == translation) {
+                this.selectedTranslation = "";
+                this.unsetLocationTranslations();
+            } else {
                 this.selectedTranslation = translation;
                 this.initTranslations(translation);
             }
@@ -96,7 +99,6 @@ Vue.createApp({
     },
     async mounted() {
         await initPromise;
-        this.initTranslations(this.selectedTranslation);
         this.initQuranize();
     },
 }).mount("#quranize-app");

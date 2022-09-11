@@ -151,7 +151,8 @@
                             </span>
                         </p>
                         <p class="panel-block">
-                            <progress class="progress is-info is-small" v-if="!location.translation"></progress>
+                            <progress class="progress is-info is-small"
+                                v-if="selectedTranslation && !location.translation"></progress>
                             <span v-if="location.translation">{{ location.translation }}</span>
                         </p>
                     </nav>
