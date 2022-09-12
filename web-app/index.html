@@ -27,8 +27,8 @@
 </head>
 
 <body id="quranize-app">
-    <section class="hero is-info">
-        <div class="hero-body" :class="{'is-hidden-touch': keywordFocused}">
+    <section class="hero is-info" :class="{'is-hidden-touch': hasResults || keyword}">
+        <div class="hero-body">
             <div class="container">
                 <p class="title"><a href="/">Quranize</a></p>
                 <p class="subtitle">
@@ -50,8 +50,7 @@
                         <div class="control has-icons-left is-expanded">
                             <input type="text" placeholder="masyaallah" title="alphabetic text" class="input is-rounded"
                                 :class="{'is-warning': !quranize, 'is-success': hasResults, 'is-danger': hasEmptyResult}"
-                                :value="keyword" @input="updateKeyword" @focus="keywordFocused = true"
-                                @blur="keywordFocused = false">
+                                :value="keyword" @input="updateKeyword" ref="keyword">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
