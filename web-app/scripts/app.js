@@ -7,6 +7,7 @@ Vue.createApp({
     data() {
         return {
             keyword: "",
+            keywordFocused: false,
             encodeResults: [],
             quranize: undefined,
             translations: {},
@@ -40,7 +41,6 @@ Vue.createApp({
                 this.setKeyword(decodeURIComponent(URLHash));
                 history.pushState({}, "", location.href.replace(/#.*$/, ""));
             }
-            else this.$refs.keyword.focus();
         },
         async initTranslations(translation) {
             this.unsetLocationTranslations();

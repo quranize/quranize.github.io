@@ -26,9 +26,9 @@
     <script type="module" src="scripts/app.js"></script>
 </head>
 
-<body>
+<body id="quranize-app">
     <section class="hero is-info">
-        <div class="hero-body">
+        <div class="hero-body" :class="{'is-hidden-touch': keywordFocused}">
             <div class="container">
                 <p class="title"><a href="/">Quranize</a></p>
                 <p class="subtitle">
@@ -42,7 +42,7 @@
         </div>
     </section>
 
-    <section class="section" id="quranize-app" v-cloak>
+    <section class="section" v-cloak>
         <div class="container">
             <div class="block">
                 <div class="field">
@@ -50,7 +50,8 @@
                         <div class="control has-icons-left is-expanded">
                             <input type="text" placeholder="masyaallah" title="alphabetic text" class="input is-rounded"
                                 :class="{'is-warning': !quranize, 'is-success': hasResults, 'is-danger': hasEmptyResult}"
-                                :value="keyword" @input="updateKeyword" ref="keyword">
+                                :value="keyword" @input="updateKeyword" @focus="keywordFocused = true"
+                                @blur="keywordFocused = false">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
@@ -64,7 +65,7 @@
                             </button>
                         </div>
                     </div>
-                    <p class="help">
+                    <p class="help" :class="{'is-hidden-touch': hasResults}">
                         <progress class="progress is-info is-small" v-show="!quranize"></progress>
                         <span class="tags" v-show="quranize">
                             <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
