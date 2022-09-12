@@ -20,7 +20,7 @@ Vue.createApp({
         examples() {
             let candidates = [
                 "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
-                "innaddiina 'indallah", "walaqod yassarna", "innaa anzalnaahu", "tabaarokalladzi", "wabarron biwalidati",
+                "wabassirilladzina", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
             ];
             let taken = [];
             const COUNT = 4 + new Date() % 2;
