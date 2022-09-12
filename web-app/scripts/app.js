@@ -93,6 +93,9 @@ Vue.createApp({
             if (n < 10) return String.fromCharCode(0x0660 + n);
             return this.toArabicNumber(Math.floor(n / 10)) + this.toArabicNumber(n % 10);
         },
+        tanzilURL(location) {
+            return `https://tanzil.net/#${location.sura_number}:${location.aya_number}`;
+        },
         share() {
             navigator.share({ url: `${location.href}#${encodeURIComponent(this.keyword.trim())}` });
         },

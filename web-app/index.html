@@ -127,8 +127,14 @@
                                         </div>
                                     </div>
                                     <div class="level-item">
-                                        <a class="button is-small is-link is-outlined is-rounded" target="_blank"
-                                            :href="`https://tanzil.net/#${location.sura_number}:${location.aya_number}`">
+                                        <a class="button is-small is-link is-outlined is-rounded is-hidden-desktop"
+                                            target="_blank" :href="tanzilURL(location)">
+                                            <span class="icon">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </span>
+                                        </a>
+                                        <a class="button is-small is-link is-outlined is-rounded is-hidden-touch"
+                                            target="_blank" :href="tanzilURL(location)">
                                             <span class="icon-text">
                                                 <span>tanzil.net</span>
                                                 <span class="icon">
