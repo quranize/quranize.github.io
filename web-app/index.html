@@ -27,16 +27,23 @@
 </head>
 
 <body id="quranize-app">
-    <section class="hero is-info" :class="{'is-hidden-touch': hasResults || keyword}">
+    <section class="hero is-small is-info">
         <div class="hero-body">
             <div class="container">
-                <p class="title"><a href="/">Quranize</a></p>
-                <p class="subtitle">
-                    <span>alquran</span>
-                    <span class="icon">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                    <span class="quran-text" style="font-size: 1em; line-height: 1em;">القرآن</span>
+                <div :class="{'is-hidden-touch': keyword}">
+                    <p class="title">
+                        <a href="/">Quranize</a>
+                    </p>
+                    <p class="subtitle">
+                        <span>alquran</span>
+                        <span class="icon ml-1 mr-1">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                        <span class="quran-text" style="font-size: 1em; line-height: 1em;">القرآن</span>
+                    </p>
+                </div>
+                <p class="subtitle is-hidden-desktop" :class="{'is-hidden-touch': !keyword}">
+                    <a href="/">Quranize</a>
                 </p>
             </div>
         </div>
