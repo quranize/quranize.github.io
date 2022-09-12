@@ -23,7 +23,7 @@ Vue.createApp({
                 "innaddiina 'indallah", "walaqod yassarna", "innaa anzalnaahu", "tabaarokalladzi", "wabarron biwalidati",
             ];
             let taken = [];
-            const COUNT = 4 + new Date() % 3;
+            const COUNT = 4 + new Date() % 2;
             for (let i = 0; i < COUNT; i++)
                 taken.push(...candidates.splice(new Date() % candidates.length, 1));
             return taken;
