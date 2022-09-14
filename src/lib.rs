@@ -37,8 +37,8 @@ impl JsQuranize {
     }
 
     #[wasm_bindgen(js_name = encode)]
-    pub fn js_encode(&self, text: &str) -> JsValue {
-        JsValue::from_serde(&self.encode(text)).unwrap()
+    pub fn js_encode(&self, text: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
+        serde_wasm_bindgen::to_value(&self.encode(text))
     }
 
     fn encode(&self, text: &str) -> Vec<JsEncodeResult> {
@@ -53,8 +53,8 @@ impl JsQuranize {
     }
 
     #[wasm_bindgen(js_name = get_locations)]
-    pub fn js_get_locations(&self, quran: &str) -> JsValue {
-        JsValue::from_serde(&self.get_locations(quran)).unwrap()
+    pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
+        serde_wasm_bindgen::to_value(&self.get_locations(quran))
     }
 
     fn get_locations(&self, quran: &str) -> Vec<JsLocation> {
