@@ -1,7 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-use quranize::quran::{AyaGetter, SIMPLE_PLAIN};
-use quranize::Quranize;
+use quranize::{AyaGetter, Quranize};
 
 #[wasm_bindgen(js_name = Quranize)]
 pub struct JsQuranize {
@@ -33,7 +32,7 @@ impl JsQuranize {
                 0 => Quranize::default(),
                 _ => Quranize::new(word_count_limit),
             },
-            aya_getter: AyaGetter::new(SIMPLE_PLAIN),
+            aya_getter: AyaGetter::default(),
         }
     }
 
