@@ -13,7 +13,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all-features
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -25,4 +24,3 @@ jobs:
       - uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
