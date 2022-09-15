@@ -11,18 +11,30 @@ function intercept(event) {
 }
 
 function respondStaleWhileRevalidate(event) {
-    console.log(`not serving ${event.request.url}`);
+    event.respondWith(
+        caches.match(event.request).then(cachedResponse => {
+            let fetchedResponse = fetch(event.request).then(response => {
+                putResponse(event.request, response);
+                return response;
+            });
+            return cachedResponse ? cachedResponse : fetchedResponse;
+        })
+    );
 }
 
 function respondNetworkFirst(event) {
     event.respondWith(
         fetch(event.request)
             .then(response => {
-                let clonedResponse = response.clone();
-                caches.open("quranize-network-first")
-                    .then(cache => cache.put(event.request, clonedResponse));
+                putResponse(event.request, response);
                 return response;
             })
             .catch(() => caches.match(event.request))
     );
+}
+
+function putResponse(request, response) {
+    let clonedResponse = response.clone();
+    return caches.open("quranize-sw-v2")
+        .then(cache => cache.put(request, clonedResponse));
 }
