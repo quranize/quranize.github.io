@@ -16,7 +16,7 @@ function respondStaleWhileRevalidate(event) {
             let fetchedResponse = fetch(event.request).then(response => {
                 putResponse(event.request, response);
                 return response;
-            });
+            }).catch(() => { });
             return cachedResponse ? cachedResponse : fetchedResponse;
         })
     );
