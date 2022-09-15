@@ -17,11 +17,12 @@ function respondStaleWhileRevalidate(event) {
 function respondNetworkFirst(event) {
     event.respondWith(
         fetch(event.request)
-            .then(response =>
+            .then(response => {
+                let clonedResponse = response.clone();
                 caches.open("quranize-network-first")
-                    .then(cache => cache.put(event.request, response.clone()))
-                    .then(() => response)
-            )
+                    .then(cache => cache.put(event.request, clonedResponse));
+                return response;
+            })
             .catch(() => caches.match(event.request))
     );
 }
