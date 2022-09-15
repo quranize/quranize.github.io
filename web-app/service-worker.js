@@ -1,13 +1,27 @@
 self.addEventListener("fetch", event => {
+    if (event.request.method == "GET" && /^https?:\/\//.test(event.request.url))
+        intercept(event);
+});
+
+function intercept(event) {
+    if (/\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url))
+        respondStaleWhileRevalidate(event)
+    else
+        respondNetworkFirst(event);
+}
+
+function respondStaleWhileRevalidate(event) {
+    console.log(`not serving ${event.request.url}`);
+}
+
+function respondNetworkFirst(event) {
     event.respondWith(
         fetch(event.request)
-            .then(response => event.request.url.startsWith("http") ? caches
-                .open("quranize-network-first")
-                .then(cache => {
-                    cache.put(event.request, response.clone());
-                    return response;
-                }) : response
+            .then(response =>
+                caches.open("quranize-network-first")
+                    .then(cache => cache.put(event.request, response.clone()))
+                    .then(() => response)
             )
             .catch(() => caches.match(event.request))
     );
-});
+}
