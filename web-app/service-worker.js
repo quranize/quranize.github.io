@@ -33,8 +33,8 @@ function respondNetworkFirst(event) {
     );
 }
 
-function putResponse(request, response) {
+async function putResponse(request, response) {
     let clonedResponse = response.clone();
-    return caches.open("quranize-sw-v2")
-        .then(cache => cache.put(request, clonedResponse));
+    const cache = await caches.open("quranize-sw-v2");
+    return await cache.put(request, clonedResponse);
 }
