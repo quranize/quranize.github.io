@@ -58,9 +58,9 @@ dependencies = [
 
 [[package]]
 name = "quranize"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ef711213d83d8d6b33350cdf9e8d25a1a63f5256c102b1c0cf3e6e15a7299c3c"
+checksum = "1356e2b2bf0eede2df1b31ddd022ae9b29c541333cac702ac6d746ddc62bd2f7"
 
 [[package]]
 name = "quranize-wasm"
