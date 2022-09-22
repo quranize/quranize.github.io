@@ -26,25 +26,23 @@
     <script type="module" src="scripts/app.js"></script>
 </head>
 
-<body id="quranize-app">
+<body>
     <header class="hero is-small is-info">
         <div class="hero-body">
-            <div class="container">
-                <p class="title">
-                    <a href="/">Quranize</a>
-                </p>
-                <p class="subtitle" :class="{'is-hidden-touch': keyword}">
-                    <span>alquran</span>
-                    <span class="icon ml-1 mr-1">
+            <div class="container has-text-centered">
+                <a href="/" class="title">Quranize</a>
+                <span class="subtitle">
+                    <span>| alquran</span>
+                    <span class="icon">
                         <i class="fa-solid fa-arrow-right"></i>
                     </span>
                     <span class="quran-text" style="font-size: 1em; line-height: 1em;">القرآن</span>
-                </p>
+                </span>
             </div>
         </div>
     </header>
 
-    <main class="section" v-cloak>
+    <main class="section" id="quranize-app" v-cloak>
         <div class="container">
             <div class="block">
                 <div class="field">
