@@ -63,7 +63,10 @@ impl JsQuranize {
             .quranize
             .get_locations(quran)
             .map(|&(sura_number, aya_number, word_number)| {
-                let text = self.aya_getter.get(sura_number, aya_number).unwrap();
+                let text = self
+                    .aya_getter
+                    .get(sura_number, aya_number)
+                    .unwrap_or_default();
                 let (l, r) = get_highlight_boundary(text, word_number, word_count);
                 JsLocation {
                     sura_number,
