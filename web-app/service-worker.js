@@ -4,10 +4,11 @@ self.addEventListener("fetch", event => {
 });
 
 function intercept(event) {
-    if (/\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url))
-        respondStaleWhileRevalidate(event)
-    else
-        respondNetworkFirst(event);
+    if (
+        /\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url) ||
+        /\/scripts\/quran\/.*$/.test(event.request.url)
+    ) respondStaleWhileRevalidate(event)
+    else respondNetworkFirst(event);
 }
 
 function respondStaleWhileRevalidate(event) {
