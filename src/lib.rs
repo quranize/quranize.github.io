@@ -62,15 +62,12 @@ impl JsQuranize {
         let mut locations: Vec<_> = self
             .quranize
             .get_locations(quran)
-            .map(|&(sura_number, aya_number, word_number)| {
-                let text = self
-                    .aya_getter
-                    .get(sura_number, aya_number)
-                    .unwrap_or_default();
-                let (l, r) = get_highlight_boundary(text, word_number, word_count);
+            .map(|&(sn, an, wn)| {
+                let text = self.aya_getter.get(sn, an).unwrap_or_default();
+                let (l, r) = get_highlight_boundary(text, wn, word_count);
                 JsLocation {
-                    sura_number,
-                    aya_number,
+                    sura_number: sn,
+                    aya_number: an,
                     before_text: &text[..l.max(1) - 1],
                     text: &text[l..r],
                     after_text: &text[r.min(text.len() - 1) + 1..],
