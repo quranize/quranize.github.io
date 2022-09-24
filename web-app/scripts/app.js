@@ -19,7 +19,7 @@ Vue.createApp({
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length == 0; },
         examples() {
             let candidates = [
-                "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
+                "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
                 "wabassirilladzina", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
             ];
             let taken = [];
