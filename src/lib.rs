@@ -26,11 +26,11 @@ struct JsLocation<'a> {
 #[wasm_bindgen(js_class = Quranize)]
 impl JsQuranize {
     #[wasm_bindgen(constructor)]
-    pub fn new(word_count_limit: u8) -> Self {
+    pub fn new(min_harfs: usize) -> Self {
         Self {
-            quranize: match word_count_limit {
+            quranize: match min_harfs {
                 0 => Quranize::default(),
-                _ => Quranize::new(word_count_limit),
+                _ => Quranize::new(min_harfs),
             },
             aya_getter: AyaGetter::default(),
         }
