@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, quranize-0.7-usage]
   workflow_dispatch:
 
 permissions:
