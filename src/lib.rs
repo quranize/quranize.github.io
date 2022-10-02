@@ -104,7 +104,7 @@ mod tests {
 
     #[test]
     fn test_encode() {
-        let q = JsQuranize::new(29);
+        let q = JsQuranize::new(0);
         let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
         assert_eq!(l.sura_number, 1);
         assert_eq!(l.aya_number, 1);
