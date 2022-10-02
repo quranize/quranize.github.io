@@ -52,7 +52,7 @@ impl JsQuranize {
             .collect()
     }
 
-    #[wasm_bindgen(js_name = get_locations)]
+    #[wasm_bindgen(js_name = getLocations)]
     pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
         serde_wasm_bindgen::to_value(&self.get_locations(quran))
     }

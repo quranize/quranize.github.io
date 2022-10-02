@@ -73,7 +73,7 @@ Vue.createApp({
         },
         clickEncodeResult(result) {
             result.listed ^= true;
-            if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
+            if (!result.locations) result.locations = this.quranize.getLocations(result.quran);
             result.locations.forEach(this.setTranslation);
         },
         clickExplanation(result) {
