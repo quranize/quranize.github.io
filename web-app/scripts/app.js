@@ -33,7 +33,7 @@ Vue.createApp({
     },
     methods: {
         initQuranize() {
-            this.quranize = new Quranize(31);
+            this.quranize = new Quranize(27);
             let URLHash = location.hash.replace(/^#/, "");
             if (this.keyword) this.encodeResults = this.quranize.encode(this.keyword)
             else if (URLHash) {
