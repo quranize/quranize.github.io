@@ -26,11 +26,11 @@ struct JsLocation<'a> {
 #[wasm_bindgen(js_class = Quranize)]
 impl JsQuranize {
     #[wasm_bindgen(constructor)]
-    pub fn new(word_count_limit: u8) -> Self {
+    pub fn new(min_harfs: usize) -> Self {
         Self {
-            quranize: match word_count_limit {
+            quranize: match min_harfs {
                 0 => Quranize::default(),
-                _ => Quranize::new(word_count_limit),
+                _ => Quranize::new(min_harfs),
             },
             aya_getter: AyaGetter::default(),
         }
@@ -52,7 +52,7 @@ impl JsQuranize {
             .collect()
     }
 
-    #[wasm_bindgen(js_name = get_locations)]
+    #[wasm_bindgen(js_name = getLocations)]
     pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
         serde_wasm_bindgen::to_value(&self.get_locations(quran))
     }
@@ -104,7 +104,7 @@ mod tests {
 
     #[test]
     fn test_encode() {
-        let q = JsQuranize::new(5);
+        let q = JsQuranize::new(0);
         let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
         assert_eq!(l.sura_number, 1);
         assert_eq!(l.aya_number, 1);

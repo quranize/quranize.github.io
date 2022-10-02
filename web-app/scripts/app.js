@@ -33,7 +33,7 @@ Vue.createApp({
     },
     methods: {
         initQuranize() {
-            this.quranize = new Quranize(7);
+            this.quranize = new Quranize(29);
             let URLHash = location.hash.replace(/^#/, "");
             if (this.keyword) this.encodeResults = this.quranize.encode(this.keyword)
             else if (URLHash) {
@@ -73,7 +73,7 @@ Vue.createApp({
         },
         clickEncodeResult(result) {
             result.listed ^= true;
-            if (!result.locations) result.locations = this.quranize.get_locations(result.quran);
+            if (!result.locations) result.locations = this.quranize.getLocations(result.quran);
             result.locations.forEach(this.setTranslation);
         },
         clickExplanation(result) {

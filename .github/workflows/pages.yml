@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
       - run: wasm-pack build --release --target=web --no-typescript --out-dir=web-app/scripts --out-name=quranize
-      - run: wget https://unpkg.com/vue@3.2.39/dist/vue.global.prod.js -O web-app/scripts/vue.js
+      - run: wget https://unpkg.com/vue@3.2.40/dist/vue.global.prod.js -O web-app/scripts/vue.js
       - uses: actions/upload-artifact@v3
         with:
           name: build-scripts
