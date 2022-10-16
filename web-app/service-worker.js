@@ -1,15 +1,7 @@
 self.addEventListener("fetch", event => {
     if (event.request.method == "GET" && /^https?:\/\//.test(event.request.url))
-        intercept(event);
+        respondStaleWhileRevalidate(event);
 });
-
-function intercept(event) {
-    if (
-        /\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url) ||
-        /\/scripts\/quran\/.*$/.test(event.request.url)
-    ) respondStaleWhileRevalidate(event)
-    else respondNetworkFirst(event);
-}
 
 function respondStaleWhileRevalidate(event) {
     event.respondWith(
@@ -20,17 +12,6 @@ function respondStaleWhileRevalidate(event) {
             }).catch(() => { });
             return cachedResponse ? cachedResponse : fetchedResponse;
         })
-    );
-}
-
-function respondNetworkFirst(event) {
-    event.respondWith(
-        fetch(event.request)
-            .then(response => {
-                putResponse(event.request, response);
-                return response;
-            })
-            .catch(() => caches.match(event.request))
     );
 }
 
