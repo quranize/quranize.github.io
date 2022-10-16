@@ -91,6 +91,9 @@
                                 <span class="icon">
                                     <i class="fa-solid fa-table-list"></i>
                                 </span>
+                                <span v-if="encodeResult.locations">
+                                    {{ encodeResult.locations.length }}
+                                </span>
                             </button>
                             <span class="quran-text has-text-weight-bold">
                                 {{ encodeResult.quran }}
