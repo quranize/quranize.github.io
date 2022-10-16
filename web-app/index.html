@@ -67,7 +67,6 @@
                         </div>
                     </div>
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
-                        <progress class="progress is-info is-small" v-show="!quranize"></progress>
                         <span class="tags" v-show="quranize">
                             <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
                                 {{ example }}
