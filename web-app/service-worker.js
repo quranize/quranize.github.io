@@ -17,6 +17,6 @@ function respondStaleWhileRevalidate(event) {
 
 async function putResponse(request, response) {
     let clonedResponse = response.clone();
-    const cache = await caches.open("quranize-sw-v2");
+    const cache = await caches.open("quranize-sw-v3");
     return await cache.put(request, clonedResponse);
 }
