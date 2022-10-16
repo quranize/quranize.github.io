@@ -61,7 +61,8 @@
                             <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
-                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <i class="fa-solid fa-spinner fa-spin" v-show="!quranize"></i>
+                                    <i class="fa-solid fa-share-nodes" v-show="quranize"></i>
                                 </span>
                             </button>
                         </div>
