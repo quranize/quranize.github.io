@@ -1,5 +1,6 @@
 self.addEventListener("fetch", event => {
-    if (event.request.method == "GET" && /^https?:\/\//.test(event.request.url) && !/service-worker.js$/.test(event.request.url))
+    if (event.request.method == "GET" && /^https?:\/\//.test(event.request.url)
+        && !/(service-worker\.js|index\.html)$/.test(event.request.url))
         respondStaleWhileRevalidate(event);
 });
 
