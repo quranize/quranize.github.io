@@ -80,12 +80,6 @@
                 <nav class="level is-mobile">
                     <div class="level-item">
                         <div class="buttons">
-                            <button class="button is-small is-rounded" :class="{'is-info': encodeResult.explained}"
-                                @click="clickExplanation(encodeResult)">
-                                <span class="icon">
-                                    <i class="fa-solid fa-info"></i>
-                                </span>
-                            </button>
                             <button class="button is-small is-rounded" :class="{'is-info': encodeResult.listed}"
                                 @click="clickEncodeResult(encodeResult)">
                                 <span class="icon">
@@ -93,6 +87,12 @@
                                 </span>
                                 <span v-if="encodeResult.locations">
                                     {{ encodeResult.locations.length }}
+                                </span>
+                            </button>
+                            <button class="button is-small is-rounded" :class="{'is-info': encodeResult.explained}"
+                                @click="clickExplanation(encodeResult)">
+                                <span class="icon">
+                                    <i class="fa-solid fa-info"></i>
                                 </span>
                             </button>
                             <span class="quran-text has-text-weight-bold">
