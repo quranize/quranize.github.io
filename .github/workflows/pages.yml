@@ -20,6 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
       - run: wasm-pack build --release --target=web --no-typescript --out-dir=web-app/scripts --out-name=quranize
       - run: wget https://unpkg.com/vue@3.2.41/dist/vue.global.prod.js -O web-app/scripts/vue.js
