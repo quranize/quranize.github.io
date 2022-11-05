@@ -69,15 +69,15 @@
                     </div>
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags" v-show="quranize">
-                            <span v-for="example in examples" class="tag is-italic" style="cursor: pointer;"
-                                @click="clickExample(example)">
+                            <span v-for="example in examples" @click="clickExample(example)"
+                                class="tag is-rounded is-italic is-clickable">
                                 {{ example }}
                             </span>
                         </span>
                     </p>
                 </div>
             </div>
-            <section class="box" v-for="encodeResult in encodeResults">
+            <section v-for="encodeResult in encodeResults" class="box">
                 <nav class="level is-mobile">
                     <div class="level-item">
                         <div class="buttons">
@@ -105,7 +105,7 @@
                 <article class="message is-small is-info" v-if="encodeResult.explained">
                     <div class="message-body">
                         <div class="tags">
-                            <span class="tag is-white" v-for="(e, i) in encodeResult.explanations">
+                            <span v-for="(e, i) in encodeResult.explanations" class="tag is-white">
                                 <span class="icon-text">
                                     <span>{{ e }}</span>
                                     <span class="icon">
@@ -118,16 +118,16 @@
                     </div>
                 </article>
                 <div v-if="encodeResult.listed">
-                    <article class="panel" v-for="location in encodeResult.locations">
+                    <article v-for="location in encodeResult.locations" class="panel">
                         <header class="panel-heading">
                             <nav class="level is-mobile">
                                 <div class="level-left">
                                     <div class="level-item">
                                         <div class="buttons has-addons">
-                                            <button class="button is-small is-rounded"
-                                                v-for="translation in Object.keys(availableTranslations)"
-                                                :class="{'is-info': location.selectedTranslation == translation}"
-                                                @click="clickTranslationSwitch(location, translation)">
+                                            <button v-for="translation in Object.keys(availableTranslations)"
+                                                @click="clickTranslationSwitch(location, translation)"
+                                                class="button is-small is-rounded"
+                                                :class="{'is-info': location.selectedTranslation == translation}">
                                                 {{ translation }}
                                             </button>
                                         </div>
