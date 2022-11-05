@@ -92,7 +92,7 @@ Vue.createApp({
         },
     },
     mounted() {
-        initProm.then(() => this.initQuranize());
+        initProm.then(this.initQuranize);
     },
 }).mount("#quranize-app");
 
