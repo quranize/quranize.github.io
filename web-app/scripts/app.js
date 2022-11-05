@@ -1,7 +1,7 @@
 import init, { Quranize } from "./quranize.js";
 import suraNames from "./quran/sura-names.js";
 
-const initPromise = init();
+const initProm = init();
 
 Vue.createApp({
     data() {
@@ -10,7 +10,6 @@ Vue.createApp({
             encodeResults: [],
             quranize: undefined,
             translations: {},
-            selectedTranslation: "",
         };
     },
     computed: {
@@ -42,25 +41,6 @@ Vue.createApp({
             }
             this.$refs.keyword.focus();
         },
-        async initTranslations(translation) {
-            this.unsetLocationTranslations();
-            (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
-                .split("\n")
-                .map(l => l.split("|"))
-                .filter(x => x.length == 3)
-                .forEach(x => this.translations[`${x[0]}:${x[1]}`] = x[2]);
-            this.setLocationTranslations();
-        },
-        unsetLocationTranslations() {
-            this.encodeResults.forEach(r => r.locations && r.locations.forEach(l => delete l.translation));
-        },
-        setLocationTranslations() {
-            this.encodeResults.forEach(r => r.locations && r.locations.forEach(this.setTranslation));
-        },
-        setTranslation(location) {
-            if (!location.translation)
-                location.translation = this.translations[`${location.sura_number}:${location.aya_number}`];
-        },
         setKeyword(keyword) {
             this.keyword = keyword;
             if (this.quranize) this.encodeResults = this.quranize.encode(keyword);
@@ -74,19 +54,30 @@ Vue.createApp({
         clickEncodeResult(result) {
             result.listed ^= true;
             if (!result.locations) result.locations = this.quranize.getLocations(result.quran);
-            result.locations.forEach(this.setTranslation);
         },
         clickExplanation(result) {
             result.explained ^= true;
         },
-        clickTranslationSwitch(translation) {
-            if (this.selectedTranslation == translation) {
-                this.selectedTranslation = "";
-                this.unsetLocationTranslations();
+        clickTranslationSwitch(location, translation) {
+            if (location.selectedTranslation == translation) {
+                delete location.selectedTranslation;
+                delete location.translation;
             } else {
-                this.selectedTranslation = translation;
-                this.initTranslations(translation);
+                location.selectedTranslation = translation;
+                this.fetchTranslations(translation)
+                    .then(t => location.translation = t[`${location.sura_number}:${location.aya_number}`]);
             }
+        },
+        async fetchTranslations(translation) {
+            if (this.translations[translation]) return this.translations[translation];
+            let translations = {};
+            (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
+                .split("\n")
+                .map(l => l.split("|"))
+                .filter(x => x.length == 3)
+                .forEach(x => translations[`${x[0]}:${x[1]}`] = x[2]);
+            this.translations[translation] = translations;
+            return translations;
         },
         toArabicNumber(n) {
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
@@ -100,9 +91,8 @@ Vue.createApp({
             navigator.share({ url: `${location.href}#${encodeURIComponent(this.keyword.trim())}` });
         },
     },
-    async mounted() {
-        await initPromise;
-        this.initQuranize();
+    mounted() {
+        initProm.then(() => this.initQuranize());
     },
 }).mount("#quranize-app");
 
