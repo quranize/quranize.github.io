@@ -59,9 +59,9 @@ Vue.createApp({
             result.explained ^= true;
         },
         clickTranslationSwitch(location, translation) {
+            delete location.translation;
             if (location.selectedTranslation == translation) {
                 delete location.selectedTranslation;
-                delete location.translation;
             } else {
                 location.selectedTranslation = translation;
                 this.fetchTranslations(translation)
