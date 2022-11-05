@@ -69,7 +69,8 @@
                     </div>
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags" v-show="quranize">
-                            <span class="tag is-italic" @click="clickExample(example)" v-for="example in examples">
+                            <span v-for="example in examples" class="tag is-italic" style="cursor: pointer;"
+                                @click="clickExample(example)">
                                 {{ example }}
                             </span>
                         </span>
