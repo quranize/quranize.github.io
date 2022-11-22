@@ -24,7 +24,7 @@ jobs:
           toolchain: stable
           target: wasm32-unknown-unknown
           profile: minimal
-      - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
+      - run: cargo install wasm-pack
       - run: wasm-pack build --release --target=web --no-typescript --out-dir=web-app/scripts --out-name=quranize
       - run: wget https://unpkg.com/vue@3.2.41/dist/vue.global.prod.js -O web-app/scripts/vue.js
       - uses: actions/upload-artifact@v3
