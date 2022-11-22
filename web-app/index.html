@@ -121,7 +121,14 @@
                                                 @click="clickTranslationSwitch(location, translation)"
                                                 class="button is-small is-rounded"
                                                 :class="{'is-info': location.selectedTranslation == translation}">
-                                                {{ translation }}
+                                                <span
+                                                    v-if="!(location.selectedTranslation == translation && !location.translation)">
+                                                    {{ translation }}
+                                                </span>
+                                                <span class="icon"
+                                                    v-if="location.selectedTranslation == translation && !location.translation">
+                                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                                </span>
                                             </button>
                                         </div>
                                     </div>
@@ -161,9 +168,8 @@
                                 {{ location.after_text }}
                             </span>
                         </article>
-                        <article class="panel-block" v-show="location.selectedTranslation">
-                            <progress class="progress is-info is-small" v-show="!location.translation"></progress>
-                            <span v-show="location.translation">{{ location.translation }}</span>
+                        <article class="panel-block" v-show="location.translation">
+                            {{ location.translation }}
                         </article>
                     </article>
                 </div>
