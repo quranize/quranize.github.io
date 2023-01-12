@@ -64,7 +64,7 @@ checksum = "d4cd144be6a0b46be8fb9113446f781cdb0b9ed2358f05ae8b965a9fc2bab1eb"
 
 [[package]]
 name = "quranize-wasm"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "quranize",
  "serde",
