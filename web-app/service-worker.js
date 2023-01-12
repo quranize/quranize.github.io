@@ -1,6 +1,5 @@
 self.addEventListener("fetch", event => {
-    if (event.request.method == "GET" && /^https?:\/\//.test(event.request.url))
-        intercept(event);
+    if (/^https?:\/\//.test(event.request.url)) intercept(event);
 });
 
 function intercept(event) {
@@ -37,5 +36,5 @@ function respondNetworkFirst(event) {
 async function putResponse(request, response) {
     let clonedResponse = response.clone();
     const cache = await caches.open("quranize-sw-v2");
-    return await cache.put(request, clonedResponse);
+    return cache.put(request, clonedResponse);
 }
