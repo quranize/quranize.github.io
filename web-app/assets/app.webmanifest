@@ -1,15 +1,16 @@
 {
     "name": "Quranize",
     "short_name": "Quranize",
-    "description": "mencari القرآن menggunakan alfabet",
+    "description": "Quranize transforms transliterations into quran forms: bismillah → بسم الله, alhamdulillah → الحمد لله, arrohman → الرحمن",
     "display": "standalone",
     "start_url": "/",
     "theme_color": "#3E8ED0",
     "background_color": "#3E8ED0",
-    "lang": "id",
+    "lang": "en",
     "orientation": "portrait",
     "categories": [
-        "education",
+        "alquran",
+        "quran",
         "utilities"
     ],
     "icons": [
@@ -146,26 +147,22 @@
         {
             "src": "screenshots/screenshot1.jpg",
             "sizes": "1080x2400",
-            "type": "image/jpeg",
-            "description": "tampilan awal"
+            "type": "image/jpeg"
         },
         {
             "src": "screenshots/screenshot2.jpg",
             "sizes": "1080x2400",
-            "type": "image/jpeg",
-            "description": "tampilan masyaallah"
+            "type": "image/jpeg"
         },
         {
             "src": "screenshots/screenshot3.jpg",
             "sizes": "1080x2400",
-            "type": "image/jpeg",
-            "description": "tampilan walaqod yassarna"
+            "type": "image/jpeg"
         },
         {
             "src": "screenshots/screenshot4.jpg",
             "sizes": "1080x2400",
-            "type": "image/jpeg",
-            "description": "tampilan wa'tasimu"
+            "type": "image/jpeg"
         }
     ]
 }
