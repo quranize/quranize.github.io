@@ -46,8 +46,8 @@
                         <div class="control has-icons-left is-expanded">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
                                 class="input is-rounded"
-                                :class="{'is-warning': !quranize, 'is-success': hasResults, 'is-danger': hasEmptyResult}"
-                                :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
+                                :class="{'is-success': hasResults, 'is-danger': hasEmptyResult}" :value="keyword"
+                                @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
@@ -56,14 +56,13 @@
                             <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
-                                    <i class="fa-solid fa-spinner fa-spin" v-show="!quranize"></i>
-                                    <i class="fa-solid fa-share-nodes" v-show="quranize"></i>
+                                    <i class="fa-solid fa-share-nodes"></i>
                                 </span>
                             </button>
                         </div>
                     </div>
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
-                        <span class="tags" v-show="quranize">
+                        <span class="tags">
                             <span v-for="example in examples" @click="clickExample(example)"
                                 class="tag is-rounded is-italic is-clickable">
                                 {{ example }}

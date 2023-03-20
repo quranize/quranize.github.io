@@ -1,14 +1,14 @@
 import init, { Quranize } from "./quranize.js";
 import suraNames from "./quran/sura-names.js";
 
-const initProm = init();
+await init();
+const quranize = new Quranize(29);
 
 Vue.createApp({
     data() {
         return {
             keyword: "",
             encodeResults: [],
-            quranize: undefined,
             translations: {},
         };
     },
@@ -31,19 +31,9 @@ Vue.createApp({
         supportSharing() { return "share" in navigator; },
     },
     methods: {
-        initQuranize() {
-            this.quranize = new Quranize(29);
-            let URLHash = location.hash.replace(/^#/, "");
-            if (this.keyword) this.encodeResults = this.quranize.encode(this.keyword)
-            else if (URLHash) {
-                this.setKeyword(decodeURIComponent(URLHash));
-                history.pushState({}, "", location.href.replace(/#.*$/, ""));
-            }
-            this.$refs.keyword.focus();
-        },
         setKeyword(keyword) {
             this.keyword = keyword;
-            if (this.quranize) this.encodeResults = this.quranize.encode(keyword);
+            this.encodeResults = quranize.encode(keyword);
         },
         updateKeyword(event) {
             this.setKeyword(event.target.value);
@@ -53,7 +43,7 @@ Vue.createApp({
         },
         clickEncodeResult(result) {
             result.listed ^= true;
-            if (!result.locations) result.locations = this.quranize.getLocations(result.quran);
+            if (!result.locations) result.locations = quranize.getLocations(result.quran);
         },
         clickExplanation(result) {
             result.explained ^= true;
@@ -92,7 +82,13 @@ Vue.createApp({
         },
     },
     mounted() {
-        initProm.then(this.initQuranize);
+        let URLHash = location.hash.replace(/^#/, "");
+        if (this.keyword) this.encodeResults = quranize.encode(this.keyword)
+        else if (URLHash) {
+            this.setKeyword(decodeURIComponent(URLHash));
+            history.pushState({}, "", location.href.replace(/#.*$/, ""));
+        }
+        this.$refs.keyword.focus();
     },
 }).mount("#quranize-app");
 
