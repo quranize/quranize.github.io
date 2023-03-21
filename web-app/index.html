@@ -45,7 +45,7 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
-                                class="input is-rounded"
+                                class="input is-primary is-normal is-rounded"
                                 :class="{'is-success': hasResults, 'is-danger': hasEmptyResult}" :value="keyword"
                                 @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
