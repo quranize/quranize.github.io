@@ -2,7 +2,7 @@ import init, { Quranize } from "./quranize.js";
 import suraNames from "./quran/sura-names.js";
 
 await init();
-let quranizeCap = 20;
+let quranizeCap = 13;
 let quranize = new Quranize(quranizeCap);
 
 Vue.createApp({
