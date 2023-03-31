@@ -1,3 +1,5 @@
+const cacheKey = "quranize-sw-v3";
+
 self.addEventListener("fetch", event => {
     if (/^https?:\/\//.test(event.request.url)) intercept(event);
 });
@@ -13,7 +15,7 @@ function intercept(event) {
 function respondStaleWhileRevalidate(event) {
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
-            let fetchedResponse = fetch(event.request).then(response => {
+            const fetchedResponse = fetch(event.request).then(response => {
                 putResponse(event.request, response);
                 return response;
             }).catch(() => { });
@@ -29,12 +31,12 @@ function respondNetworkFirst(event) {
                 putResponse(event.request, response);
                 return response;
             })
-            .catch(() => caches.match(event.request))
+            .catch(async () => (await caches.open(cacheKey)).match(event.request))
     );
 }
 
 async function putResponse(request, response) {
-    let clonedResponse = response.clone();
-    const cache = await caches.open("quranize-sw-v2");
+    const clonedResponse = response.clone();
+    const cache = await caches.open(cacheKey);
     return cache.put(request, clonedResponse);
 }
