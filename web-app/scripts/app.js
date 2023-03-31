@@ -2,7 +2,8 @@ import init, { Quranize } from "./quranize.js";
 import suraNames from "./quran/sura-names.js";
 
 await init();
-const quranize = new Quranize(33);
+let quranizeCap = 20;
+let quranize = new Quranize(quranizeCap);
 
 Vue.createApp({
     data() {
@@ -31,9 +32,16 @@ Vue.createApp({
         supportSharing() { return "share" in navigator; },
     },
     methods: {
+        encode(keyword) {
+            if (keyword.length > quranizeCap && quranizeCap < 50) {
+                quranizeCap += 10;
+                quranize = new Quranize(quranizeCap);
+            }
+            return quranize.encode(keyword);
+        },
         setKeyword(keyword) {
             this.keyword = keyword;
-            this.encodeResults = quranize.encode(keyword);
+            this.encodeResults = this.encode(keyword);
         },
         updateKeyword(event) {
             this.setKeyword(event.target.value);
@@ -83,7 +91,7 @@ Vue.createApp({
     },
     mounted() {
         let URLHash = location.hash.replace(/^#/, "");
-        if (this.keyword) this.encodeResults = quranize.encode(this.keyword)
+        if (this.keyword) this.encodeResults = this.encode(this.keyword)
         else if (URLHash) {
             this.setKeyword(decodeURIComponent(URLHash));
             history.pushState({}, "", location.href.replace(/#.*$/, ""));
