@@ -1,5 +1,9 @@
 const cacheKey = "quranize-sw-v3";
 
+self.addEventListener("install", (_event) => {
+    self.skipWaiting();
+});
+
 self.addEventListener("fetch", event => {
     if (/^https?:\/\//.test(event.request.url)) intercept(event);
 });
