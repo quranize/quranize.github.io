@@ -90,7 +90,7 @@ Vue.createApp({
         },
     },
     mounted() {
-        let URLHash = location.hash.replace(/^#/, "");
+        const URLHash = location.hash.replace(/^#/, "");
         if (this.keyword) this.encodeResults = this.encode(this.keyword)
         else if (URLHash) {
             this.setKeyword(decodeURIComponent(URLHash));
