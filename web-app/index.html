@@ -76,10 +76,10 @@
                     <mark class="quran-text has-text-weight-bold" v-show="!result.explaining">
                         {{ result.quran }}
                     </mark>
-                    <span v-show="result.explaining" dir="rtl">
+                    <span v-if="result.explaining" dir="rtl">
                         <span class="box mx-1 px-1 py-0" style="display: inline-flex;"
                             v-for="(expl, i) in result.explanations">
-                            <mark class="quran-text has-text-weight-bold">{{ result.quran[i] }}</mark>
+                            <mark class="quran-text has-text-weight-bold">{{ result.quran_expls[i] }}</mark>
                             <span class="tag is-white">{{ expl }}</span>
                         </span>
                     </span>

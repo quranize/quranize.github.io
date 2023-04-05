@@ -54,6 +54,15 @@ Vue.createApp({
             if (!result.locations) result.locations = quranize.getLocations(result.quran);
         },
         clickExplanation(result) {
+            result.quran_expls = [];
+            for (let i = 0; i < result.explanations.length; i++) {
+                if (result.explanations[i] == "") {
+                    result.quran_expls[result.quran_expls.length - 1] += result.quran[i];
+                } else {
+                    result.quran_expls.push(result.quran[i]);
+                }
+            }
+            result.explanations = result.explanations.filter(e => e != "");
             result.explaining ^= true;
         },
         clickTranslationSwitch(location, translation) {
