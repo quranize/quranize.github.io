@@ -19,8 +19,8 @@ Vue.createApp({
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length == 0; },
         examples() {
             let candidates = [
-                "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "wa'tashimuu bihablillah",
-                "wabassirilladzina", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
+                "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "waantum muslimun",
+                "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
             ];
             let taken = [];
             const COUNT = 4 + new Date() % 2;
