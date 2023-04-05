@@ -72,12 +72,12 @@
                 </div>
             </div>
             <section v-for="result in encodeResults" class="box">
-                <div class="box is-flex is-justify-content-center">
+                <div class="box is-flex is-flex-direction-row-reverse is-justify-content-center">
                     <mark class="quran-text has-text-weight-bold" v-show="!result.explaining">
                         {{ result.quran }}
                     </mark>
                     <span v-show="result.explaining" dir="rtl">
-                        <span class="box mx-1 px-1 py-1" style="display: inline-flex;"
+                        <span class="box mx-1 px-1 py-0" style="display: inline-flex;"
                             v-for="(expl, i) in result.explanations">
                             <mark class="quran-text has-text-weight-bold">{{ result.quran[i] }}</mark>
                             <span class="tag is-white">{{ expl }}</span>
