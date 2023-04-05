@@ -49,12 +49,12 @@ Vue.createApp({
         clickExample(example) {
             this.setKeyword(example);
         },
-        clickEncodeResult(result) {
-            result.listed ^= true;
+        clickExpand(result) {
+            result.expanding ^= true;
             if (!result.locations) result.locations = quranize.getLocations(result.quran);
         },
         clickExplanation(result) {
-            result.explained ^= true;
+            result.explaining ^= true;
         },
         clickTranslationSwitch(location, translation) {
             delete location.translation;
