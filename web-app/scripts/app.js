@@ -34,7 +34,7 @@ Vue.createApp({
     methods: {
         encode(keyword) {
             if (keyword.length > quranizeCap && quranizeCap < 100) {
-                quranizeCap += 10;
+                quranizeCap = quranizeCap * 3 >> 1;
                 quranize = new Quranize(quranizeCap);
             }
             return quranize.encode(keyword);
