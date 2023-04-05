@@ -72,6 +72,18 @@
                 </div>
             </div>
             <section v-for="result in encodeResults" class="box">
+                <div class="box is-flex is-justify-content-center">
+                    <mark class="quran-text has-text-weight-bold" v-show="!result.explaining">
+                        {{ result.quran }}
+                    </mark>
+                    <span v-show="result.explaining" dir="rtl">
+                        <span class="box mx-1 px-1 py-1" style="display: inline-flex;"
+                            v-for="(expl, i) in result.explanations">
+                            <mark class="quran-text has-text-weight-bold">{{ result.quran[i] }}</mark>
+                            <span class="tag">{{ expl }}</span>
+                        </span>
+                    </span>
+                </div>
                 <nav class="level is-mobile">
                     <div class="level-item">
                         <div class="buttons">
@@ -90,16 +102,6 @@
                                     <i class="fa-solid fa-info"></i>
                                 </span>
                             </button>
-                            <mark class="quran-text has-text-weight-bold" v-show="!result.explaining">
-                                {{ result.quran }}
-                            </mark>
-                            <span v-show="result.explaining" dir="rtl">
-                                <span class="box mx-1 px-2 py-1" style="display: inline;"
-                                    v-for="(expl, i) in result.explanations">
-                                    <mark class="quran-text has-text-weight-bold">{{ result.quran[i] }}</mark>
-                                    <sup class="is-italic">{{ expl }}</sup>
-                                </span>
-                            </span>
                         </div>
                     </div>
                 </nav>
