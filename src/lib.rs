@@ -112,12 +112,12 @@ mod tests {
         assert_eq!(l.text, "بِسْمِ اللَّهِ");
         assert_eq!(l.after_text, "الرَّحْمَـٰنِ الرَّحِيمِ");
 
-        let l = &q.get_locations(&q.encode("bismillah hirrohman nirrohim")[0].quran)[0];
+        let l = &q.get_locations(&q.encode("bismillahirrohmanirrohim")[0].quran)[0];
         assert_eq!(l.before_text, "");
         assert_eq!(l.text, "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ");
         assert_eq!(l.after_text, "");
 
-        let l = &q.get_locations(&q.encode("arrohman nirrohim")[0].quran)[0];
+        let l = &q.get_locations(&q.encode("arrohmanirrohim")[0].quran)[0];
         assert_eq!(l.sura_number, 1);
         assert_eq!(l.aya_number, 1);
         assert_eq!(l.before_text, "بِسْمِ اللَّهِ");
