@@ -87,6 +87,12 @@
                 <nav class="level is-mobile">
                     <div class="level-item">
                         <div class="buttons">
+                            <button class="button is-small is-rounded" :class="{'is-info': result.explaining}"
+                                @click="clickExplanation(result)">
+                                <span class="icon">
+                                    <i class="fa-solid fa-info"></i>
+                                </span>
+                            </button>
                             <button class="button is-small is-rounded" :class="{'is-info': result.expanding}"
                                 @click="clickExpand(result)">
                                 <span class="icon">
@@ -94,12 +100,6 @@
                                 </span>
                                 <span>
                                     {{ result.location_count }}
-                                </span>
-                            </button>
-                            <button class="button is-small is-rounded" :class="{'is-info': result.explaining}"
-                                @click="clickExplanation(result)">
-                                <span class="icon">
-                                    <i class="fa-solid fa-info"></i>
                                 </span>
                             </button>
                         </div>
