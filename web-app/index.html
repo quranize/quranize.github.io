@@ -47,7 +47,7 @@
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
                                 class="input is-normal is-rounded"
                                 :class="hasResults ? 'is-success' : hasEmptyResult ? 'is-warning' : 'is-info'"
-                                :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur">
+                                :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
