@@ -59,15 +59,17 @@ Vue.createApp({
             result.explaining ^= true;
         },
         compressExplanation(result) {
-            let compressedExplanation = [];
-            for (let i = 0; i < result.explanations.length; i++) {
-                if (result.explanations[i]) {
-                    compressedExplanation.push({ q: result.quran[i], a: result.explanations[i] });
+            let ce = [];
+            result.explanations.forEach((e, i) => {
+                let q = result.quran[i];
+                if (q == "\u0651" || e == "") {
+                    ce[ce.length - 1].quran += q;
+                    ce[ce.length - 1].alphabet += e;
                 } else {
-                    compressedExplanation[compressedExplanation.length - 1].q += result.quran[i];
+                    ce.push({ quran: q, alphabet: e });
                 }
-            }
-            return compressedExplanation;
+            });
+            return ce;
         },
         clickTranslationSwitch(location, translation) {
             delete location.translation;
