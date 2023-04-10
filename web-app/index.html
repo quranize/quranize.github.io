@@ -43,13 +43,16 @@
             <div class="block">
                 <div class="field">
                     <div class="field is-grouped">
-                        <div class="control has-icons-left is-expanded">
+                        <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
                                 class="input is-normal is-rounded"
                                 :class="hasResults ? 'is-success' : hasEmptyResult ? 'is-warning' : 'is-info'"
                                 :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <span v-show="keyword" class="icon is-right">
+                                <button class="delete" @click="setKeyword('')"></button>
                             </span>
                         </div>
                         <div class="control" v-show="supportSharing">
