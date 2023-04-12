@@ -77,7 +77,7 @@
             <section v-for="result in encodeResults" class="box">
                 <div class="block is-flex is-flex-direction-row-reverse is-justify-content-center" dir="rtl">
                     <span v-if="!result.explaining" class="box">
-                        <mark class="quran-text has-text-weight-bold">
+                        <mark class="quran-text has-text-weight-bold has-text-black">
                             {{ result.quran }}
                         </mark>
                     </span>
@@ -157,7 +157,7 @@
                                 </div>
                             </nav>
                         </header>
-                        <article class="panel-block quran-text">
+                        <article class="panel-block quran-text has-text-black">
                             <span>
                                 {{ location.before_text }}
                                 <mark>{{ location.text }}</mark>

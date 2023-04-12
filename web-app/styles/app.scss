@@ -31,8 +31,13 @@ $section-padding: 1.5rem 1.5rem;
 .quran-text {
     font-family: hafs;
     font-size: 1.15em;
-    line-height: 2em;
+    text-align: justify;
     direction: rtl;
+    line-height: 2.32em;
+}
+
+mark {
+    background-color: #d5f1d0;
 }
 
 [v-cloak] {
