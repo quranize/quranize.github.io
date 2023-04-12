@@ -75,13 +75,14 @@
                 </div>
             </div>
             <section v-for="result in encodeResults" class="box">
-                <div class="block is-flex is-justify-content-center">
+                <div class="block">
                     <div class="box">
-                        <div v-if="!result.explaining" class="quran-text has-text-weight-bold has-text-black">
+                        <div v-if="!result.explaining"
+                            class="quran-text has-text-centered has-text-weight-bold has-text-black">
                             {{ result.quran }}
                         </div>
-                        <div class="field is-grouped is-grouped-multiline is-flex is-flex-direction-row-reverse is-justify-content-space-between"
-                            v-if="result.explaining">
+                        <div v-if="result.explaining"
+                            class="field is-grouped is-grouped-multiline is-flex is-flex-direction-row-reverse is-justify-content-space-between">
                             <div class="control" v-for="expl in result.compressedExplanation">
                                 <div class="tags has-addons">
                                     <span class="tag is-dark">{{ expl.alphabet }}</span>
