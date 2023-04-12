@@ -129,14 +129,8 @@
                                         </div>
                                     </div>
                                     <div class="level-item">
-                                        <a class="button is-small is-link is-outlined is-rounded is-hidden-desktop"
-                                            target="_blank" :href="tanzilURL(location)">
-                                            <span class="icon">
-                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                            </span>
-                                        </a>
-                                        <a class="button is-small is-link is-outlined is-rounded is-hidden-touch"
-                                            target="_blank" :href="tanzilURL(location)">
+                                        <a class="button is-small is-link is-outlined is-rounded"
+                                            :href="tanzilURL(location)" target="_blank">
                                             <span class="icon-text">
                                                 <span>tanzil.net</span>
                                                 <span class="icon">
@@ -150,8 +144,6 @@
                                     <div class="level-item">
                                         <span class="quran-text has-text-weight-normal is-size-5">
                                             {{ suraNames[location.sura_number - 1] }}
-                                            :
-                                            {{ toArabicNumber(location.aya_number) }}
                                         </span>
                                     </div>
                                 </div>
@@ -162,6 +154,7 @@
                                 {{ location.before_text }}
                                 <mark>{{ location.text }}</mark>
                                 {{ location.after_text }}
+                                ﴿{{ toArabicNumber(location.aya_number) }}﴾
                             </span>
                         </article>
                         <article class="panel-block" v-show="location.translation">
