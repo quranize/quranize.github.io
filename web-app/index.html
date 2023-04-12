@@ -75,19 +75,21 @@
                 </div>
             </div>
             <section v-for="result in encodeResults" class="box">
-                <div class="block is-flex is-flex-direction-row-reverse is-justify-content-center" dir="rtl">
-                    <span v-if="!result.explaining" class="box">
-                        <mark class="quran-text has-text-weight-bold has-text-black">
+                <div class="block is-flex is-justify-content-center">
+                    <div class="box">
+                        <div v-if="!result.explaining" class="quran-text has-text-weight-bold has-text-black">
                             {{ result.quran }}
-                        </mark>
-                    </span>
-                    <span v-if="result.explaining">
-                        <span v-for="expl in result.compressedExplanation" class="box mx-1 px-0 py-0"
-                            style="display: inline-block;">
-                            <mark class="quran-text has-text-weight-bold">{{ expl.quran }}</mark>
-                            <span class="tag is-white">{{ expl.alphabet }}</span>
-                        </span>
-                    </span>
+                        </div>
+                        <div class="field is-grouped is-grouped-multiline is-flex is-flex-direction-row-reverse is-justify-content-space-between"
+                            v-if="result.explaining">
+                            <div class="control" v-for="expl in result.compressedExplanation">
+                                <div class="tags has-addons">
+                                    <span class="tag is-dark">{{ expl.alphabet }}</span>
+                                    <span class="tag is-info"><span class="quran-text">{{ expl.quran }}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="block">
                     <nav class="field is-grouped is-flex is-justify-content-center">
