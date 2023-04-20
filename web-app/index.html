@@ -49,7 +49,7 @@
                                 :class="hasResults ? 'is-success' : hasEmptyResult ? 'is-warning' : 'is-info'"
                                 :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                             </span>
                             <span v-show="keyword" class="icon is-right">
                                 <button class="delete" @click="setKeyword('')"></button>
@@ -59,7 +59,7 @@
                             <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
-                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
                                 </span>
                             </button>
                         </div>
@@ -74,96 +74,98 @@
                     </p>
                 </div>
             </div>
-            <section v-for="result in encodeResults" class="box">
-                <div class="block">
-                    <div class="box">
-                        <div v-if="!result.explaining"
-                            class="quran-text has-text-centered has-text-weight-bold has-text-black">
-                            {{ result.quran }}
+            <section v-for="result in encodeResults" class="block">
+                <div class="card">
+                    <header class="card-header" dir="rtl">
+                        <p class="card-header-title">
+                            <span class="quran-text">{{ result.quran }}</span>
+                        </p>
+                        <button @click="clickExpand(result)" class="card-header-icon">
+                            <span class="icon">
+                                <i :class="result.expanding ? 'fa-angle-up' : 'fa-angle-down'" class="fa-solid"
+                                    aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </header>
+                    <div v-if="result.expanding" class="card-content">
+                        <div v-for="location in result.locations" class="panel">
+                            <header class="panel-heading">
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <div class="level-item">
+                                            <div class="buttons has-addons">
+                                                <button v-for="translation in Object.keys(availableTranslations)"
+                                                    @click="clickTranslationSwitch(location, translation)"
+                                                    class="button is-small is-rounded"
+                                                    :class="{'is-info': location.selectedTranslation == translation}">
+                                                    <span
+                                                        v-if="!(location.selectedTranslation == translation && !location.translation)">
+                                                        {{ translation }}
+                                                    </span>
+                                                    <span class="icon"
+                                                        v-if="location.selectedTranslation == translation && !location.translation">
+                                                        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="level-item">
+                                            <a class="button is-small is-link is-outlined is-rounded"
+                                                :href="tanzilURL(location)" target="_blank">
+                                                <span class="icon-text">
+                                                    <span>tanzil.net</span>
+                                                    <span class="icon">
+                                                        <i class="fa-solid fa-arrow-up-right-from-square"
+                                                            aria-hidden="true"></i>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <span class="quran-text tag is-medium">
+                                                {{ suraNames[location.sura_number - 1] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </header>
+                            <article class="panel-block quran-text has-text-black">
+                                <span>
+                                    {{ location.before_text }}
+                                    <mark>{{ location.text }}</mark>
+                                    {{ location.after_text }}
+                                    ﴿{{ toArabicNumber(location.aya_number) }}﴾
+                                </span>
+                            </article>
+                            <article class="panel-block" v-show="location.translation">
+                                {{ location.translation }}
+                            </article>
                         </div>
-                        <div v-if="result.explaining"
-                            class="field is-grouped is-grouped-multiline is-flex is-flex-direction-row-reverse is-justify-content-space-between">
-                            <div class="control" v-for="expl in result.compressedExplanation">
-                                <div class="tags has-addons">
-                                    <span class="tag is-dark">{{ expl.alphabet }}</span>
-                                    <span class="tag is-info"><span class="quran-text">{{ expl.quran }}</span></span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-item is-flex-direction-column">
+                            <div class="block">
+                                <button class="button is-small is-rounded" :class="{'is-info': result.explaining}"
+                                    @click="clickExplanation(result)">
+                                    <span class="icon">
+                                        <i class="fa-solid fa-info" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div v-if="result.explaining" class="block">
+                                <div class="field is-grouped is-grouped-multiline">
+                                    <div v-for="e in result.compressedExplanation" class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-dark">{{ e.alphabet }}</span>
+                                            <span class="tag is-info quran-text">{{ e.quran }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="block">
-                    <nav class="field is-grouped is-flex is-justify-content-center">
-                        <span class="control">
-                            <button class="button is-small is-rounded" :class="{'is-info': result.explaining}"
-                                @click="clickExplanation(result)">
-                                <span class="icon"><i class="fa-solid fa-info"></i></span>
-                            </button>
-                        </span>
-                        <span class="control">
-                            <button class="button is-small is-rounded" :class="{'is-info': result.expanding}"
-                                @click="clickExpand(result)">
-                                <span class="icon"><i class="fa-solid fa-table-list"></i></span>
-                                <span>{{ result.location_count }}</span>
-                            </button>
-                        </span>
-                    </nav>
-                </div>
-                <div v-if="result.expanding">
-                    <article v-for="location in result.locations" class="panel">
-                        <header class="panel-heading">
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <div class="level-item">
-                                        <div class="buttons has-addons">
-                                            <button v-for="translation in Object.keys(availableTranslations)"
-                                                @click="clickTranslationSwitch(location, translation)"
-                                                class="button is-small is-rounded"
-                                                :class="{'is-info': location.selectedTranslation == translation}">
-                                                <span
-                                                    v-if="!(location.selectedTranslation == translation && !location.translation)">
-                                                    {{ translation }}
-                                                </span>
-                                                <span class="icon"
-                                                    v-if="location.selectedTranslation == translation && !location.translation">
-                                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="level-item">
-                                        <a class="button is-small is-link is-outlined is-rounded"
-                                            :href="tanzilURL(location)" target="_blank">
-                                            <span class="icon-text">
-                                                <span>tanzil.net</span>
-                                                <span class="icon">
-                                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="level-right">
-                                    <div class="level-item">
-                                        <span class="quran-text tag is-medium">
-                                            {{ suraNames[location.sura_number - 1] }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </nav>
-                        </header>
-                        <article class="panel-block quran-text has-text-black">
-                            <span>
-                                {{ location.before_text }}
-                                <mark>{{ location.text }}</mark>
-                                {{ location.after_text }}
-                                ﴿{{ toArabicNumber(location.aya_number) }}﴾
-                            </span>
-                        </article>
-                        <article class="panel-block" v-show="location.translation">
-                            {{ location.translation }}
-                        </article>
-                    </article>
                 </div>
             </section>
         </div>
