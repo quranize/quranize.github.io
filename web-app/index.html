@@ -67,7 +67,7 @@
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags">
                             <span v-for="example in examples" @click="clickExample(example)"
-                                class="tag is-rounded is-italic is-clickable">
+                                class="tag is-rounded is-italic is-clickable" :class="{'is-info': example === keyword}">
                                 {{ example }}
                             </span>
                         </span>
@@ -106,13 +106,13 @@
                                                 <button v-for="translation in Object.keys(availableTranslations)"
                                                     @click="clickTranslationSwitch(location, translation)"
                                                     class="button is-small is-rounded"
-                                                    :class="{'is-info': location.selectedTranslation == translation}">
+                                                    :class="{'is-info': location.selectedTranslation === translation}">
                                                     <span
-                                                        v-if="!(location.selectedTranslation == translation && !location.translation)">
+                                                        v-if="!(location.selectedTranslation === translation && !location.translation)">
                                                         {{ translation }}
                                                     </span>
                                                     <span class="icon"
-                                                        v-if="location.selectedTranslation == translation && !location.translation">
+                                                        v-if="location.selectedTranslation === translation && !location.translation">
                                                         <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
                                                     </span>
                                                 </button>
