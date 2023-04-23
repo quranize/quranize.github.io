@@ -79,7 +79,15 @@
                     <header class="card-header" dir="rtl">
                         <p class="card-header-title">
                             <span class="quran-text">{{ result.quran }}</span>
-                            <span class="tag">{{ result.location_count }}</span>
+                            <span class="tags">
+                                <span class="tag is-rounded is-info is-light">{{ result.location_count }}</span>
+                                <span class="tag is-rounded is-clickable" :class="{'is-info': result.explaining}"
+                                    @click="clickExplanation(result)">
+                                    <span class="icon">
+                                        <i class="fa-solid fa-question" aria-hidden="true"></i>
+                                    </span>
+                                </span>
+                            </span>
                         </p>
                         <button @click="clickExpand(result)" class="card-header-icon">
                             <span class="icon">
@@ -145,23 +153,13 @@
                             </article>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="card-footer-item is-flex-direction-column">
-                            <div class="block">
-                                <button class="button is-small is-rounded" :class="{'is-info': result.explaining}"
-                                    @click="clickExplanation(result)">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-info" aria-hidden="true"></i>
-                                    </span>
-                                </button>
-                            </div>
-                            <div v-if="result.explaining" class="block">
-                                <div class="field is-grouped is-grouped-multiline">
-                                    <div v-for="e in result.compressedExplanation" class="control">
-                                        <div class="tags has-addons">
-                                            <span class="tag is-dark">{{ e.alphabet }}</span>
-                                            <span class="tag is-info quran-text">{{ e.quran }}</span>
-                                        </div>
+                    <div v-if="result.explaining" class="card-footer">
+                        <div class="card-footer-item">
+                            <div class="field is-grouped is-grouped-multiline">
+                                <div v-for="e in result.compressedExplanation" class="control">
+                                    <div class="tags has-addons">
+                                        <span class="tag is-dark">{{ e.alphabet }}</span>
+                                        <span class="tag is-info quran-text">{{ e.quran }}</span>
                                     </div>
                                 </div>
                             </div>
