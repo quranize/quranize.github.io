@@ -107,18 +107,12 @@
                                                     @click="clickTranslationSwitch(location, translation)"
                                                     class="button is-small is-rounded"
                                                     :class="{'is-info': location.selectedTranslation === translation}">
-                                                    <span
-                                                        v-if="!(location.selectedTranslation === translation && !location.translation)">
-                                                        <span class="icon">
-                                                            <i class="fa-solid fa-language" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span>
-                                                            {{ translation }}
-                                                        </span>
-                                                    </span>
                                                     <span class="icon"
                                                         v-if="location.selectedTranslation === translation && !location.translation">
                                                         <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span v-else>
+                                                        {{ translation }}
                                                     </span>
                                                 </button>
                                             </div>
