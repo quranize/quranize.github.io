@@ -11,32 +11,32 @@ self.addEventListener("fetch", event => {
 function intercept(event) {
     if (
         /\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url) ||
-        /\/scripts\/quran\/.*$/.test(event.request.url)
+        /\/scripts\/quran\/.*$/.test(event.request.url) ||
+        /\/scripts\/quranize\/.*$/.test(event.request.url)
     ) respondStaleWhileRevalidate(event)
     else respondNetworkFirst(event);
 }
 
 function respondStaleWhileRevalidate(event) {
+    const fetchedResponse = fetchRequest(event.request).catch(() => { });
     event.respondWith(
-        caches.match(event.request).then(cachedResponse => {
-            const fetchedResponse = fetch(event.request).then(response => {
-                putResponse(event.request, response);
-                return response;
-            }).catch(() => { });
-            return cachedResponse ? cachedResponse : fetchedResponse;
-        })
+        caches.open(cacheKey)
+            .then(cache => cache.match(event.request))
+            .then(cachedResponse => cachedResponse ? cachedResponse : fetchedResponse)
     );
 }
 
 function respondNetworkFirst(event) {
     event.respondWith(
-        fetch(event.request)
-            .then(response => {
-                putResponse(event.request, response);
-                return response;
-            })
+        fetchRequest(event.request)
             .catch(async () => (await caches.open(cacheKey)).match(event.request))
     );
+}
+
+async function fetchRequest(request) {
+    const response = await fetch(request);
+    putResponse(request, response);
+    return response;
 }
 
 async function putResponse(request, response) {
