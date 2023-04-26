@@ -44,8 +44,7 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
-                                class="input is-normal is-rounded"
-                                :class="hasResults ? 'is-success' : hasEmptyResult ? 'is-warning' : 'is-info'"
+                                class="input is-rounded" :class="hasEmptyResult ? 'is-warning' : 'is-info'"
                                 :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
@@ -66,7 +65,8 @@
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags">
                             <span v-for="example in examples" @click="clickExample(example)"
-                                class="tag is-rounded is-italic is-clickable" :class="{'is-info': example === keyword}">
+                                class="tag is-rounded is-italic is-clickable"
+                                :class="{'is-primary': example === keyword}">
                                 {{ example }}
                             </span>
                         </span>
@@ -156,7 +156,7 @@
                             <div class="field is-grouped is-grouped-multiline">
                                 <div v-for="e in result.compressedExplanation" class="control">
                                     <div class="tags has-addons">
-                                        <span class="tag is-dark">{{ e.alphabet }}</span>
+                                        <span class="tag">{{ e.alphabet }}</span>
                                         <span class="tag is-info quran-text">{{ e.quran }}</span>
                                     </div>
                                 </div>
