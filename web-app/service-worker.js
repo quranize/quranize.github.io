@@ -9,12 +9,11 @@ self.addEventListener("fetch", event => {
 });
 
 function intercept(event) {
-    if (
-        /\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url) ||
-        /\/scripts\/quran\/.*$/.test(event.request.url) ||
-        /\/scripts\/quranize\/.*$/.test(event.request.url)
-    ) respondStaleWhileRevalidate(event)
-    else respondNetworkFirst(event);
+    const path = new URL(event.request.url).pathname;
+    if (path.startsWith("/assets") || path.startsWith("/scripts") || path.startsWith("/styles"))
+        respondStaleWhileRevalidate(event)
+    else
+        respondNetworkFirst(event);
 }
 
 function respondStaleWhileRevalidate(event) {
