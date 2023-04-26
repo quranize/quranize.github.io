@@ -9,12 +9,7 @@ self.addEventListener("fetch", event => {
 });
 
 function intercept(event) {
-    if (
-        /\.(otf|ttf|woff|woff2)(\?.*)?$/.test(event.request.url) ||
-        /\/scripts\/quran\/.*$/.test(event.request.url) ||
-        /\/scripts\/quranize\/.*$/.test(event.request.url)
-    ) respondStaleWhileRevalidate(event)
-    else respondNetworkFirst(event);
+    respondStaleWhileRevalidate(event);
 }
 
 function respondStaleWhileRevalidate(event) {
@@ -23,14 +18,6 @@ function respondStaleWhileRevalidate(event) {
         caches.open(cacheKey)
             .then(cache => cache.match(event.request))
             .then(cachedResponse => cachedResponse ? cachedResponse : fetchedResponse)
-    );
-}
-
-function respondNetworkFirst(event) {
-    event.respondWith(
-        fetchRequest(event.request)
-            .catch(() => caches.open(cacheKey))
-            .then(cache => cache.match(event.request))
     );
 }
 
