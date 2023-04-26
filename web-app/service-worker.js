@@ -28,8 +28,7 @@ function respondStaleWhileRevalidate(event) {
 function respondNetworkFirst(event) {
     event.respondWith(
         fetchRequest(event.request)
-            .catch(() => caches.open(cacheKey))
-            .then(cache => cache.match(event.request))
+            .catch(async () => (await caches.open(cacheKey)).match(event.request))
     );
 }
 
