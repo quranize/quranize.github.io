@@ -2,7 +2,7 @@
 
 /web-app/scripts/quranize.js
 /web-app/scripts/quranize_bg.wasm
-/web-app/scripts/vue.js
+/web-app/scripts/vue.esm-browser.js
 
 /web-app/styles/bulma.min.css
 /web-app/styles/fontawesome

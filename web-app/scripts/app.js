@@ -1,20 +1,21 @@
-import init, { Quranize } from "./quranize.js";
-import suraNames from "./quran/sura-names.js";
+import init, { Quranize } from "./quranize/quranize.js";
+import { createApp } from "./vue.esm-browser.js"
+import { suraNames } from "./quran/meta.js"
 
 await init();
 let quranizeCap = 23;
 let quranize = new Quranize(quranizeCap);
 
-Vue.createApp({
+createApp({
     data() {
         return {
             keyword: "",
             encodeResults: [],
             translations: {},
+            suraNames
         };
     },
     computed: {
-        suraNames() { return suraNames; },
         hasResults() { return this.encodeResults.length > 0; },
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length == 0; },
         examples() {

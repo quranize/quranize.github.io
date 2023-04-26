@@ -1,4 +1,4 @@
-export default [
+const suraNames = [
     "الفاتحة",
     "البقرة",
     "آل عمران",
@@ -114,3 +114,4 @@ export default [
     "الفلق",
     "الناس",
 ];
+export { suraNames };
