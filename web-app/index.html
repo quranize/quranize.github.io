@@ -44,7 +44,7 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
-                                class="input is-rounded" :class="hasEmptyResult ? 'is-warning' : 'is-info'"
+                                class="input is-rounded" :class="hasEmptyResult ? 'is-warning' : 'is-dark'"
                                 :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
                             </span>
                         </div>
                         <div class="control" v-show="supportSharing">
-                            <button class="button is-info is-outlined is-rounded" @click="share"
+                            <button class="button is-dark is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
                                     <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
@@ -84,13 +84,13 @@
                         </button>
                         <p class="card-header-title is-justify-content-right">
                             <span class="tags">
-                                <span class="tag is-rounded is-clickable" :class="{'is-info': result.explaining}"
+                                <span class="tag is-rounded is-clickable" :class="{'is-dark': result.explaining}"
                                     @click="clickExplanation(result)">
                                     <span class="icon">
                                         <i class="fa-solid fa-question" aria-hidden="true"></i>
                                     </span>
                                 </span>
-                                <span class="tag is-rounded is-dark">{{ result.location_count }}</span>
+                                <span class="tag is-rounded is-info">{{ result.location_count }}</span>
                                 <span class="quran-text">{{ result.quran }}</span>
                             </span>
                         </p>
@@ -105,7 +105,7 @@
                                                 <button v-for="translation in Object.keys(availableTranslations)"
                                                     @click="clickTranslationSwitch(location, translation)"
                                                     class="button is-small is-rounded"
-                                                    :class="{'is-info': location.selectedTranslation === translation}">
+                                                    :class="{'is-dark': location.selectedTranslation === translation}">
                                                     <span class="icon"
                                                         v-if="location.selectedTranslation === translation && !location.translation">
                                                         <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
@@ -157,7 +157,7 @@
                                 <div v-for="e in result.compressedExplanation" class="control">
                                     <div class="tags has-addons">
                                         <span class="tag">{{ e.alphabet }}</span>
-                                        <span class="tag is-info quran-text">{{ e.quran }}</span>
+                                        <span class="tag is-dark quran-text">{{ e.quran }}</span>
                                     </div>
                                 </div>
                             </div>
