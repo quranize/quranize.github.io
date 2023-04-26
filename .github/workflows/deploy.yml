@@ -31,8 +31,8 @@ jobs:
         with:
           name: build-scripts
           path: |
-            web-app/scripts/quranize.js
-            web-app/scripts/quranize_bg.wasm
+            web-app/scripts/quranize/quranize.js
+            web-app/scripts/quranize/quranize_bg.wasm
             web-app/scripts/vue.esm-browser.js
   build-styles:
     runs-on: ubuntu-latest
