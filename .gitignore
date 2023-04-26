@@ -4,7 +4,5 @@
 /web-app/scripts/quranize_bg.wasm
 /web-app/scripts/vue.js
 
-/web-app/styles/app.css
-/web-app/styles/app.css.map
-/web-app/styles/bulma
+/web-app/styles/bulma.min.css
 /web-app/styles/fontawesome

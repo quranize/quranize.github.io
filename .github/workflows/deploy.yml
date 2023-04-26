@@ -38,13 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
-        with:
-          repository: jgthms/bulma
-          ref: "0.9.4"
-          path: web-app/styles/bulma
-      - run: curl -L https://github.com/sass/dart-sass/releases/download/1.54.8/dart-sass-1.54.8-linux-x64.tar.gz | tar xzv
-      - run: dart-sass/sass --no-source-map --style=compressed web-app/styles/app.scss web-app/styles/app.css
+      - run: wget https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css -O web-app/styles/bulma.min.css
       - run: wget https://use.fontawesome.com/releases/v6.4.0/fontawesome-free-6.4.0-web.zip
       - run: unzip fontawesome-free-6.4.0-web.zip "fontawesome-free-6.4.0-web/webfonts/**" "fontawesome-free-6.4.0-web/css/**"
       - run: mv fontawesome-free-6.4.0-web web-app/styles/fontawesome
@@ -53,6 +47,7 @@ jobs:
           name: build-styles
           path: |
             web-app/styles/app.css
+            web-app/styles/bulma.min.css
             web-app/styles/fontawesome
   deploy:
     needs:
