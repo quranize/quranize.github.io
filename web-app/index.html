@@ -53,7 +53,7 @@
                                 <button class="delete" @click="setKeyword('')"></button>
                             </span>
                         </div>
-                        <div class="control" v-show="supportSharing">
+                        <div class="control" v-if="supportSharing">
                             <button class="button is-dark is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
@@ -102,16 +102,17 @@
                                     <div class="level-left">
                                         <div class="level-item">
                                             <div class="buttons has-addons">
-                                                <button v-for="translation in Object.keys(availableTranslations)"
+                                                <button v-for="translation in Object.keys(translations)"
                                                     @click="clickTranslationSwitch(location, translation)"
                                                     class="button is-small is-rounded"
-                                                    :class="{'is-dark': location.selectedTranslation === translation}">
-                                                    <span class="icon"
-                                                        v-if="location.selectedTranslation === translation && !location.translation">
-                                                        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span v-else>
-                                                        {{ translation }}
+                                                    :class="{'is-dark': location.translations?.[translation]?.selected}">
+                                                    <span class="icon-text">
+                                                        <span class="icon"
+                                                            v-if="location.translations?.[translation]?.selected && !location.translations?.[translation]?.text">
+                                                            <i class="fa-solid fa-spinner fa-spin"
+                                                                aria-hidden="true"></i>
+                                                        </span>
+                                                        <span v-else>{{ translation }}</span>
                                                     </span>
                                                 </button>
                                             </div>
@@ -138,7 +139,7 @@
                                     </div>
                                 </nav>
                             </header>
-                            <article class="panel-block quran-text has-text-black">
+                            <article class="panel-block is-active quran-text has-text-black">
                                 <span>
                                     {{ location.before_text }}
                                     <mark>{{ location.text }}</mark>
@@ -146,8 +147,13 @@
                                     ﴿{{ toArabicNumber(location.aya_number) }}﴾
                                 </span>
                             </article>
-                            <article class="panel-block" v-show="location.translation">
-                                {{ location.translation }}
+                            <article v-for="translation in Object.keys(translations)"
+                                v-show="location.translations?.[translation]?.selected && location.translations?.[translation]?.text"
+                                class="panel-block">
+                                <span class="tags">
+                                    <span class="tag is-dark">{{ translation }}</span>
+                                    <span>{{ location.translations?.[translation]?.text }}</span>
+                                </span>
                             </article>
                         </div>
                     </div>

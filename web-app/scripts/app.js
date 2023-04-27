@@ -8,44 +8,45 @@ let quranize = new Quranize(quranizeCap);
 
 createApp({
     data() {
+        let exampleCandidates = [
+            "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "waantum muslimun",
+            "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
+        ];
+        let examples = [];
+        const EXAMPLE_COUNT = 4 + new Date() % 3;
+        for (let i = 0; i < EXAMPLE_COUNT; i++)
+            examples.push(...exampleCandidates.splice(new Date() % exampleCandidates.length, 1));
+
         return {
             keyword: "",
+            supportSharing: "share" in navigator,
             encodeResults: [],
-            translations: {},
-            suraNames
+            examples: examples,
+            translations: {
+                EN: { path: "./quran/en.sahih.js" },
+                ID: { path: "./quran/id.indonesian.js" },
+            },
+            suraNames: suraNames,
         };
     },
     computed: {
         hasResults() { return this.encodeResults.length > 0; },
-        hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length == 0; },
-        examples() {
-            let candidates = [
-                "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "waantum muslimun",
-                "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
-            ];
-            let taken = [];
-            const COUNT = 4 + new Date() % 2;
-            for (let i = 0; i < COUNT; i++)
-                taken.push(...candidates.splice(new Date() % candidates.length, 1));
-            return taken;
-        },
-        availableTranslations() { return { "EN": "en.sahih", "ID": "id.indonesian" }; },
-        supportSharing() { return "share" in navigator; },
+        hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
     },
     methods: {
+        updateKeyword(event) {
+            this.setKeyword(event.target.value);
+        },
+        setKeyword(keyword) {
+            this.keyword = keyword;
+            this.encodeResults = this.encode(keyword);
+        },
         encode(keyword) {
             if (keyword.length > quranizeCap && quranizeCap < 100) {
                 quranizeCap = quranizeCap * 3 >> 1;
                 quranize = new Quranize(quranizeCap);
             }
             return quranize.encode(keyword);
-        },
-        setKeyword(keyword) {
-            this.keyword = keyword;
-            this.encodeResults = this.encode(keyword);
-        },
-        updateKeyword(event) {
-            this.setKeyword(event.target.value);
         },
         clickExample(example) {
             this.setKeyword(example);
@@ -63,7 +64,7 @@ createApp({
             let ce = [];
             result.explanations.forEach((e, i) => {
                 let q = result.quran[i];
-                if (q == "\u0651" || e == "") {
+                if (q === "\u0651" || e === "") {
                     ce[ce.length - 1].quran += q;
                     ce[ce.length - 1].alphabet += e;
                 } else {
@@ -72,26 +73,27 @@ createApp({
             });
             return ce;
         },
-        clickTranslationSwitch(location, translation) {
-            delete location.translation;
-            if (location.selectedTranslation == translation) {
-                delete location.selectedTranslation;
-            } else {
-                location.selectedTranslation = translation;
-                this.fetchTranslations(translation)
-                    .then(t => location.translation = t[`${location.sura_number}:${location.aya_number}`]);
-            }
+        async clickTranslationSwitch(location, translation) {
+            if (location.translations === undefined) location.translations = {};
+            if (location.translations[translation] === undefined)
+                location.translations[translation] = { selected: false };
+            location.translations[translation].selected ^= true;
+            if (!location.translations[translation].text)
+                location.translations[translation].text =
+                    (await this.getTranslation(translation))[`${location.sura_number}:${location.aya_number}`];
         },
-        async fetchTranslations(translation) {
-            if (this.translations[translation]) return this.translations[translation];
-            let translations = {};
-            (await import(`./quran/${this.availableTranslations[translation]}.js`)).default
+        async getTranslation(translation) {
+            if (this.translations[translation].map)
+                return this.translations[translation].map;
+
+            let map = {};
+            (await import(this.translations[translation].path)).default
                 .split("\n")
                 .map(l => l.split("|"))
-                .filter(x => x.length == 3)
-                .forEach(x => translations[`${x[0]}:${x[1]}`] = x[2]);
-            this.translations[translation] = translations;
-            return translations;
+                .filter(x => x.length === 3)
+                .forEach(x => map[`${x[0]}:${x[1]}`] = x[2]);
+            this.translations[translation].map = map;
+            return map;
         },
         toArabicNumber(n) {
             if (n < 0) return `-${this.toArabicNumber(-n)}`;
