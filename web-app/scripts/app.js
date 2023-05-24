@@ -3,7 +3,7 @@ import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
 await init();
-let quranizeCap = 23;
+let quranizeCap = 27;
 let quranize = new Quranize(quranizeCap);
 
 createApp({
