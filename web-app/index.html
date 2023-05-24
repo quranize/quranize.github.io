@@ -44,7 +44,7 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" title="alphabetic text"
-                                class="input is-rounded" :class="hasEmptyResult ? 'is-warning' : 'is-dark'"
+                                class="input is-rounded" :class="hasEmptyResult ? 'is-warning' : 'is-info'"
                                 :value="keyword" @input="updateKeyword" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
                             </span>
                         </div>
                         <div class="control" v-if="supportSharing">
-                            <button class="button is-dark is-outlined is-rounded" @click="share"
+                            <button class="button is-info is-outlined is-rounded" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
                                     <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
@@ -65,8 +65,7 @@
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags">
                             <span v-for="example in examples" @click="clickExample(example)"
-                                class="tag is-rounded is-italic is-clickable"
-                                :class="{'is-primary': example === keyword}">
+                                class="tag is-rounded is-italic is-clickable" :class="{'is-info': example === keyword}">
                                 {{ example }}
                             </span>
                         </span>
@@ -84,13 +83,13 @@
                         </button>
                         <p class="card-header-title is-justify-content-right">
                             <span class="tags">
-                                <span class="tag is-rounded is-clickable" :class="{'is-dark': result.explaining}"
+                                <span class="tag is-rounded is-clickable" :class="{'is-info': result.explaining}"
                                     @click="clickExplanation(result)">
                                     <span class="icon">
                                         <i class="fa-solid fa-question" aria-hidden="true"></i>
                                     </span>
                                 </span>
-                                <span class="tag is-rounded is-info">{{ result.location_count }}</span>
+                                <span class="tag is-rounded is-dark">{{ result.location_count }}</span>
                                 <span class="quran-text">{{ result.quran }}</span>
                             </span>
                         </p>
@@ -105,7 +104,7 @@
                                                 <button v-for="translation in Object.keys(translations)"
                                                     @click="clickTranslationSwitch(location, translation)"
                                                     class="button is-small is-rounded"
-                                                    :class="{'is-dark': location.translations?.[translation]?.selected}">
+                                                    :class="{'is-info': location.translations?.[translation]?.selected}">
                                                     <span class="icon-text">
                                                         <span class="icon"
                                                             v-if="location.translations?.[translation]?.selected && !location.translations?.[translation]?.text">
@@ -151,7 +150,7 @@
                                 v-show="location.translations?.[translation]?.selected && location.translations?.[translation]?.text"
                                 class="panel-block">
                                 <span class="tags">
-                                    <span class="tag is-dark">{{ translation }}</span>
+                                    <span class="tag is-info">{{ translation }}</span>
                                     <span>{{ location.translations?.[translation]?.text }}</span>
                                 </span>
                             </article>
@@ -163,7 +162,7 @@
                                 <div v-for="e in result.compressedExplanation" class="control">
                                     <div class="tags has-addons">
                                         <span class="tag">{{ e.alphabet }}</span>
-                                        <span class="tag is-dark quran-text">{{ e.quran }}</span>
+                                        <span class="tag is-info quran-text">{{ e.quran }}</span>
                                     </div>
                                 </div>
                             </div>
