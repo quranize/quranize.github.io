@@ -145,22 +145,17 @@
     ],
     "screenshots": [
         {
-            "src": "screenshots/screenshot1.jpg",
+            "src": "screenshots/Screenshot_2023-05-24-21-50-36-387_com.microsoft.emmx.jpg",
             "sizes": "1080x2400",
             "type": "image/jpeg"
         },
         {
-            "src": "screenshots/screenshot2.jpg",
+            "src": "screenshots/Screenshot_2023-05-24-21-50-50-668_com.microsoft.emmx.jpg",
             "sizes": "1080x2400",
             "type": "image/jpeg"
         },
         {
-            "src": "screenshots/screenshot3.jpg",
-            "sizes": "1080x2400",
-            "type": "image/jpeg"
-        },
-        {
-            "src": "screenshots/screenshot4.jpg",
+            "src": "screenshots/Screenshot_2023-05-24-21-51-00-101_com.microsoft.emmx.jpg",
             "sizes": "1080x2400",
             "type": "image/jpeg"
         }
