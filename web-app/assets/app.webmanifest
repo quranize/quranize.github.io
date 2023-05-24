@@ -1,18 +1,14 @@
 {
     "name": "Quranize",
     "short_name": "Quranize",
-    "description": "Quranize transforms transliterations into quran forms: bismillah → بسم الله, alhamdulillah → الحمد لله, arrohman → الرحمن",
+    "description": "Transforming transliterations into quran forms, e.g. bismillah → بسم اللّه, alhamdulillah → الحمد للّه, arrohman → الرّحمن.",
     "display": "standalone",
     "start_url": "/",
     "theme_color": "#3E8ED0",
     "background_color": "#3E8ED0",
     "lang": "en",
     "orientation": "portrait",
-    "categories": [
-        "alquran",
-        "quran",
-        "utilities"
-    ],
+    "categories": [ "alquran", "utilities" ],
     "icons": [
         {
             "src": "android/android-launchericon-512-512.png",
