@@ -52,13 +52,11 @@ createApp({
             this.setKeyword(example);
         },
         clickExpand(result) {
-            result.expanding ^= true;
-            if (!result.locations) result.locations = quranize.getLocations(result.quran);
-        },
-        clickExplanation(result) {
+            if (!result.locations)
+                result.locations = quranize.getLocations(result.quran);
             if (!result.compressedExplanation)
                 result.compressedExplanation = this.compressExplanation(result);
-            result.explaining ^= true;
+            result.expanding ^= true;
         },
         compressExplanation(result) {
             let ce = [];

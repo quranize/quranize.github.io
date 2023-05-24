@@ -76,25 +76,31 @@
                 <div class="card">
                     <header class="card-header">
                         <button @click="clickExpand(result)" class="card-header-icon">
-                            <span class="icon">
-                                <i :class="result.expanding ? 'fa-angle-up' : 'fa-angle-down'" class="fa-solid"
-                                    aria-hidden="true"></i>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fa-solid" :class="result.expanding ? 'fa-angle-up' : 'fa-angle-down'"
+                                        aria-hidden="true"></i>
+                                </span>
+                                <span class="tag is-rounded" :class="{'is-info': result.expanding}">
+                                    {{ result.location_count }}
+                                </span>
                             </span>
                         </button>
                         <p class="card-header-title is-justify-content-right">
-                            <span class="tags">
-                                <span class="tag is-rounded is-clickable" :class="{'is-info': result.explaining}"
-                                    @click="clickExplanation(result)">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-question" aria-hidden="true"></i>
-                                    </span>
-                                </span>
-                                <span class="tag is-rounded is-dark">{{ result.location_count }}</span>
-                                <span class="quran-text">{{ result.quran }}</span>
-                            </span>
+                            <span class="quran-text">{{ result.quran }}</span>
                         </p>
                     </header>
                     <div v-if="result.expanding" class="card-content">
+                        <div class="box is-flex is-justify-content-center">
+                            <div class="field is-grouped is-grouped-multiline">
+                                <div v-for="e in result.compressedExplanation" class="control">
+                                    <div class="tags has-addons">
+                                        <span class="tag">{{ e.alphabet }}</span>
+                                        <span class="tag is-info"><span class="quran-text">{{ e.quran }}</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div v-for="location in result.locations" class="panel">
                             <header class="panel-heading">
                                 <nav class="level is-mobile">
@@ -154,18 +160,6 @@
                                     <span>{{ location.translations?.[translation]?.text }}</span>
                                 </span>
                             </article>
-                        </div>
-                    </div>
-                    <div v-if="result.explaining" class="card-footer">
-                        <div class="card-footer-item">
-                            <div class="field is-grouped is-grouped-multiline">
-                                <div v-for="e in result.compressedExplanation" class="control">
-                                    <div class="tags has-addons">
-                                        <span class="tag">{{ e.alphabet }}</span>
-                                        <span class="tag is-info quran-text">{{ e.quran }}</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
