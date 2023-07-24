@@ -9,8 +9,8 @@ let quranize = new Quranize(quranizeCap);
 createApp({
     data() {
         let exampleCandidates = [
-            "bismillah", "masyaallah", "subhanallah", "alhamdulillah", "allahuakbar", "waantum muslimun",
-            "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
+            "bismillah", "subhanallah", "alhamdulillah", "allahuakbar", "masyaallah", "insyaallah", "inna lillahi wainna ilaihi roji'un",
+            "waantum muslimun", "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
         ];
         let examples = [];
         const EXAMPLE_COUNT = 4 + new Date() % 3;
