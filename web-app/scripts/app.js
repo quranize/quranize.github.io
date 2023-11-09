@@ -3,8 +3,9 @@ import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
 await init();
-let quranizeCap = 17;
-let quranize = new Quranize(quranizeCap);
+let quranizeCap = 25;
+let quranize;
+setTimeout(() => { if (!quranize) quranize = new Quranize(quranizeCap); }, 2500);
 
 createApp({
     data() {
@@ -42,8 +43,9 @@ createApp({
             this.encodeResults = this.encode(keyword);
         },
         encode(keyword) {
-            if (keyword.length > quranizeCap && quranizeCap < 100) {
-                quranizeCap = (quranizeCap * 3) >> 1;
+            if (!quranize) quranize = new Quranize(quranizeCap);
+            if (quranizeCap <= keyword.length && quranizeCap <= 200) {
+                quranizeCap <<= 1;
                 quranize = new Quranize(quranizeCap);
             }
             return quranize.encode(keyword);
