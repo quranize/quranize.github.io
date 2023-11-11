@@ -53,6 +53,10 @@ createApp({
             while (keyword.length >= quranizeCap && (quranizeCap << 1) <= 200) quranizeCap <<= 1;
             quranize = new Quranize(quranizeCap);
         },
+        deleteKeyword() {
+            this.setKeyword("");
+            this.$refs.keyword.focus();
+        },
         clickExample(example) {
             this.setKeyword(example);
         },

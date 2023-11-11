@@ -50,7 +50,7 @@
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                             </span>
                             <span v-show="keyword" class="icon is-right">
-                                <button class="delete" @click="setKeyword('')"></button>
+                                <button class="delete" @click="deleteKeyword"></button>
                             </span>
                         </div>
                         <div class="control" v-if="supportSharing">
