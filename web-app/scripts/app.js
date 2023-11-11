@@ -34,10 +34,10 @@ createApp({
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
     },
     methods: {
-        inputFocus(event) {
+        keywordFocused(event) {
             this.initQuranize(event.target.value);
         },
-        updateKeyword(event) {
+        keywordInputted(event) {
             this.setKeyword(event.target.value);
         },
         setKeyword(keyword) {
