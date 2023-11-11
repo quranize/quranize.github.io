@@ -122,6 +122,7 @@ createApp({
             history.pushState({}, "", location.href.replace(/#.*$/, ""));
         }
         this.$refs.keyword.focus();
+        setTimeout(this.initQuranize, 5000, "");
     },
 }).mount("#quranize-app");
 
