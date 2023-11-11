@@ -5,7 +5,6 @@ import { suraNames } from "./quran/meta.js"
 await init();
 let quranizeCap = 25;
 let quranize;
-setTimeout(() => { if (!quranize) quranize = new Quranize(quranizeCap); }, 2500);
 
 createApp({
     data() {
@@ -35,6 +34,9 @@ createApp({
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
     },
     methods: {
+        inputFocus(event) {
+            this.initQuranize(event.target.value);
+        },
         updateKeyword(event) {
             this.setKeyword(event.target.value);
         },
@@ -43,12 +45,13 @@ createApp({
             this.encodeResults = this.encode(keyword);
         },
         encode(keyword) {
-            if (!quranize) quranize = new Quranize(quranizeCap);
-            if (quranizeCap <= keyword.length && quranizeCap <= 200) {
-                quranizeCap <<= 1;
-                quranize = new Quranize(quranizeCap);
-            }
+            this.initQuranize(keyword);
             return quranize.encode(keyword);
+        },
+        initQuranize(keyword) {
+            if (quranize && quranizeCap > keyword.length) return;
+            while (keyword.length >= quranizeCap && (quranizeCap << 1) <= 200) quranizeCap <<= 1;
+            quranize = new Quranize(quranizeCap);
         },
         clickExample(example) {
             this.setKeyword(example);
