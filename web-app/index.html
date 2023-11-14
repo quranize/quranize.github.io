@@ -44,7 +44,7 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" class="input is-rounded"
-                                :class="hasEmptyResult ? 'is-warning' : 'is-info'" :value="keyword"
+                                :class="hasEmptyResult ? 'is-warning' : quranize ? 'is-info' : ''" :value="keyword"
                                 @input="keywordInputted" @keyup.enter="$refs.keyword.blur()" @focus="keywordFocused">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>

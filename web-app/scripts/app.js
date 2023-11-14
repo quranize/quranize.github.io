@@ -4,7 +4,6 @@ import { suraNames } from "./quran/meta.js"
 
 await init();
 let quranizeCap = 25;
-let quranize;
 
 createApp({
     data() {
@@ -18,6 +17,7 @@ createApp({
             examples.push(...exampleCandidates.splice(new Date() % exampleCandidates.length, 1));
 
         return {
+            quranize: undefined,
             keyword: "",
             supportSharing: "share" in navigator,
             encodeResults: [],
@@ -46,12 +46,12 @@ createApp({
         },
         encode(keyword) {
             this.initQuranize(keyword);
-            return quranize.encode(keyword);
+            return this.quranize.encode(keyword);
         },
         initQuranize(keyword) {
-            if (quranize && quranizeCap > keyword.length) return;
+            if (this.quranize && quranizeCap > keyword.length) return;
             while (keyword.length >= quranizeCap && (quranizeCap << 1) <= 200) quranizeCap <<= 1;
-            quranize = new Quranize(quranizeCap);
+            this.quranize = new Quranize(quranizeCap);
         },
         deleteKeyword() {
             this.setKeyword("");
@@ -62,7 +62,7 @@ createApp({
         },
         clickExpand(result) {
             if (!result.locations)
-                result.locations = quranize.getLocations(result.quran);
+                result.locations = this.quranize.getLocations(result.quran);
             if (!result.compressedExplanation)
                 result.compressedExplanation = this.compressExplanation(result);
             result.expanding ^= true;
