@@ -3,6 +3,11 @@ import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
 await init();
+
+const translations = {
+    EN: { path: "./quran/en.sahih.js" },
+    ID: { path: "./quran/id.indonesian.js" },
+};
 let quranizeCap = 25;
 
 createApp({
@@ -13,10 +18,7 @@ createApp({
             supportSharing: "share" in navigator,
             encodeResults: [],
             examples: getExamples(),
-            translations: {
-                EN: { path: "./quran/en.sahih.js" },
-                ID: { path: "./quran/id.indonesian.js" },
-            },
+            translations: translations,
             suraNames: suraNames,
         };
     },
