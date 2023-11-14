@@ -31,7 +31,7 @@ jobs:
           profile: minimal
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | bash
       - run: wasm-pack build --release --target=web --no-typescript --out-dir=web-app/scripts/quranize --out-name=quranize
-      - run: wget https://unpkg.com/vue@$VUE_VERSION/dist/vue.esm-browser.prod.js -O web-app/scripts/vue.esm-browser.js
+      - run: wget https://cdn.jsdelivr.net/npm/vue@$VUE_VERSION/dist/vue.esm-browser.prod.js -O web-app/scripts/vue.esm-browser.js
       - uses: actions/upload-artifact@v3
         with:
           name: build-scripts
