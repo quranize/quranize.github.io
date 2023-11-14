@@ -7,21 +7,12 @@ let quranizeCap = 25;
 
 createApp({
     data() {
-        let exampleCandidates = [
-            "bismillah", "subhanallah", "alhamdulillah", "allahuakbar", "masyaallah", "insyaallah", "inna lillahi wainna ilaihi roji'un",
-            "waantum muslimun", "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
-        ];
-        let examples = [];
-        const EXAMPLE_COUNT = 4 + new Date() % 3;
-        for (let i = 0; i < EXAMPLE_COUNT; i++)
-            examples.push(...exampleCandidates.splice(new Date() % exampleCandidates.length, 1));
-
         return {
             quranize: undefined,
             keyword: "",
             supportSharing: "share" in navigator,
             encodeResults: [],
-            examples: examples,
+            examples: getExamples(),
             translations: {
                 EN: { path: "./quran/en.sahih.js" },
                 ID: { path: "./quran/id.indonesian.js" },
@@ -128,3 +119,15 @@ createApp({
 
 if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("service-worker.js");
+
+function getExamples() {
+    let candidates = [
+        "bismillah", "subhanallah", "alhamdulillah", "allahuakbar", "masyaallah", "insyaallah", "inna lillahi wainna ilaihi roji'un",
+        "waantum muslimun", "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
+    ];
+    let examples = [];
+    const EXAMPLE_COUNT = 4 + Math.floor(Math.random() * 3);
+    for (let i = 0; i < EXAMPLE_COUNT; i++)
+        examples.push(...candidates.splice(Math.floor(Math.random() * candidates.length), 1));
+    return examples;
+}
