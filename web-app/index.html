@@ -54,7 +54,7 @@
                             </span>
                         </div>
                         <div class="control" v-if="supportSharing">
-                            <button class="button is-info is-outlined is-rounded" @click="share"
+                            <button class="button is-outlined is-rounded" :class="{'is-info': quranize}" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
                                     <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
