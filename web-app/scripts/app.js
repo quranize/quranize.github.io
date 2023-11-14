@@ -126,7 +126,7 @@ function getExamples() {
         "waantum muslimun", "ya ayyuhannas", "walaqod yassarna", "waltandur nafs", "tabaarokalladzi", "wabarron biwalidati",
     ];
     let examples = [];
-    const EXAMPLE_COUNT = 4 + Math.floor(Math.random() * 3);
+    const EXAMPLE_COUNT = 5 + Math.floor(Math.random() * 3);
     for (let i = 0; i < EXAMPLE_COUNT; i++)
         examples.push(...candidates.splice(Math.floor(Math.random() * candidates.length), 1));
     return examples;
