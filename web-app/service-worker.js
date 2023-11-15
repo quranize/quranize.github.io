@@ -10,10 +10,9 @@ self.addEventListener("fetch", event => {
 
 function intercept(event) {
     const path = new URL(event.request.url).pathname;
-    if (path.startsWith("/assets") || path.startsWith("/scripts") || path.startsWith("/styles"))
-        respondStaleWhileRevalidate(event)
-    else
-        respondNetworkFirst(event);
+    const swrPrefixes = ["/styles/fontawesome/", "/styles/fonts/", "/scripts/quran/"];
+    if (swrPrefixes.some(p => path.startsWith(p))) respondStaleWhileRevalidate(event)
+    else respondNetworkFirst(event);
 }
 
 function respondStaleWhileRevalidate(event) {
