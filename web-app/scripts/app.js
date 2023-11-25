@@ -50,9 +50,6 @@ createApp({
             this.setKeyword("");
             this.$refs.keyword.focus();
         },
-        clickExample(example) {
-            this.setKeyword(example);
-        },
         clickExpand(result) {
             if (!result.locations)
                 result.locations = this.quranize.getLocations(result.quran);
