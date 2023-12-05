@@ -54,14 +54,12 @@
                                 <button class="delete" @click="deleteKeyword"></button>
                             </span>
                         </div>
-                        <div class="control" v-if="supportSharing">
-                            <button class="button is-outlined is-rounded is-info" @click="share"
-                                :disabled="hasEmptyResult">
-                                <span class="icon">
-                                    <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
-                                </span>
-                            </button>
-                        </div>
+                        <button v-if="supportSharing" class="button is-outlined is-rounded is-info" @click="share"
+                            :disabled="hasEmptyResult">
+                            <span class="icon">
+                                <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+                            </span>
+                        </button>
                     </div>
                     <p class="help" :class="{'is-hidden-touch': hasResults && !examples.includes(keyword)}">
                         <span class="tags">
