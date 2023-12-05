@@ -1,19 +1,14 @@
-import init, { Quranize } from "./quranize/quranize.js";
 import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
-await init();
-
-const translations = {
-    EN: { path: "./quran/en.sahih.js" },
-    ID: { path: "./quran/id.indonesian.js" },
-};
-let quranizeCap = 25;
-
-createApp({
+const worker = new Worker("scripts/worker.js", { type: "module" });
+const app = createApp({
     data() {
+        const translations = {
+            EN: { path: "./quran/en.sahih.js" },
+            ID: { path: "./quran/id.indonesian.js" },
+        };
         return {
-            quranize: undefined,
             keyword: "",
             supportSharing: "share" in navigator,
             encodeResults: [],
@@ -27,24 +22,12 @@ createApp({
         hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
     },
     methods: {
-        keywordFocused(event) {
-            this.initQuranize(event.target.value);
-        },
         keywordInputted(event) {
             this.setKeyword(event.target.value);
         },
         setKeyword(keyword) {
             this.keyword = keyword;
-            this.encodeResults = this.encode(keyword);
-        },
-        encode(keyword) {
-            this.initQuranize(keyword);
-            return this.quranize.encode(keyword);
-        },
-        initQuranize(keyword) {
-            if (this.quranize && quranizeCap > keyword.length) return;
-            while (keyword.length >= quranizeCap && (quranizeCap << 1) <= 200) quranizeCap <<= 1;
-            this.quranize = new Quranize(quranizeCap);
+            worker.postMessage({ method: "encode", args: [keyword] });
         },
         deleteKeyword() {
             this.setKeyword("");
@@ -52,7 +35,7 @@ createApp({
         },
         clickExpand(result) {
             if (!result.locations)
-                result.locations = this.quranize.getLocations(result.quran);
+                worker.postMessage({ method: "getLocations", args: [result.quran] });
             if (!result.compressedExplanation)
                 result.compressedExplanation = this.compressExplanation(result);
             result.expanding ^= true;
@@ -112,9 +95,18 @@ createApp({
             history.pushState({}, "", location.href.replace(/#.*$/, ""));
         }
         this.$refs.keyword.focus();
-        setTimeout(this.initQuranize, 3000, "");
     },
 }).mount("#quranize-app");
+
+worker.onmessage = event => {
+    const { method, args, returnValue } = event.data;
+    if (method === "encode" && args[0] === app.keyword) {
+        app.encodeResults = returnValue;
+    } else if (method === "getLocations") {
+        const result = app.encodeResults.find(result => args[0] == result.quran);
+        if (result) result.locations = returnValue;
+    }
+};
 
 if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("service-worker.js");

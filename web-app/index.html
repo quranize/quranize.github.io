@@ -44,8 +44,8 @@
                     <div class="field is-grouped">
                         <div class="control has-icons-left is-expanded" :class="{'has-icons-right': keyword}">
                             <input type="text" ref="keyword" placeholder="masyaallah" class="input is-rounded"
-                                :class="hasEmptyResult ? 'is-warning' : quranize ? 'is-info' : ''" :value="keyword"
-                                @input="keywordInputted" @keyup.enter="$refs.keyword.blur()" @focus="keywordFocused">
+                                :class="hasEmptyResult ? 'is-warning' : 'is-info'" :value="keyword"
+                                @input="keywordInputted" @keyup.enter="$refs.keyword.blur()">
                             <span class="icon is-left">
                                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                             </span>
@@ -54,7 +54,7 @@
                             </span>
                         </div>
                         <div class="control" v-if="supportSharing">
-                            <button class="button is-outlined is-rounded" :class="{'is-info': quranize}" @click="share"
+                            <button class="button is-outlined is-rounded is-info" @click="share"
                                 :disabled="hasEmptyResult">
                                 <span class="icon">
                                     <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
