@@ -27,20 +27,18 @@ const app = createApp({
         keywordInputted(event) {
             this.setKeyword(event.target.value);
         },
+        deleteKeyword() {
+            this.setKeyword("");
+            this.$refs.keyword.focus();
+        },
         setKeyword(keyword) {
             this.keyword = keyword;
             this.isEncoding = true;
             quranizeWorker.postMessage({ method: "encode", args: [keyword] });
         },
-        deleteKeyword() {
-            this.setKeyword("");
-            this.$refs.keyword.focus();
-        },
         clickExpand(result) {
-            if (!result.locations)
-                quranizeWorker.postMessage({ method: "getLocations", args: [result.quran] });
-            if (!result.compressedExplanation)
-                result.compressedExplanation = this.compressExplanation(result);
+            if (!result.locations) quranizeWorker.postMessage({ method: "getLocations", args: [result.quran] });
+            if (!result.compressedExplanation) result.compressedExplanation = this.compressExplanation(result);
             result.expanding ^= true;
         },
         compressExplanation(result) {
