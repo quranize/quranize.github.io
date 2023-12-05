@@ -1,7 +1,7 @@
 import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
-const worker = new Worker("scripts/worker.js", { type: "module" });
+const quranizeWorker = new Worker("scripts/quranize-worker.js", { type: "module" });
 const app = createApp({
     data() {
         const translations = {
@@ -27,7 +27,7 @@ const app = createApp({
         },
         setKeyword(keyword) {
             this.keyword = keyword;
-            worker.postMessage({ method: "encode", args: [keyword] });
+            quranizeWorker.postMessage({ method: "encode", args: [keyword] });
         },
         deleteKeyword() {
             this.setKeyword("");
@@ -35,7 +35,7 @@ const app = createApp({
         },
         clickExpand(result) {
             if (!result.locations)
-                worker.postMessage({ method: "getLocations", args: [result.quran] });
+                quranizeWorker.postMessage({ method: "getLocations", args: [result.quran] });
             if (!result.compressedExplanation)
                 result.compressedExplanation = this.compressExplanation(result);
             result.expanding ^= true;
@@ -98,7 +98,7 @@ const app = createApp({
     },
 }).mount("#quranize-app");
 
-worker.onmessage = event => {
+quranizeWorker.onmessage = event => {
     const { method, args, returnValue } = event.data;
     if (method === "encode" && args[0] === app.keyword) {
         app.encodeResults = returnValue;
