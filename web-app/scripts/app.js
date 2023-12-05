@@ -21,7 +21,7 @@ const app = createApp({
     },
     computed: {
         hasResults() { return this.encodeResults.length > 0; },
-        hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
+        hasEmptyResult() { return !this.isEncoding && !this.hasResults && this.keyword.trim() !== ""; },
     },
     methods: {
         keywordInputted(event) {
