@@ -2,6 +2,7 @@ import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
 const quranizeWorker = new Worker("scripts/quranize-worker.js", { type: "module" });
+
 const app = createApp({
     data() {
         const translations = {
@@ -10,6 +11,7 @@ const app = createApp({
         };
         return {
             keyword: "",
+            isEncoding: false,
             supportSharing: "share" in navigator,
             encodeResults: [],
             examples: getExamples(),
@@ -27,6 +29,7 @@ const app = createApp({
         },
         setKeyword(keyword) {
             this.keyword = keyword;
+            this.isEncoding = true;
             quranizeWorker.postMessage({ method: "encode", args: [keyword] });
         },
         deleteKeyword() {
@@ -101,6 +104,7 @@ const app = createApp({
 quranizeWorker.onmessage = event => {
     const { method, args, returnValue } = event.data;
     if (method === "encode" && args[0] === app.keyword) {
+        app.isEncoding = false;
         app.encodeResults = returnValue;
     } else if (method === "getLocations") {
         const result = app.encodeResults.find(result => args[0] == result.quran);
