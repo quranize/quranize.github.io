@@ -1,20 +1,17 @@
-import init, { Quranize } from "./quranize/quranize.js";
 import { createApp } from "./vue.esm-browser.js"
 import { suraNames } from "./quran/meta.js"
 
-await init();
+const quranizeWorker = new Worker("scripts/quranize-worker.js", { type: "module" });
 
-const translations = {
-    EN: { path: "./quran/en.sahih.js" },
-    ID: { path: "./quran/id.indonesian.js" },
-};
-let quranizeCap = 25;
-
-createApp({
+const app = createApp({
     data() {
+        const translations = {
+            EN: { path: "./quran/en.sahih.js" },
+            ID: { path: "./quran/id.indonesian.js" },
+        };
         return {
-            quranize: undefined,
             keyword: "",
+            isEncoding: false,
             supportSharing: "share" in navigator,
             encodeResults: [],
             examples: getExamples(),
@@ -24,37 +21,24 @@ createApp({
     },
     computed: {
         hasResults() { return this.encodeResults.length > 0; },
-        hasEmptyResult() { return this.keyword.trim() != "" && this.encodeResults.length === 0; },
+        hasEmptyResult() { return !this.isEncoding && !this.hasResults && this.keyword.trim() !== ""; },
     },
     methods: {
-        keywordFocused(event) {
-            this.initQuranize(event.target.value);
-        },
         keywordInputted(event) {
             this.setKeyword(event.target.value);
-        },
-        setKeyword(keyword) {
-            this.keyword = keyword;
-            this.encodeResults = this.encode(keyword);
-        },
-        encode(keyword) {
-            this.initQuranize(keyword);
-            return this.quranize.encode(keyword);
-        },
-        initQuranize(keyword) {
-            if (this.quranize && quranizeCap > keyword.length) return;
-            while (keyword.length >= quranizeCap && (quranizeCap << 1) <= 200) quranizeCap <<= 1;
-            this.quranize = new Quranize(quranizeCap);
         },
         deleteKeyword() {
             this.setKeyword("");
             this.$refs.keyword.focus();
         },
+        setKeyword(keyword) {
+            this.keyword = keyword;
+            this.isEncoding = true;
+            quranizeWorker.postMessage({ method: "encode", args: [keyword] });
+        },
         clickExpand(result) {
-            if (!result.locations)
-                result.locations = this.quranize.getLocations(result.quran);
-            if (!result.compressedExplanation)
-                result.compressedExplanation = this.compressExplanation(result);
+            if (!result.locations) quranizeWorker.postMessage({ method: "getLocations", args: [result.quran] });
+            if (!result.compressedExplanation) result.compressedExplanation = this.compressExplanation(result);
             result.expanding ^= true;
         },
         compressExplanation(result) {
@@ -112,9 +96,19 @@ createApp({
             history.pushState({}, "", location.href.replace(/#.*$/, ""));
         }
         this.$refs.keyword.focus();
-        setTimeout(this.initQuranize, 3000, "");
     },
 }).mount("#quranize-app");
+
+quranizeWorker.onmessage = event => {
+    const { method, args, returnValue } = event.data;
+    if (method === "encode" && args[0] === app.keyword) {
+        app.isEncoding = false;
+        app.encodeResults = returnValue;
+    } else if (method === "getLocations") {
+        const result = app.encodeResults.find(result => args[0] == result.quran);
+        if (result) result.locations = returnValue;
+    }
+};
 
 if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("service-worker.js");
