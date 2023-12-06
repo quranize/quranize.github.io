@@ -1,4 +1,5 @@
 import EventStatus from "./event-status.js";
+import init, { Quranize } from "./quranize/quranize.js";
 
 let quranize;
 let pendingEvents = [];
@@ -25,12 +26,9 @@ function handleEvent(event) {
 
 self.onmessage = handleEvent;
 
-import init, { Quranize } from "./quranize/quranize.js";
-
 await init();
 quranize = new Quranize();
 
 self.postMessage({ status: EventStatus.EngineInitiated });
-
 pendingEvents.forEach(handleEvent);
 pendingEvents = [];
