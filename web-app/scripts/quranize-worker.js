@@ -4,7 +4,7 @@ import init, { Quranize } from "./quranize/quranize.js";
 let quranize;
 let pendingEvents = [];
 
-function handleEvent(event) {
+self.onmessage = event => {
     if (!quranize) {
         pendingEvents.push(event);
         return;
@@ -22,13 +22,11 @@ function handleEvent(event) {
             self.postMessage({ status: EventStatus.ResultLocated, result, locations });
             break;
     }
-}
-
-self.onmessage = handleEvent;
+};
 
 await init();
 quranize = new Quranize();
 
 self.postMessage({ status: EventStatus.EngineInitiated });
-pendingEvents.forEach(handleEvent);
+pendingEvents.forEach(self.onmessage);
 pendingEvents = [];
