@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VUE_VERSION: "3.3.9"
+  VUE_VERSION: "3.3.10"
   BULMA_VERSION: "0.9.4"
   FONTAWESOME_VERSION: "6.4.2"
 
