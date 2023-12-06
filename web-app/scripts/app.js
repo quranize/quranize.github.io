@@ -1,27 +1,24 @@
-import { createApp } from "./vue.esm-browser.js"
-import { suraNames } from "./quran/meta.js"
+import EventStatus from "./event-status.js";
+import { createApp } from "./vue.esm-browser.js";
+import { suraNames } from "./quran/meta.js";
 
 const quranizeWorker = new Worker("scripts/quranize-worker.js", { type: "module" });
 
 const app = createApp({
     data() {
-        const translations = {
-            EN: { path: "./quran/en.sahih.js" },
-            ID: { path: "./quran/id.indonesian.js" },
-        };
         return {
+            isEngineInitiated: false,
             keyword: "",
-            isEncoding: false,
-            supportSharing: "share" in navigator,
             encodeResults: [],
+            supportSharing: "share" in navigator,
             examples: getExamples(),
-            translations: translations,
             suraNames: suraNames,
+            translations: { EN: { path: "./quran/en.sahih.js" }, ID: { path: "./quran/id.indonesian.js" } },
         };
     },
     computed: {
         hasResults() { return this.encodeResults.length > 0; },
-        hasEmptyResult() { return !this.isEncoding && !this.hasResults && this.keyword.trim() !== ""; },
+        hasEmptyResult() { return this.isEngineInitiated && this.keyword !== "" && !this.hasResults; },
     },
     methods: {
         keywordInputted(event) {
@@ -33,12 +30,11 @@ const app = createApp({
         },
         setKeyword(keyword) {
             this.keyword = keyword;
-            this.isEncoding = true;
-            quranizeWorker.postMessage({ method: "encode", args: [keyword] });
+            quranizeWorker.postMessage({ status: EventStatus.KeywordUpdated, keyword });
         },
         clickExpand(result) {
-            if (!result.locations) quranizeWorker.postMessage({ method: "getLocations", args: [result.quran] });
             if (!result.compressedExplanation) result.compressedExplanation = this.compressExplanation(result);
+            if (!result.locations) quranizeWorker.postMessage({ status: EventStatus.ResultClicked, result: { quran: result.quran } });
             result.expanding ^= true;
         },
         compressExplanation(result) {
@@ -64,16 +60,15 @@ const app = createApp({
                     (await this.getTranslation(translation))[`${location.sura_number}:${location.aya_number}`];
         },
         async getTranslation(translation) {
-            if (this.translations[translation].map)
-                return this.translations[translation].map;
-
+            if (!translations[translation]) return {};
+            if (translations[translation].map) return translations[translation].map;
             let map = {};
-            (await import(this.translations[translation].path)).default
+            (await import(translations[translation].path)).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(x => x.length === 3)
                 .forEach(x => map[`${x[0]}:${x[1]}`] = x[2]);
-            this.translations[translation].map = map;
+            translations[translation].map = map;
             return map;
         },
         toArabicNumber(n) {
@@ -100,18 +95,22 @@ const app = createApp({
 }).mount("#quranize-app");
 
 quranizeWorker.onmessage = event => {
-    const { method, args, returnValue } = event.data;
-    if (method === "encode" && args[0] === app.keyword) {
-        app.isEncoding = false;
-        app.encodeResults = returnValue;
-    } else if (method === "getLocations") {
-        const result = app.encodeResults.find(result => args[0] == result.quran);
-        if (result) result.locations = returnValue;
+    const message = event.data;
+    switch (message.status) {
+        case EventStatus.EngineInitiated:
+            app.isEngineInitiated = true;
+            break;
+        case EventStatus.KeywordEncoded:
+            if (message.keyword === app.keyword) app.encodeResults = message.encodeResults;
+            break;
+        case EventStatus.ResultLocated:
+            const result = app.encodeResults.find(result => result.quran === message.result.quran);
+            if (result) result.locations = message.locations;
+            break;
     }
 };
 
-if ("serviceWorker" in navigator)
-    navigator.serviceWorker.register("service-worker.js");
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");
 
 function getExamples() {
     let candidates = [
