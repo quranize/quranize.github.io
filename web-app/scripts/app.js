@@ -60,15 +60,15 @@ const app = createApp({
                     (await this.getTranslation(translation))[`${location.sura_number}:${location.aya_number}`];
         },
         async getTranslation(translation) {
-            if (!translations[translation]) return {};
-            if (translations[translation].map) return translations[translation].map;
+            if (!this.translations[translation]) return {};
+            if (this.translations[translation].map) return translations[translation].map;
             let map = {};
-            (await import(translations[translation].path)).default
+            (await import(this.translations[translation].path)).default
                 .split("\n")
                 .map(l => l.split("|"))
                 .filter(x => x.length === 3)
                 .forEach(x => map[`${x[0]}:${x[1]}`] = x[2]);
-            translations[translation].map = map;
+            this.translations[translation].map = map;
             return map;
         },
         toArabicNumber(n) {
