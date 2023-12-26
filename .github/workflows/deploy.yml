@@ -15,9 +15,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VUE_VERSION: "3.3.10"
+  VUE_VERSION: "3.3.13"
   BULMA_VERSION: "0.9.4"
-  FONTAWESOME_VERSION: "6.4.2"
+  FONTAWESOME_VERSION: "6.5.1"
 
 jobs:
   build-scripts:
