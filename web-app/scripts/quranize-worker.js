@@ -2,11 +2,11 @@ import EventStatus from "./event-status.js";
 import init, { Quranize } from "./quranize/quranize.js";
 
 let quranize;
-let pendingEvents = [];
+let pendingEvent;
 
 self.onmessage = event => {
     if (!quranize) {
-        pendingEvents.push(event);
+        pendingEvent = event;
         return;
     }
     const message = event.data;
@@ -28,5 +28,8 @@ await init();
 quranize = new Quranize();
 
 self.postMessage({ status: EventStatus.EngineInitiated });
-pendingEvents.forEach(self.onmessage);
-pendingEvents = [];
+
+if (pendingEvent) {
+    self.onmessage(pendingEvent);
+    pendingEvent = undefined;
+}
