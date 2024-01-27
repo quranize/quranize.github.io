@@ -61,7 +61,7 @@ const app = createApp({
         },
         async getTranslation(translation) {
             if (!this.translations[translation]) return {};
-            if (this.translations[translation].map) return translations[translation].map;
+            if (this.translations[translation].map) return this.translations[translation].map;
             let map = {};
             (await import(this.translations[translation].path)).default
                 .split("\n")
