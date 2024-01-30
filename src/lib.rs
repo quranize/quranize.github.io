@@ -43,16 +43,15 @@ impl JsQuranize {
     }
 
     fn encode(&self, text: &str) -> Vec<JsEncodeResult> {
-        let encode_results = self.quranize.encode(text);
-        let mut js_encode_results = Vec::with_capacity(encode_results.len());
-        for (quran, explanations, location_count) in encode_results {
-            js_encode_results.push(JsEncodeResult {
+        self.quranize
+            .encode(text)
+            .into_iter()
+            .map(|(quran, explanations, location_count)| JsEncodeResult {
                 quran,
                 explanations,
                 location_count,
-            });
-        }
-        js_encode_results
+            })
+            .collect()
     }
 
     #[wasm_bindgen(js_name = getLocations)]
@@ -62,20 +61,21 @@ impl JsQuranize {
 
     fn get_locations(&self, quran: &str) -> Vec<JsLocation> {
         let word_count = quran.split_whitespace().count() as u8;
-        let locations = self.quranize.get_locations(quran);
-        let mut js_locations = Vec::with_capacity(locations.len());
-        for &(sn, an, wn) in locations {
-            let text = self.aya_getter.get(sn, an).unwrap_or_default();
-            let (l, r) = get_highlight_boundary(text, wn, word_count);
-            js_locations.push(JsLocation {
-                sura_number: sn,
-                aya_number: an,
-                before_text: &text[..l.max(1) - 1],
-                text: &text[l..r],
-                after_text: &text[r.min(text.len() - 1) + 1..],
+        self.quranize
+            .get_locations(quran)
+            .into_iter()
+            .map(|&(sn, an, wn)| {
+                let text = self.aya_getter.get(sn, an).unwrap_or_default();
+                let (l, r) = get_highlight_boundary(text, wn, word_count);
+                JsLocation {
+                    sura_number: sn,
+                    aya_number: an,
+                    before_text: &text[..l.max(1) - 1],
+                    text: &text[l..r],
+                    after_text: &text[r.min(text.len() - 1) + 1..],
+                }
             })
-        }
-        js_locations
+            .collect()
     }
 }
 
