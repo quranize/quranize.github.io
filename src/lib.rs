@@ -63,7 +63,7 @@ impl JsQuranize {
         let word_count = quran.split_whitespace().count() as u8;
         self.quranize
             .get_locations(quran)
-            .into_iter()
+            .iter()
             .map(|&(sn, an, wn)| {
                 let text = self.aya_getter.get(sn, an).unwrap_or_default();
                 let (l, r) = get_highlight_boundary(text, wn, word_count);
