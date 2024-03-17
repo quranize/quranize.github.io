@@ -85,8 +85,7 @@ const app = createApp({
     },
     mounted() {
         const URLHash = location.hash.replace(/^#/, "");
-        if (this.keyword) this.encodeResults = this.encode(this.keyword)
-        else if (URLHash) {
+        if (URLHash) {
             this.setKeyword(decodeURIComponent(URLHash));
             history.pushState({}, "", location.href.replace(/#.*$/, ""));
         }
