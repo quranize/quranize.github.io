@@ -39,7 +39,7 @@ const app = createApp({
         },
         compressExplanation(result) {
             let ce = [];
-            result.explanations.forEach((e, i) => {
+            result.explanations().forEach((e, i) => {
                 let q = result.quran[i];
                 if (q === "\u0651" || e === "") {
                     ce[ce.length - 1].quran += q;
@@ -100,6 +100,9 @@ quranizeWorker.onmessage = event => {
             app.isEngineInitiated = true;
             break;
         case EventStatus.KeywordEncoded:
+            console.debug(message.encodeResults[0].quran());
+            console.debug(message.encodeResults[0].explanations());
+            console.debug(message.encodeResults[0].location_count());
             if (message.keyword === app.keyword) app.encodeResults = message.encodeResults;
             break;
         case EventStatus.ResultLocated:

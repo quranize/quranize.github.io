@@ -14,6 +14,9 @@ self.onmessage = event => {
         case EventStatus.KeywordUpdated:
             const keyword = message.keyword;
             const encodeResults = quranize.encode(keyword);
+            console.debug(encodeResults[0].quran());
+            console.debug(encodeResults[0].explanations());
+            console.debug(encodeResults[0].location_count());
             self.postMessage({ status: EventStatus.KeywordEncoded, keyword, encodeResults });
             break;
         case EventStatus.ResultClicked:

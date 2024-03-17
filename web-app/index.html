@@ -81,12 +81,12 @@
                                         aria-hidden="true"></i>
                                 </span>
                                 <span class="tag is-rounded" :class="{'is-info': result.expanding}">
-                                    {{ result.location_count }}
+                                    <!-- {{ result.get_location_count() }} -->
                                 </span>
                             </span>
                         </button>
                         <p class="card-header-title is-justify-content-right">
-                            <span class="quran-text">{{ result.quran }}</span>
+                            <span class="quran-text">{{ result.quran() }}</span>
                         </p>
                     </header>
                     <div v-if="result.expanding" class="card-content">
@@ -137,7 +137,7 @@
                                     <div class="level-right">
                                         <div class="level-item">
                                             <span class="quran-text tag is-medium">
-                                                {{ suraNames[location.sura_number - 1] }}
+                                                {{ suraNames[location.sura_number() - 1] }}
                                             </span>
                                         </div>
                                     </div>
@@ -145,10 +145,10 @@
                             </header>
                             <article class="panel-block is-active quran-text has-text-black">
                                 <span>
-                                    {{ location.before_text }}
-                                    <mark>{{ location.text }}</mark>
-                                    {{ location.after_text }}
-                                    ﴿{{ toArabicNumber(location.aya_number) }}﴾
+                                    {{ location.before_text() }}
+                                    <mark>{{ location.text() }}</mark>
+                                    {{ location.after_text() }}
+                                    ﴿{{ toArabicNumber(location.aya_number()) }}﴾
                                 </span>
                             </article>
                             <article v-for="translation in Object.keys(translations)"

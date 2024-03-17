@@ -1,31 +1,19 @@
+mod encode_result;
+mod location;
+
+use encode_result::EncodeResult;
+use location::Location;
+use quranize::{AyaGetter, Quranize};
 use wasm_bindgen::prelude::*;
 
-use quranize::{AyaGetter, Quranize};
-
 #[wasm_bindgen(js_name = Quranize)]
-pub struct JsQuranize {
+pub struct QuranizeEngine {
     quranize: Quranize,
     aya_getter: AyaGetter<'static>,
 }
 
-#[derive(serde::Serialize)]
-struct JsEncodeResult<'a> {
-    quran: String,
-    explanations: Vec<&'a str>,
-    location_count: usize,
-}
-
-#[derive(serde::Serialize)]
-struct JsLocation<'a> {
-    sura_number: u8,
-    aya_number: u16,
-    before_text: &'a str,
-    text: &'a str,
-    after_text: &'a str,
-}
-
 #[wasm_bindgen(js_class = Quranize)]
-impl JsQuranize {
+impl QuranizeEngine {
     #[wasm_bindgen(constructor)]
     pub fn new(min_harfs: usize) -> Self {
         Self {
@@ -37,29 +25,23 @@ impl JsQuranize {
         }
     }
 
-    #[wasm_bindgen(js_name = encode)]
-    pub fn js_encode(&self, text: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
-        serde_wasm_bindgen::to_value(&self.encode(text))
-    }
-
-    fn encode(&self, text: &str) -> Vec<JsEncodeResult> {
+    #[wasm_bindgen]
+    pub fn encode(&self, text: &str) -> Vec<EncodeResult> {
         self.quranize
             .encode(text)
             .into_iter()
-            .map(|(quran, explanations, location_count)| JsEncodeResult {
-                quran,
-                explanations,
-                location_count,
+            .map(|(quran, explanations, location_count)| {
+                EncodeResult::new(
+                    quran,
+                    explanations.iter().map(|s| s.to_string()).collect(),
+                    location_count,
+                )
             })
             .collect()
     }
 
-    #[wasm_bindgen(js_name = getLocations)]
-    pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
-        serde_wasm_bindgen::to_value(&self.get_locations(quran))
-    }
-
-    fn get_locations(&self, quran: &str) -> Vec<JsLocation> {
+    #[wasm_bindgen]
+    pub fn get_locations(&self, quran: &str) -> Vec<Location> {
         let word_count = quran.split_whitespace().count() as u8;
         self.quranize
             .get_locations(quran)
@@ -67,13 +49,13 @@ impl JsQuranize {
             .map(|&(sn, an, wn)| {
                 let text = self.aya_getter.get(sn, an).unwrap_or_default();
                 let (l, r) = get_highlight_boundary(text, wn, word_count);
-                JsLocation {
-                    sura_number: sn,
-                    aya_number: an,
-                    before_text: &text[..l.max(1) - 1],
-                    text: &text[l..r],
-                    after_text: &text[r.min(text.len() - 1) + 1..],
-                }
+                Location::new(
+                    sn,
+                    an,
+                    &text[..l.max(1) - 1],
+                    &text[l..r],
+                    &text[r.min(text.len() - 1) + 1..],
+                )
             })
             .collect()
     }
@@ -104,25 +86,25 @@ mod tests {
 
     #[test]
     fn test_encode() {
-        let q = JsQuranize::new(0);
-        let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
-        assert_eq!(l.sura_number, 1);
-        assert_eq!(l.aya_number, 1);
-        assert_eq!(l.before_text, "");
-        assert_eq!(l.text, "بِسمِ اللَّهِ");
-        assert_eq!(l.after_text, "الرَّحمٰنِ الرَّحيمِ");
+        let q = QuranizeEngine::new(0);
+        let l = &q.get_locations(&q.encode("bismillah")[0].quran())[0];
+        assert_eq!(l.sura_number(), 1);
+        assert_eq!(l.aya_number(), 1);
+        assert_eq!(l.before_text(), "");
+        assert_eq!(l.text(), "بِسمِ اللَّهِ");
+        assert_eq!(l.after_text(), "الرَّحمٰنِ الرَّحيمِ");
 
-        let l = &q.get_locations(&q.encode("bismillahirrohmanirrohim")[0].quran)[0];
-        assert_eq!(l.before_text, "");
-        assert_eq!(l.text, "بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ");
-        assert_eq!(l.after_text, "");
+        let l = &q.get_locations(&q.encode("bismillahirrohmanirrohim")[0].quran())[0];
+        assert_eq!(l.before_text(), "");
+        assert_eq!(l.text(), "بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ");
+        assert_eq!(l.after_text(), "");
 
-        let l = &q.get_locations(&q.encode("arrohmanirrohim")[0].quran)[0];
-        assert_eq!(l.sura_number, 1);
-        assert_eq!(l.aya_number, 1);
-        assert_eq!(l.before_text, "بِسمِ اللَّهِ");
-        assert_eq!(l.text, "الرَّحمٰنِ الرَّحيمِ");
-        assert_eq!(l.after_text, "");
+        let l = &q.get_locations(&q.encode("arrohmanirrohim")[0].quran())[0];
+        assert_eq!(l.sura_number(), 1);
+        assert_eq!(l.aya_number(), 1);
+        assert_eq!(l.before_text(), "بِسمِ اللَّهِ");
+        assert_eq!(l.text(), "الرَّحمٰنِ الرَّحيمِ");
+        assert_eq!(l.after_text(), "");
     }
 
     #[test]
