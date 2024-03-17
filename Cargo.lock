@@ -55,9 +55,9 @@ dependencies = [
 
 [[package]]
 name = "quranize"
-version = "0.11.0"
+version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cca2c2f3311decef724f4076399618bbad4b0cef9a9ffe814dacbe9f2c744d0c"
+checksum = "aa03f050c9ec06c1b50e7746e6c526e644eaaee6c4479026015a5b6cafcf1996"
 
 [[package]]
 name = "quranize-wasm"
@@ -102,9 +102,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.52"
+version = "2.0.53"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b699d15b36d1f02c3e7c69f8ffef53de37aefae075d8488d4ba1a7788d574a07"
+checksum = "7383cd0e49fff4b6b90ca5670bfd3e9d6a733b3f90c686605aa7eec8c4996032"
 dependencies = [
  "proc-macro2",
  "quote",
