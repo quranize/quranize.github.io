@@ -24,6 +24,12 @@ struct JsLocation<'a> {
     after_text: &'a str,
 }
 
+#[derive(serde::Serialize)]
+struct JsExplanation {
+    alphabet: String,
+    quran: String,
+}
+
 #[wasm_bindgen(js_class = Quranize)]
 impl JsQuranize {
     #[wasm_bindgen(constructor)]
@@ -80,7 +86,15 @@ impl JsQuranize {
 
     #[wasm_bindgen(js_name = compressExplanation)]
     pub fn js_compress_explanation(&self, quran: &str, expl: &str) -> Result<JsValue, Error> {
-        to_value(&compress_explanation(quran, expl))
+        to_value(
+            &compress_explanation(quran, expl)
+                .into_iter()
+                .map(|(e, q)| JsExplanation {
+                    alphabet: e,
+                    quran: q,
+                })
+                .collect::<Vec<_>>(),
+        )
     }
 }
 
