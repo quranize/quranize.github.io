@@ -41,7 +41,7 @@ const app = createApp({
             let ce = [];
             result.explanations.forEach((e, i) => {
                 let q = result.quran[i];
-                if (q === "\u0651" || e === "") {
+                if (ce.length && (q === "\u0651" || e === "")) {
                     ce[ce.length - 1].quran += q;
                     ce[ce.length - 1].alphabet += e;
                 } else {
