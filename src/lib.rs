@@ -1,6 +1,6 @@
-use wasm_bindgen::prelude::*;
-
 use quranize::{AyaGetter, Quranize};
+use serde_wasm_bindgen::{to_value, Error};
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(js_name = Quranize)]
 pub struct JsQuranize {
@@ -38,8 +38,8 @@ impl JsQuranize {
     }
 
     #[wasm_bindgen(js_name = encode)]
-    pub fn js_encode(&self, text: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
-        serde_wasm_bindgen::to_value(&self.encode(text))
+    pub fn js_encode(&self, text: &str) -> Result<JsValue, Error> {
+        to_value(&self.encode(text))
     }
 
     fn encode(&self, text: &str) -> Vec<JsEncodeResult> {
@@ -55,8 +55,8 @@ impl JsQuranize {
     }
 
     #[wasm_bindgen(js_name = getLocations)]
-    pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, serde_wasm_bindgen::Error> {
-        serde_wasm_bindgen::to_value(&self.get_locations(quran))
+    pub fn js_get_locations(&self, quran: &str) -> Result<JsValue, Error> {
+        to_value(&self.get_locations(quran))
     }
 
     fn get_locations(&self, quran: &str) -> Vec<JsLocation> {
@@ -76,6 +76,11 @@ impl JsQuranize {
                 }
             })
             .collect()
+    }
+
+    #[wasm_bindgen(js_name = compressExplanation)]
+    pub fn js_compress_explanation(&self, quran: &str, expl: &str) -> Result<JsValue, Error> {
+        to_value(&compress_explanation(quran, expl))
     }
 }
 
@@ -98,9 +103,43 @@ fn get_highlight_boundary(text: &str, word_number: u8, word_count: u8) -> (usize
     (left, right)
 }
 
+fn compress_explanation(quran: &str, expl: &str) -> Vec<(String, String)> {
+    let mut eqs = vec![(String::new(), String::new())];
+    for eq in expl.split('-').zip(quran.chars()) {
+        let mut last1_eq = eqs.pop();
+        let mut last2_eq = eqs.pop();
+        let mut new_eq = None;
+        match (&mut last2_eq, &mut last1_eq, eq) {
+            (
+                Some((ref mut last2_e, ref mut last2_q)),
+                _,
+                (e, q @ ('\u{0610}'..='\u{061A}' | '\u{064B}'..='\u{065F}' | '\u{0670}')),
+            ) => {
+                last2_e.push_str(e);
+                last2_q.push(q);
+            }
+            (_, Some((_, ref mut last1_q)), ("", q)) => last1_q.push(q),
+            (_, Some((ref mut last1_e, ref mut last1_q)), (e, q)) => {
+                last1_e.push_str(e);
+                last1_q.push(q);
+                new_eq = Some((String::new(), String::new()));
+            }
+            _ => (),
+        };
+        for mut e in [last2_eq, last1_eq, new_eq] {
+            if let Some(v) = e.take() {
+                eqs.push(v);
+            }
+        }
+    }
+    eqs.pop();
+    eqs
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn test_encode() {
@@ -131,5 +170,26 @@ mod tests {
         assert_eq!(get_highlight_boundary("ab cde f", 2, 2), (3, 8));
         assert_eq!(get_highlight_boundary("ab cde f", 3, 1), (7, 8));
         assert_eq!(get_highlight_boundary("ab cde f", 1, 1), (0, 2));
+    }
+
+    #[test]
+    fn test_compress_explanation() {
+        assert_eq!(
+            compress_explanation("بِرَبِّ النّاسِ", "b-i-r-o-b-b-i----n-n-a-s-"),
+            to_vec_string_string(&[
+                ("bi", "بِ"),
+                ("ro", "رَ"),
+                ("bbi", "بِّ"),
+                ("nn", " النّ"),
+                ("a", "ا"),
+                ("s", "سِ"),
+            ])
+        );
+    }
+
+    fn to_vec_string_string(a: &[(&str, &str)]) -> Vec<(String, String)> {
+        a.iter()
+            .map(|(x, y)| (x.to_string(), y.to_string()))
+            .collect()
     }
 }
