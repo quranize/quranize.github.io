@@ -139,7 +139,7 @@ fn compress_explanation(quran: &str, expl: &str) -> Vec<(String, String)> {
                 new_eq = Some((String::new(), String::new()));
             }
             _ => (),
-        };
+        }
         for eq in [last2_eq, last1_eq, new_eq].into_iter().flatten() {
             eqs.push(eq);
         }
