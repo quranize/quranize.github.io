@@ -33,22 +33,10 @@ const app = createApp({
             quranizeWorker.postMessage({ status: EventStatus.KeywordUpdated, keyword });
         },
         clickExpand(result) {
-            if (!result.compressedExplanation) result.compressedExplanation = this.compressExplanation(result);
-            if (!result.locations) quranizeWorker.postMessage({ status: EventStatus.ResultClicked, result: { quran: result.quran } });
-            result.expanding ^= true;
-        },
-        compressExplanation(result) {
-            let ce = [];
-            result.explanations.forEach((e, i) => {
-                let q = result.quran[i];
-                if (ce.length && (q === "\u0651" || e === "")) {
-                    ce[ce.length - 1].quran += q;
-                    ce[ce.length - 1].alphabet += e;
-                } else {
-                    ce.push({ quran: q, alphabet: e });
-                }
+            quranizeWorker.postMessage({
+                status: EventStatus.ResultClicked, quran: result.quran, expl: result.explanations.join("-")
             });
-            return ce;
+            result.expanding ^= true;
         },
         async clickTranslationSwitch(location, translation) {
             if (location.translations === undefined) location.translations = {};
@@ -103,8 +91,11 @@ quranizeWorker.onmessage = event => {
             if (message.keyword === app.keyword) app.encodeResults = message.encodeResults;
             break;
         case EventStatus.ResultLocated:
-            const result = app.encodeResults.find(result => result.quran === message.result.quran);
-            if (result) result.locations = message.locations;
+            const result = app.encodeResults.find(result => result.quran === message.quran);
+            if (result) {
+                result.compactExpls = message.compactExpls;
+                result.locations = message.locations;
+            }
             break;
     }
 };
