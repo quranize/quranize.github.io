@@ -140,10 +140,8 @@ fn compress_explanation(quran: &str, expl: &str) -> Vec<(String, String)> {
             }
             _ => (),
         };
-        for mut e in [last2_eq, last1_eq, new_eq] {
-            if let Some(v) = e.take() {
-                eqs.push(v);
-            }
+        for eq in [last2_eq, last1_eq, new_eq].into_iter().flatten() {
+            eqs.push(eq);
         }
     }
     eqs.pop();
