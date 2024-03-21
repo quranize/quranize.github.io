@@ -33,7 +33,7 @@ const app = createApp({
             quranizeWorker.postMessage({ status: EventStatus.KeywordUpdated, keyword });
         },
         clickExpand(result) {
-            quranizeWorker.postMessage({
+            if (!result.compactExpls || !result.locations) quranizeWorker.postMessage({
                 status: EventStatus.ResultClicked, quran: result.quran, expl: result.explanations.join("-")
             });
             result.expanding ^= true;
