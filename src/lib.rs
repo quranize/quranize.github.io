@@ -9,9 +9,9 @@ pub struct JsQuranize {
 }
 
 #[derive(serde::Serialize)]
-struct JsEncodeResult<'a> {
+struct JsEncodeResult {
     quran: String,
-    explanations: Vec<&'a str>,
+    explanation: String,
     location_count: usize,
 }
 
@@ -54,7 +54,7 @@ impl JsQuranize {
             .into_iter()
             .map(|(quran, explanations, location_count)| JsEncodeResult {
                 quran,
-                explanations,
+                explanation: explanations.join("-"),
                 location_count,
             })
             .collect()

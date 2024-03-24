@@ -34,7 +34,7 @@ const app = createApp({
         },
         clickExpand(result) {
             if (!result.compactExpls || !result.locations) quranizeWorker.postMessage({
-                status: EventStatus.ResultClicked, quran: result.quran, expl: result.explanations.join("-")
+                status: EventStatus.ResultClicked, quran: result.quran, expl: result.explanation
             });
             result.expanding ^= true;
         },
