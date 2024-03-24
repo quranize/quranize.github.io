@@ -83,19 +83,6 @@ impl JsQuranize {
             })
             .collect()
     }
-
-    #[wasm_bindgen(js_name = compressExplanation)]
-    pub fn js_compress_explanation(&self, quran: &str, expl: &str) -> Result<JsValue, Error> {
-        to_value(
-            &compress_explanation(quran, expl)
-                .into_iter()
-                .map(|(e, q)| JsExplanation {
-                    alphabet: e,
-                    quran: q,
-                })
-                .collect::<Vec<_>>(),
-        )
-    }
 }
 
 fn get_highlight_boundary(text: &str, word_number: u8, word_count: u8) -> (usize, usize) {
@@ -115,6 +102,19 @@ fn get_highlight_boundary(text: &str, word_number: u8, word_count: u8) -> (usize
         }
     }
     (left, right)
+}
+
+#[wasm_bindgen(js_name = compressExplanation)]
+pub fn js_compress_explanation(quran: &str, expl: &str) -> Result<JsValue, Error> {
+    to_value(
+        &compress_explanation(quran, expl)
+            .into_iter()
+            .map(|(e, q)| JsExplanation {
+                alphabet: e,
+                quran: q,
+            })
+            .collect::<Vec<_>>(),
+    )
 }
 
 fn compress_explanation(quran: &str, expl: &str) -> Vec<(String, String)> {

@@ -1,5 +1,5 @@
 import EventStatus from "./event-status.js";
-import init, { Quranize } from "./quranize/quranize.js";
+import init, { Quranize, compressExplanation } from "./quranize/quranize.js";
 
 let quranize;
 let pendingEvent;
@@ -18,7 +18,7 @@ self.onmessage = event => {
             break;
         case EventStatus.ResultClicked:
             const quran = message.quran;
-            const compactExpls = quranize.compressExplanation(quran, message.expl);
+            const compactExpls = compressExplanation(quran, message.expl);
             const locations = quranize.getLocations(quran);
             self.postMessage({ status: EventStatus.ResultLocated, quran, compactExpls, locations });
             break;
