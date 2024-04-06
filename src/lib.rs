@@ -135,43 +135,38 @@ mod tests {
     fn test_encode() {
         let q = JsQuranize::new(0);
         let l = &q.get_locations(&q.encode("bismillah")[0].quran)[0];
-        assert_eq!(l.sura_number, 1);
-        assert_eq!(l.aya_number, 1);
-        assert_eq!(l.before_text, "");
-        assert_eq!(l.text, "بِسمِ اللَّهِ");
-        assert_eq!(l.after_text, " الرَّحمٰنِ الرَّحيمِ");
+        assert_eq!(1, l.sura_number);
+        assert_eq!(1, l.aya_number);
+        assert_eq!("", l.before_text);
+        assert_eq!("بِسمِ اللَّهِ", l.text);
+        assert_eq!(" الرَّحمٰنِ الرَّحيمِ", l.after_text);
 
         let l = &q.get_locations(&q.encode("bismillahirrohmanirrohim")[0].quran)[0];
-        assert_eq!(l.before_text, "");
-        assert_eq!(l.text, "بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ");
-        assert_eq!(l.after_text, "");
+        assert_eq!("", l.before_text);
+        assert_eq!("بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ", l.text);
+        assert_eq!("", l.after_text);
 
         let l = &q.get_locations(&q.encode("arrohmanirrohim")[0].quran)[0];
-        assert_eq!(l.sura_number, 1);
-        assert_eq!(l.aya_number, 1);
-        assert_eq!(l.before_text, "بِسمِ اللَّهِ ");
-        assert_eq!(l.text, "الرَّحمٰنِ الرَّحيمِ");
-        assert_eq!(l.after_text, "");
+        assert_eq!(1, l.sura_number);
+        assert_eq!(1, l.aya_number);
+        assert_eq!("بِسمِ اللَّهِ ", l.before_text);
+        assert_eq!("الرَّحمٰنِ الرَّحيمِ", l.text);
+        assert_eq!("", l.after_text);
     }
 
     #[test]
     fn test_compress_explanation() {
         assert_eq!(
-            compress_explanation("بِرَبِّ النّاسِ", "b-i-r-o-b-b-i----n-n-a-s-"),
-            to_vec_string_string(&[
+            [
                 ("bi", "بِ"),
                 ("ro", "رَ"),
                 ("bbi", "بِّ"),
                 ("nn", " النّ"),
                 ("a", "ا"),
                 ("s", "سِ"),
-            ])
+            ]
+            .map(|(x, y)| (x.to_string(), y.to_string())),
+            *compress_explanation("بِرَبِّ النّاسِ", "b-i-r-o-b-b-i----n-n-a-s-"),
         );
-    }
-
-    fn to_vec_string_string(a: &[(&str, &str)]) -> Vec<(String, String)> {
-        a.iter()
-            .map(|(x, y)| (x.to_string(), y.to_string()))
-            .collect()
     }
 }
