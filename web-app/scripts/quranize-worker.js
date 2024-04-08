@@ -16,7 +16,9 @@ self.onmessage = event => {
             const keyword = message.keyword;
             if (keyword.length > quranizeMinHarfs * 0.7) {
                 quranizeMinHarfs = keyword.length * 3;
+                self.postMessage({ status: EventStatus.EngineInitiationStarted });
                 quranize = new Quranize(quranizeMinHarfs);
+                self.postMessage({ status: EventStatus.EngineInitiated });
             }
             const encodeResults = quranize.encode(keyword);
             self.postMessage({ status: EventStatus.KeywordEncoded, keyword, encodeResults });
@@ -30,9 +32,9 @@ self.onmessage = event => {
     }
 };
 
+self.postMessage({ status: EventStatus.EngineInitiationStarted });
 await init();
 quranize = new Quranize(quranizeMinHarfs);
-
 self.postMessage({ status: EventStatus.EngineInitiated });
 
 if (pendingEvent) self.onmessage(pendingEvent);

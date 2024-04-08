@@ -7,7 +7,7 @@ const quranizeWorker = new Worker("scripts/quranize-worker.js", { type: "module"
 const app = createApp({
     data() {
         return {
-            isEngineInitiated: false,
+            isEngineReady: false,
             keyword: "",
             encodeResults: [],
             supportSharing: "share" in navigator,
@@ -18,7 +18,7 @@ const app = createApp({
     },
     computed: {
         hasResults() { return this.encodeResults.length > 0; },
-        hasEmptyResult() { return this.isEngineInitiated && this.keyword !== "" && !this.hasResults; },
+        hasEmptyResult() { return this.isEngineReady && this.keyword !== "" && !this.hasResults; },
     },
     methods: {
         keywordInputted(event) {
@@ -84,8 +84,11 @@ const app = createApp({
 quranizeWorker.onmessage = event => {
     const message = event.data;
     switch (message.status) {
+        case EventStatus.EngineInitiationStarted:
+            app.isEngineReady = false;
+            break;
         case EventStatus.EngineInitiated:
-            app.isEngineInitiated = true;
+            app.isEngineReady = true;
             break;
         case EventStatus.KeywordEncoded:
             if (message.keyword === app.keyword) app.encodeResults = message.encodeResults;
