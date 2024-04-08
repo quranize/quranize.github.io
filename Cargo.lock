@@ -4,9 +4,9 @@ version = 3
 
 [[package]]
 name = "bumpalo"
-version = "3.15.4"
+version = "3.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ff69b9dd49fd426c69a0db9fc04dd934cdb6645ff000864d98f7e2af8830eaa"
+checksum = "79296716171880943b8470b5f8d03aa55eb2e645a4874bdbb28adb49162e012c"
 
 [[package]]
 name = "cfg-if"
@@ -71,9 +71,9 @@ dependencies = [
 
 [[package]]
 name = "quranize"
-version = "0.12.1"
+version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22d425b4d86c6ef6e6de93d8886014d0756a1cf1533d008dcd6e3727cc8d3124"
+checksum = "260f0f546d5a84d484ea257838563191a194b5767cc0abe2f9413c8dc9462fae"
 
 [[package]]
 name = "quranize-wasm"
