@@ -105,7 +105,7 @@ fn compress_explanation(quran: &str, expl: &str) -> Vec<(String, String)> {
             (
                 Some((ref mut last2_e, ref mut last2_q)),
                 _,
-                (e, q @ ('\u{0610}'..='\u{061A}' | '\u{064B}'..='\u{065F}' | '\u{0670}')),
+                (e, q @ ('\u{064B}'..='\u{065F}' | '\u{0670}' | '\u{06EA}')),
             ) => {
                 last2_e.push_str(e);
                 last2_q.push(q);
